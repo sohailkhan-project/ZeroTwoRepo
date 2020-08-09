@@ -10,9 +10,52 @@ from typing import List
 from telegram import ParseMode, InputMediaPhoto, Update, Bot, TelegramError
 from telegram.ext import run_async
 
-from tg_bot import dispatcher
-from tg_bot.modules.disable import DisableAbleCommandHandler
-from tg_bot.modules.helper_funcs.chat_status import is_user_admin, user_admin
+from SaitamaRobot import dispatcher
+from SaitamaRobot.modules.disable import DisableAbleCommandHandler
+from SaitamaRobot.{fullname}, Welcome to the Indian Anime Community group! You are our {count} member.Feel free to talk with anyone. Mention the admins when you need help. 
+
+Have fun!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[Rules](buttonurl://t.me/kigyorobot?start=-1001387786264)
+[Anime Wallpaper](buttonurl://t.me/kawaiwallpapers)
+[Anime Songs](buttonurl://t.me/animeoppainings:same)
+[Our Hentai Group](buttonurl://https://t.me/joinchat/L5MiKhlbH6xoSl37uvk2bA)
+[AniDungeon🔥(dl anime)](buttonurl://t.me/anidungeon)modules.helper_funcs.chat_status import is_user_admin, user_admin
 
 
 opener = urllib.request.build_opener()
