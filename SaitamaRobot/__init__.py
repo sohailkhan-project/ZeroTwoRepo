@@ -41,7 +41,7 @@ if ENV:
     try:
         SUDO_USERS = set(
             int(x) for x in os.environ.get("SUDO_USERS", "").split())
-        SaitamaRobot_USERS = set(int(x) for x in os.environ.get("DEV_USERS", "").split())
+        DEV_USERS = set(int(x) for x in os.environ.get("DEV_USERS", "").split())
     except ValueError:
         raise Exception(
             "Your sudo or SaitamaRobot users list does not contain valid integers.")
