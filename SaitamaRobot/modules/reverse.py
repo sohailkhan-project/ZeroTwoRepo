@@ -8,10 +8,10 @@ from bs4 import BeautifulSoup
 from telegram import InputMediaPhoto, TelegramError
 from telegram.ext import run_async
 
-from Megumi import dispatcher
+from SaitamaRobot import dispatcher
 
-from Megumi.modules.disable import DisableAbleCommandHandler
-from Megumi.modules.helper_funcs.alternate import typing_action
+from SaitamaRobot.modules.disable import DisableAbleCommandHandler
+from SaitamaRobot.modules.helper_funcs.alternate import typing_action
 
 opener = urllib.request.build_opener()
 useragent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.38 Safari/537.36"
