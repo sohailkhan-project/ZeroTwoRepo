@@ -32,9 +32,7 @@ The support group chat is at {}.
 
 HELP_STRINGS = """
 Hey there! My name is *{}*.
-I am a group management bot, here to help you get around and keep the order in your groups! Have a look at the following for an idea of some of \
-Have a look at the following for an idea of some of 
-\the things I can help you with.
+I am a group management bot, here to help you get around and keep the order in your groups!
 
 *Main* commands available:
  • /start: start the bot
