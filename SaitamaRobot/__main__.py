@@ -22,24 +22,24 @@ from telegram.utils.helpers import escape_markdown
 
 PM_START_TEXT = """
 Hi {}, my name is {}! 
-I am an Anime themed group management bot.
+I am an Anime themed group management bot with some extra features.
 You can find my list of available commands with /help.
 
-[Saitama's Repo](github.com/AnimeKaizoku/SaitamaRobot) 
-See [Basic Configuration Checklist](t.me/OnePunchUpdates/29) on how to secure your group.
+
+See [Basic Configuration Checklist](https://t.me/Remboupdates) on how to secure your group.
 The support group chat is at {}.
 """
 
 HELP_STRINGS = """
 Hey there! My name is *{}*.
-I'm a Hero For Fun and help admins manage their groups with One Punch! Have a look at the following for an idea of some of \
+I'm a Demon girl who help admins manage their groups with my powers! Have a look at the following for an idea of some of \
 the things I can help you with.
 
 *Main* commands available:
  • /start: start the bot
  • /help: PM's you this message.
  • /help <module name>: PM's you info about that module.
- • /donate: information about how to donate!
+
  • /settings:
    • in PM: will send you your settings for all supported modules.
    • in a group: will redirect you to pm, with all that chat's settings.
@@ -51,7 +51,7 @@ And the following:
     dispatcher.bot.first_name, ""
     if not ALLOW_EXCL else "\nAll commands can either be used with / or !.\n")
 
-SAITAMA_IMG = "https://telegra.ph/file/46e6d9dfcb3eb9eae95d9.jpg"
+SAITAMA_IMG = "https://telegra.ph/file/b91901637c87c92dac1f2.jpg"
 
 DONATE_STRING = """Heya, glad to hear you want to donate!
 Saitama is hosted on one of Kaizoku's Servers and doesn't require any donations as of now but \
