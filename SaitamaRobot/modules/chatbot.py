@@ -66,7 +66,7 @@ def remove_chat(update: Update, context: CallbackContext):
 
 def check_message(context: CallbackContext, message):
     reply_msg = message.reply_to_message
-    if message.text.lower() == "saitama":
+    if message.text.lower() == "megumi":
         return True
     if reply_msg:
         if reply_msg.from_user.id == context.bot.get_me().id:
@@ -103,7 +103,7 @@ def chatbot(update: Update, context: CallbackContext):
             bot.send_chat_action(chat_id, action='typing')
             rep = api_client.think_thought(sesh, query)
             sleep(0.3)
-            chat.send_message(rep, timeout=60)
+            msg.reply_text(rep, timeout=60)
         except CFError as e:
             bot.send_message(OWNER_ID,
                              f"Chatbot error: {e} occurred in {chat_id}!")
@@ -127,25 +127,25 @@ def list_chatbot_chats(update: Update, context: CallbackContext):
     update.effective_message.reply_text(text, parse_mode="HTML")
 
 
-__mod_name__ = "Chatbot"
+mod_name = "Chatbot"
 
-__help__ = f"""
-Chatbot utilizes the CoffeeHouse API and allows Saitama to talk and provides a more interactive group chat experience.
+help = f"""
+Chatbot utilizes the CoffeeHouse API and allows Megumi to talk and provides a more interactive group chat experience.
 
 *Commands:* 
 *Admins only:*
- • `/addchat`*:* Enables Chatbot mode in the chat.
- • `/rmchat`*:* Disables Chatbot mode in the chat.
+ • /addchat*:* Enables Chatbot mode in the chat.
+ • /rmchat*:* Disables Chatbot mode in the chat.
  
 *Dragons or higher only:* 
- • `/listaichats`*:* Lists the chats the chatmode is enabled in.
+ • /listaichats*:* Lists the chats the chatmode is enabled in.
 
 Reports bugs at {SUPPORT_CHAT}
 *Powered by CoffeeHouse* (https://coffeehouse.intellivoid.net/) from @Intellivoid
 """
 
-ADD_CHAT_HANDLER = CommandHandler("addchat", add_chat)
-REMOVE_CHAT_HANDLER = CommandHandler("rmchat", remove_chat)
+ADD_CHAT_HANDLER = CommandHandler("addchat", add_chat, filters=CustomFilters.dev_filter)
+REMOVE_CHAT_HANDLER = CommandHandler("rmchat", remove_chat, filters=CustomFilters.dev_filter)
 CHATBOT_HANDLER = MessageHandler(
     Filters.text & (~Filters.regex(r"^#[^\s]+") & ~Filters.regex(r"^!")
                     & ~Filters.regex(r"^\/")), chatbot)
