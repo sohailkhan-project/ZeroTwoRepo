@@ -1,7 +1,7 @@
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 from telethon.tl import types, functions
 from fontTools.ttLib import TTFont 
-from  fontTools.unicode import Unicode 
+from fontTools.unicode import Unicode 
 import emoji
 import textwrap
 import urllib
