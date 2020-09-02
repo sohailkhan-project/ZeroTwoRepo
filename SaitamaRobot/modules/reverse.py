@@ -2,6 +2,8 @@ import os
 import re
 import requests
 import urllib
+import urllib.request
+import urllib.parse
 from urllib.error import URLError, HTTPError
 from bs4 import BeautifulSoup
 
