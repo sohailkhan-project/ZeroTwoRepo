@@ -25,7 +25,7 @@ Hi {}, my name is {}!
 I am an Anime themed group management bot with some extra features.
 You can find my list of available commands with /help.
 
-[Rem's Repo](https://github.com/AnimeKaizoku/SaitamaRobot)
+[Rem's Repo](https://github.com/Harsh17786/Rembot)
 See [Basic Configuration Checklist](https://t.me/Remboupdates) on how to secure your group.
 The support group chat is at {}.
 """
