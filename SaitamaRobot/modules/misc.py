@@ -2,6 +2,12 @@ import html
 import re
 
 import requests
+import random
+
+import json
+import urllib.request
+import urllib.parse
+
 from SaitamaRobot import (DEV_USERS, OWNER_ID, SUDO_USERS, SUPPORT_USERS,
                           TIGER_USERS, WHITELIST_USERS, dispatcher)
 from SaitamaRobot.__main__ import STATS, TOKEN, USER_INFO
@@ -177,6 +183,26 @@ def info(update: Update, context: CallbackContext):
     update.effective_message.reply_text(
         text, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
 
+@run_async
+def pat(update: Update, context: CallbackContext):
+    bot, args = context.bot, context.args
+    chat_id = update.effective_chat.id
+    msg = str(update.message.text)
+    try:
+        msg = msg.split(" ", 1)[1]
+    except IndexError:
+        msg = ""
+    msg_id = update.effective_message.reply_to_message.message_id if update.effective_message.reply_to_message else update.effective_message.message_id
+    pats = []
+    pats = json.loads(urllib.request.urlopen(urllib.request.Request(
+    'http://headp.at/js/pats.json',
+    headers={'User-Agent': 'Mozilla/5.0 (X11; U; Linux i686) '
+         'Gecko/20071127 Firefox/2.0.0.11'}
+    )).read().decode('utf-8'))
+    if "@" in msg and len(msg) > 5:
+        bot.send_photo(chat_id, f'https://headp.at/pats/{urllib.parse.quote(random.choice(pats))}', caption=msg)
+    else:
+        bot.send_photo(chat_id, f'https://headp.at/pats/{urllib.parse.quote(random.choice(pats))}', reply_to_message_id=msg_id)
 
 @run_async
 @user_admin
