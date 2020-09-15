@@ -4,19 +4,19 @@ import re
 import time
 from functools import partial
 
-import Megumi.modules.sql.welcome_sql as sql
-from Megumi import (DEV_USERS, LOGGER, OWNER_ID, SUDO_USERS,
+import SaitamaRobot.modules.sql.welcome_sql as sql
+from SaitamaRobot import (DEV_USERS, LOGGER, OWNER_ID, SUDO_USERS,
                           SUPPORT_USERS, TIGER_USERS, WHITELIST_USERS, sw,
                           dispatcher)
-from Megumi.modules.helper_funcs.chat_status import (
+from SaitamaRobot.modules.helper_funcs.chat_status import (
     is_user_ban_protected, user_admin)
-from Megumi.modules.helper_funcs.misc import (build_keyboard,
+from SaitamaRobot.modules.helper_funcs.misc import (build_keyboard,
                                                     revert_buttons)
-from Megumi.modules.helper_funcs.msg_types import get_welcome_type
-from Megumi.modules.helper_funcs.string_handling import (
+from SaitamaRobot.modules.helper_funcs.msg_types import get_welcome_type
+from SaitamaRobot.modules.helper_funcs.string_handling import (
     escape_invalid_curly_brackets, markdown_parser)
-from Megumi.modules.log_channel import loggable
-from Megumi.modules.sql.global_bans_sql import is_user_gbanned
+from SaitamaRobot.modules.log_channel import loggable
+from SaitamaRobot.modules.sql.global_bans_sql import is_user_gbanned
 from telegram import (ChatPermissions, InlineKeyboardButton,
                       InlineKeyboardMarkup, ParseMode, Update)
 from telegram.error import BadRequest
