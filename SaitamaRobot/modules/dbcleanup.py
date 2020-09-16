@@ -132,10 +132,10 @@ def callback_button(update: Update, context: CallbackContext):
                                 message.message_id)
             invalid_chat_count = gfrom time import sleep
 
-import Megumi.modules.sql.global_bans_sql as gban_sql
-import Megumi.modules.sql.users_sql as user_sql
-from Megumi import DEV_USERS, OWNER_ID, dispatcher
-from Megumi.modules.helper_funcs.chat_status import dev_plus
+import SaitamaRobot.modules.sql.global_bans_sql as gban_sql
+import SaitamaRobotusers_sql as user_sql
+from SaitamaRobotSERS, OWNER_ID, dispatcher
+from SaitamaRobot.modules.helper_funcs.chat_status import dev_plus
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.error import BadRequest, Unauthorized
 from telegram.ext import (CallbackContext, CallbackQueryHandler, CommandHandler,
