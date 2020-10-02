@@ -66,7 +66,7 @@ def remove_chat(update: Update, context: CallbackContext):
 
 def check_message(context: CallbackContext, message):
     reply_msg = message.reply_to_message
-    if message.text.lower() == "megumi":
+    if message.text.lower() == "Rem":
         return True
     if reply_msg:
         if reply_msg.from_user.id == context.bot.get_me().id:
@@ -130,7 +130,7 @@ def list_chatbot_chats(update: Update, context: CallbackContext):
 mod_name = "Chatbot"
 
 help = f"""
-Chatbot utilizes the CoffeeHouse API and allows Megumi to talk and provides a more interactive group chat experience.
+Chatbot utilizes the CoffeeHouse API and allows SaitamaRobot to talk and provides a more interactive group chat experience.
 
 *Commands:* 
 *Admins only:*
