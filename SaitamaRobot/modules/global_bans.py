@@ -354,7 +354,7 @@ def check_and_ban(update, user_id, should_message=True):
                    f"<b>User ID</b>: <code>{user_id}</code>"
             user = sql.get_gbanned_user(user_id)
             if user.reason:
-                text += "\nReason: <code>{}</code>".format(html.escape(user.reason))
+            text += "\nReason: <code>{}</code>".format(html.escape(user.reason))
             update.effective_message.reply_text(text, parse_mode=ParseMode.HTML)
 
 @run_async
