@@ -110,7 +110,6 @@ class CustomCommandHandler(CommandHandler):
                                    check_result):
         if isinstance(check_result, bool):
 
-Dragon Emperor, [26.10.20 20:24]
 context.args = update.effective_message.text.split()[1:]
         else:
             context.args = check_result[0]
