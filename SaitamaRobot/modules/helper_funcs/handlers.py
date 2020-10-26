@@ -13,7 +13,7 @@ else:
 
 class AntiSpam:
 
-    def init__(self):
+    def __init__(self):
         self.whitelist = (DEV_USERS or []) + (SUDO_USERS or []) + (
             SUPPORT_USERS or [])
         #Values are HIGHLY experimental, its recommended you pay attention to our commits as we will be adjusting the values over time with what suits best.
