@@ -24,4 +24,4 @@ wikipedia
 telethon
 spamwatch
 alphabet_detector
-pyrate_limiter
+pyrate-limiter
