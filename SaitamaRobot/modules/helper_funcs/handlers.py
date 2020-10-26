@@ -109,7 +109,7 @@ class CustomCommandHandler(CommandHandler):
     def collect_additional_context(self, context, update, dispatcher,
                                    check_result):
         if isinstance(check_result, bool):
-context.args = update.effective_message.text.split()[1:]
+            context.args = update.effective_message.text.split()[1:]
         else:
             context.args = check_result[0]
             if isinstance(check_result[1], dict):
