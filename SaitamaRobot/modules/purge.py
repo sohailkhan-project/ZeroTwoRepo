@@ -1,6 +1,6 @@
 from SaitamaRobot.modules.helper_funcs.telethn.chatstatus import (
     can_delete_messages, user_is_admin)
-from SaitamaRobot.SaitamaRobot import Saitama
+from SaitamaRobot.Saitamabot import Saitama
 
 
 @megumi(pattern="^/purge$")
