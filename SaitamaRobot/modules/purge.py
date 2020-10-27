@@ -42,10 +42,6 @@ async def delete_messages(event):
     if event.from_id is None:
         return
 
-    if not await user_is_admin(user_id=event.from_id, message=event):
-        await event.reply("Only Admins are allowed to use this command")
-        return
-
     if not await can_delete_messages(message=event):
         await event.reply("Can't seem to delete this?")
         return
