@@ -50,7 +50,7 @@ async def purge(event):
         await del_res.delete()
 
 
-@client.on(events.NewMessage(pattern="^[!/]del$"))
+@telethn.on(events.NewMessage(pattern="^[!/]del$"))
 async def delete_msg(event):
 
     if not await is_administrator(user_id=event.from_id, message=event):
