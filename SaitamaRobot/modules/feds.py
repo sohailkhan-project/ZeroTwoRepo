@@ -8,7 +8,7 @@ from io import BytesIO
 import html
 
 import SaitamaRobot.modules.sql.feds_sql as sql
-from SaitamaRobot import (EVENT_LOGS, LOGGER, OWNER_ID, SUDO_USERS, TIGER_USERS,
+from SaitamaRobot import (GBAN_LOGS, LOGGER, OWNER_ID, SUDO_USERS, TIGER_USERS,
                           WHITELIST_USERS, dispatcher)
 from SaitamaRobot.modules.disable import DisableAbleCommandHandler
 from SaitamaRobot.modules.helper_funcs.alternate import send_message
