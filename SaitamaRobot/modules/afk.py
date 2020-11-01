@@ -10,7 +10,6 @@ from SaitamaRobot import dispatcher
 from SaitamaRobot.modules.disable import DisableAbleCommandHandler, DisableAbleMessageHandler
 from SaitamaRobot.modules.users import get_user_id
 from SaitamaRobot.modules.helper_funcs.alternate import send_message
-import SaitamaRobot.modules.helper_funcs.fun_strings as fun
 
 AFK_GROUP = 7
 AFK_REPLY_GROUP = 8
