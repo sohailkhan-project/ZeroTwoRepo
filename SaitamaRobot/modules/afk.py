@@ -9,9 +9,7 @@ from telegram.ext import Filters, MessageHandler, run_async
 from SaitamaRobot import dispatcher
 from SaitamaRobot.modules.disable import DisableAbleCommandHandler, DisableAbleMessageHandler
 from SaitamaRobot.modules.users import get_user_id
-
 from SaitamaRobot.modules.helper_funcs.alternate import send_message
-from SaitamaRobot.modules.helper_funcs.readable_time import get_readable_time
 import SaitamaRobot.modules.helper_funcs.fun_strings as fun
 
 AFK_GROUP = 7
