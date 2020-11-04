@@ -6,16 +6,16 @@ import time
 import uuid
 from io import BytesIO
 
-import Megumi.modules.sql.feds_sql as sql
-from Megumi import (GBAN_LOGS, LOGGER, OWNER_ID, SUDO_USERS, TIGER_USERS,
+import SaitamaRobot.modules.sql.feds_sql as sql
+from SaitamaRobot import (GBAN_LOGS, LOGGER, OWNER_ID, SUDO_USERS, TIGER_USERS,
                           WHITELIST_USERS, dispatcher)
-from Megumi.modules.disable import DisableAbleCommandHandler
-from Megumi.modules.helper_funcs.alternate import send_message
-from Megumi.modules.helper_funcs.chat_status import is_user_admin
-from Megumi.modules.helper_funcs.extraction import (extract_unt_fedban,
+from SaitamaRobot.modules.disable import DisableAbleCommandHandler
+from SaitamaRobot.modules.helper_funcs.alternate import send_message
+from SaitamaRobot.modules.helper_funcs.chat_status import is_user_admin
+from SaitamaRobot.modules.helper_funcs.extraction import (extract_unt_fedban,
                                                           extract_user,
                                                           extract_user_fban)
-from Megumi.modules.helper_funcs.string_handling import markdown_parser
+from SaitamaRobot.modules.helper_funcs.string_handling import markdown_parser
 from telegram import (InlineKeyboardButton, InlineKeyboardMarkup, MessageEntity,
                       ParseMode, Update)
 from telegram.error import BadRequest, TelegramError, Unauthorized
