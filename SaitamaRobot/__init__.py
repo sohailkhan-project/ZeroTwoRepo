@@ -28,7 +28,7 @@ if sys.version_info[0] < 3 or sys.version_info[1] < 6:
 ENV = bool(os.environ.get('ENV', False))
 
 if ENV:
-    TOKEN = os.environ.get('TOKEN', None)
+    API_KEY = os.environ.get('API_KEY', None)
 
     try:
         OWNER_ID = int(os.environ.get('OWNER_ID', None))
@@ -97,7 +97,7 @@ if ENV:
 
 else:
     from SaitamaRobot.config import Development as Config
-    TOKEN = Config.TOKEN
+    API_KEY = Config.API_KEY
 
     try:
         OWNER_ID = int(Config.OWNER_ID)
@@ -173,7 +173,7 @@ if not SPAMWATCH_API:
 else:
     sw = spamwatch.Client(SPAMWATCH_API)
 
-updater = tg.Updater(TOKEN, workers=WORKERS, use_context=True)
+updater = tg.Updater(API_KEY, workers=WORKERS, use_context=True)
 telethn = TelegramClient("saitama", API_ID, API_HASH)
 dispatcher = updater.dispatcher
 
