@@ -4,7 +4,7 @@ from sys import argv
 from typing import Optional
 
 from SaitamaRobot import (ALLOW_EXCL, CERT_PATH, DONATION_LINK, LOGGER,
-                          OWNER_ID, PORT, SUPPORT_CHAT, TOKEN, URL, WEBHOOK,
+                          OWNER_ID, PORT, SUPPORT_CHAT, API_KEY, URL, WEBHOOK,
                           dispatcher, telethn, updater)
 # needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!
@@ -500,9 +500,9 @@ def main():
 
         if CERT_PATH:
             updater.bot.set_webhook(
-                url=URL + TOKEN, certificate=open(CERT_PATH, 'rb'))
+                url=URL + API_KEY, certificate=open(CERT_PATH, 'rb'))
         else:
-            updater.bot.set_webhook(url=URL + TOKEN)
+            updater.bot.set_webhook(url=URL + API_KEY)
 
     else:
         LOGGER.info("Using long polling.")
@@ -518,5 +518,5 @@ def main():
 
 if __name__ == '__main__':
     LOGGER.info("Successfully loaded modules: " + str(ALL_MODULES))
-    telethn.start(bot_token=TOKEN)
+    telethn.start(bot_token=API_KEY)
     main()
