@@ -6,7 +6,7 @@ from telegram.error import BadRequest
 from telegram.ext import CommandHandler, run_async
 
 import SaitamaRobot.modules.sql.notes_sql as sql
-from SaitamaRobot import dispatcher, LOGGER, OWNER_ID, MESSAGE_DUMP
+from SaitamaRobot import dispatcher, LOGGER, OWNER_ID, JOIN_LOGGER
 from SaitamaRobot.__main__ import DATA_IMPORT
 from SaitamaRobot.modules.helper_funcs.chat_status import user_admin
 from SaitamaRobot.modules.helper_funcs.alternate import typing_action
@@ -70,7 +70,7 @@ def import_data(update, context):
 
         # Check if backup is this chat
         try:
-            if data.get(str(chat.id)) == None:
+            if data.get(str(chat.id)) is None:
                 if conn:
                     text = "Backup comes from another chat, I can't return another chat to chat *{}*".format(
                         chat_name)
@@ -325,7 +325,7 @@ def export_data(update, context):
     tgl = time.strftime("%H:%M:%S - %d/%m/%Y", time.localtime(time.time()))
     try:
         context.bot.sendMessage(
-            MESSAGE_DUMP,
+            JOIN_LOGGER,
             "*Successfully imported backup:*\nChat: `{}`\nChat ID: `{}`\nOn: `{}`"
             .format(chat.title, chat_id, tgl),
             parse_mode=ParseMode.MARKDOWN,
@@ -347,7 +347,7 @@ def export_data(update, context):
 # Temporary data
 def put_chat(chat_id, value, chat_data):
     # print(chat_data)
-    if value == False:
+    if value is False:
         status = False
     else:
         status = True
@@ -368,10 +368,10 @@ __mod_name__ = "Backups"
 __help__ = """
 *Only for group owner:*
 
- × /import: Reply to the backup file for the butler / emilia group to import as much as possible, making transfers very easy! \
+ • /import: Reply to the backup file for the butler / emilia group to import as much as possible, making transfers very easy! \
  Note that files / photos cannot be imported due to telegram restrictions.
 
- × /export: Export group data, which will be exported are: rules, notes (documents, images, music, video, audio, voice, text, text buttons) \
+ • /export: Export group data, which will be exported are: rules, notes (documents, images, music, video, audio, voice, text, text buttons) \
 
 """
 

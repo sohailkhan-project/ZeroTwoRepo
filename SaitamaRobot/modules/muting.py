@@ -1,7 +1,7 @@
 import html
 from typing import Optional
 
-from SaitamaRobot import LOGGER, TIGER_USERS, dispatcher
+from SaitamaRobot import LOGGER, TIGERS, dispatcher
 from SaitamaRobot.modules.helper_funcs.chat_status import (bot_admin,
                                                            can_restrict,
                                                            connection_status,
@@ -35,8 +35,8 @@ def check_user(user_id: int, bot: Bot, chat: Chat) -> Optional[str]:
         reply = "I'm not gonna MUTE myself, How high are you?"
         return reply
 
-    if is_user_admin(chat, user_id, member) or user_id in TIGER_USERS:
-        reply = "I really wish I could mute admins...Perhaps a Punch?"
+    if is_user_admin(chat, user_id, member) or user_id in TIGERS:
+        reply = "Can't. Find someone else to mute but not this one."
         return reply
 
     return None
@@ -123,7 +123,11 @@ def unmute(update: Update, context: CallbackContext) -> str:
                 can_send_media_messages=True,
                 can_send_other_messages=True,
                 can_add_web_page_previews=True)
-            bot.restrict_chat_member(chat.id, int(user_id), chat_permissions)
+            try:
+                bot.restrict_chat_member(chat.id, int(user_id),
+                                         chat_permissions)
+            except BadRequest:
+                pass
             bot.sendMessage(
                 chat.id,
                 f"I shall allow <b>{html.escape(member.user.first_name)}</b> to text!",

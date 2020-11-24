@@ -10,7 +10,7 @@ from telegram.utils.helpers import mention_html
 from alphabet_detector import AlphabetDetector
 
 import SaitamaRobot.modules.sql.locks_sql as sql
-from SaitamaRobot import dispatcher, SUDO_USERS, LOGGER
+from SaitamaRobot import dispatcher, DRAGONS, LOGGER
 from SaitamaRobot.modules.disable import DisableAbleCommandHandler
 from SaitamaRobot.modules.helper_funcs.chat_status import (
     can_delete,
@@ -157,7 +157,7 @@ def restr_members(bot,
                   other=False,
                   previews=False):
     for mem in members:
-        if mem.user in SUDO_USERS:
+        if mem.user in DRAGONS:
             pass
         try:
             bot.restrict_chat_member(
@@ -197,7 +197,7 @@ def unrestr_members(bot,
 @run_async
 def locktypes(update, context):
     update.effective_message.reply_text(
-        "\n × ".join(["Locks available: "] +
+        "\n • ".join(["Locks available: "] +
                      sorted(list(LOCK_TYPES) + list(LOCK_CHAT_RESTRICTION))))
 
 
@@ -222,7 +222,7 @@ def lock(update, context) -> str:
                     chat = dispatcher.bot.getChat(conn)
                     chat_id = conn
                     chat_name = chat.title
-                    text = "Locked all {} messages for non-admins in {}!".format(
+                    text = "Locked {} for non-admins in {}!".format(
                         ltype, chat_name)
                 else:
                     if update.effective_message.chat.type == "private":
@@ -234,8 +234,7 @@ def lock(update, context) -> str:
                     chat = update.effective_chat
                     chat_id = update.effective_chat.id
                     chat_name = update.effective_message.chat.title
-                    text = "Locked all {} messages for non-admins!".format(
-                        ltype)
+                    text = "Locked {} for non-admins!".format(ltype)
                 sql.update_lock(chat.id, ltype, locked=True)
                 send_message(
                     update.effective_message, text, parse_mode="markdown")
@@ -329,7 +328,7 @@ def unlock(update, context) -> str:
                     chat = dispatcher.bot.getChat(conn)
                     chat_id = conn
                     chat_name = chat.title
-                    text = "Unlocked {} messages for everyone in {}!".format(
+                    text = "Unlocked {} for everyone in {}!".format(
                         ltype, chat_name)
                 else:
                     if update.effective_message.chat.type == "private":
@@ -341,7 +340,7 @@ def unlock(update, context) -> str:
                     chat = update.effective_chat
                     chat_id = update.effective_chat.id
                     chat_name = update.effective_message.chat.title
-                    text = "Unlocked {} messages for everyone!".format(ltype)
+                    text = "Unlocked {} for everyone!".format(ltype)
                 sql.update_lock(chat.id, ltype, locked=False)
                 send_message(
                     update.effective_message, text, parse_mode="markdown")
@@ -541,10 +540,10 @@ def build_lock_message(chat_id):
         locklist.sort()
         # Building lock list string
         for x in locklist:
-            res += "\n × {}".format(x)
+            res += "\n • {}".format(x)
     res += "\n\n*" + "These are the current chat permissions:" + "*"
     for x in permslist:
-        res += "\n × {}".format(x)
+        res += "\n • {}".format(x)
     return res
 
 
@@ -620,12 +619,12 @@ You're in the right place!
 The locks module allows you to lock away some common items in the \
 telegram world; the bot will automatically delete them!
 
- × /locktypes: Lists all possible locktypes
+ • `/locktypes`*:* Lists all possible locktypes
  
-*Admin only:*
- × /lock <type>: Lock items of a certain type (not available in private)
- × /unlock <type>: Unlock items of a certain type (not available in private)
- × /locks: The current list of locks in this chat.
+*Admins only:*
+ • `/lock <type>`*:* Lock items of a certain type (not available in private)
+ • `/unlock <type>`*:* Unlock items of a certain type (not available in private)
+ • `/locks`*:* The current list of locks in this chat.
  
 Locks can be used to restrict a group's users.
 eg:
@@ -633,7 +632,7 @@ Locking urls will auto-delete all messages with urls, locking stickers will rest
 non-admin users from sending stickers, etc.
 Locking bots will stop non-admins from adding bots to the chat.
 
-Note:
+*Note:*
  • Unlocking permission *info* will allow members (non-admins) to change the group information, such as the description or the group name
  • Unlocking permission *pin* will allow members (non-admins) to pinned a message in a group
 """

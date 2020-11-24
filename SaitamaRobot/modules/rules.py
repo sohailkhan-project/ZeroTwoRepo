@@ -28,7 +28,7 @@ def send_rules(update, chat_id, from_pm=False):
             bot.send_message(
                 user.id,
                 "The rules shortcut for this chat hasn't been set properly! Ask admins to "
-                "fix this.")
+                "fix this.\nMaybe they forgot the hyphen in ID")
             return
         else:
             raise
@@ -49,7 +49,7 @@ def send_rules(update, chat_id, from_pm=False):
             "This probably doesn't mean it's lawless though...!")
     elif rules:
         update.effective_message.reply_text(
-            "Contact me in PM to get this group's rules.",
+            "Please click the button below to see the rules.",
             reply_markup=InlineKeyboardMarkup([[
                 InlineKeyboardButton(
                     text="Rules", url=f"t.me/{bot.username}?start={chat_id}")
@@ -89,7 +89,7 @@ def clear_rules(update: Update, context: CallbackContext):
 
 
 def __stats__():
-    return f"{sql.num_chats()} chats have rules set."
+    return f"• {sql.num_chats()} chats have rules set."
 
 
 def __import_data__(chat_id, data):

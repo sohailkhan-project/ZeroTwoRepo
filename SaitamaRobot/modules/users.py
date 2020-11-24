@@ -53,10 +53,11 @@ def broadcast(update: Update, context: CallbackContext):
     to_send = update.effective_message.text.split(None, 1)
 
     if len(to_send) >= 2:
-        to_group = to_user = False
-        if to_send[0] == '/broadcastgroup':
+        to_group = False
+        to_user = False
+        if to_send[0] == '/broadcastgroups':
             to_group = True
-        if to_send[0] == '/broadcastuser':
+        if to_send[0] == '/broadcastusers':
             to_user = True
         else:
             to_group = to_user = True
@@ -67,25 +68,27 @@ def broadcast(update: Update, context: CallbackContext):
         if to_group:
             for chat in chats:
                 try:
-                    context.bot.sendMessage(int(chat.chat_id), to_send[1])
+                    context.bot.sendMessage(
+                        int(chat.chat_id),
+                        to_send[1],
+                        parse_mode="MARKDOWN",
+                        disable_web_page_preview=True)
                     sleep(0.1)
                 except TelegramError:
                     failed += 1
-                    LOGGER.warning(
-                        "Couldn't send broadcast to %s, group name %s",
-                        str(chat.chat_id), str(chat.chat_name))
         if to_user:
             for user in users:
                 try:
-                    context.bot.sendMessage(int(user.user_id), to_send[1])
+                    context.bot.sendMessage(
+                        int(user.user_id),
+                        to_send[1],
+                        parse_mode="MARKDOWN",
+                        disable_web_page_preview=True)
                     sleep(0.1)
                 except TelegramError:
                     failed_user += 1
-                    LOGGER.warning("Couldn't send broadcast to %s",
-                                   str(user.user_id))
-
         update.effective_message.reply_text(
-            f"Broadcast complete. {failed} groups failed to receive the message, probably due to being kicked. {failed_user} failed to receive message, probably due to being blocked"
+            f"Broadcast complete.\nGroups failed: {failed}.\nUsers failed: {failed_user}."
         )
 
 
@@ -114,9 +117,9 @@ def chats(update: Update, context: CallbackContext):
     P = 1
     for chat in all_chats:
         try:
-            curr_chat = bot.getChat(chat.chat_id)
-            bot_member = curr_chat.get_member(bot.id)
-            chat_members = curr_chat.get_members_count(bot.id)
+            curr_chat = context.bot.getChat(chat.chat_id)
+            bot_member = curr_chat.get_member(context.bot.id)
+            chat_members = curr_chat.get_members_count(context.bot.id)
             chatfile += "{}. {} | {} | {}\n".format(P, chat.chat_name,
                                                     chat.chat_id, chat_members)
             P = P + 1
@@ -124,11 +127,11 @@ def chats(update: Update, context: CallbackContext):
             pass
 
     with BytesIO(str.encode(chatfile)) as output:
-        output.name = "chatlist.txt"
+        output.name = "groups_list.txt"
         update.effective_message.reply_document(
             document=output,
-            filename="chatlist.txt",
-            caption="Here is the list of chats in my database.")
+            filename="groups_list.txt",
+            caption="Here be the list of groups in my database.")
 
 
 @run_async
@@ -140,14 +143,16 @@ def chat_checker(update: Update, context: CallbackContext):
 
 
 def __user_info__(user_id):
+    if user_id in [777000, 1087968824]:
+        return """╘══「 Groups count: <code>???</code> 」"""
     if user_id == dispatcher.bot.id:
-        return """I've seen them in... Wow. Are they stalking me? They're in all the same places I am... oh. It's me."""
+        return """╘══「 Groups count: <code>???</code> 」"""
     num_chats = sql.get_user_num_chats(user_id)
-    return f"""I've seen them in <code>{num_chats}</code> chats in total."""
+    return f"""╘══「 Groups count: <code>{num_chats}</code> 」"""
 
 
 def __stats__():
-    return f"{sql.num_users()} users, across {sql.num_chats()} chats"
+    return f"• {sql.num_users()} users, across {sql.num_chats()} chats"
 
 
 def __migrate__(old_chat_id, new_chat_id):
@@ -157,10 +162,10 @@ def __migrate__(old_chat_id, new_chat_id):
 __help__ = ""  # no help string
 
 BROADCAST_HANDLER = CommandHandler(
-    ["broadcastall", "broadcastuser", "broadcastgroup"], broadcast)
+    ["broadcastall", "broadcastusers", "broadcastgroups"], broadcast)
 USER_HANDLER = MessageHandler(Filters.all & Filters.group, log_user)
 CHAT_CHECKER_HANDLER = MessageHandler(Filters.all & Filters.group, chat_checker)
-CHATLIST_HANDLER = CommandHandler("chatlist", chats)
+CHATLIST_HANDLER = CommandHandler("groups", chats)
 
 dispatcher.add_handler(USER_HANDLER, USERS_GROUP)
 dispatcher.add_handler(BROADCAST_HANDLER)

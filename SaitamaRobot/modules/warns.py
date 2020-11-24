@@ -3,7 +3,7 @@ import re
 from typing import Optional
 
 import telegram
-from SaitamaRobot import BAN_STICKER, TIGER_USERS, WHITELIST_USERS, dispatcher
+from SaitamaRobot import TIGERS, WOLVES, dispatcher
 from SaitamaRobot.modules.disable import DisableAbleCommandHandler
 from SaitamaRobot.modules.helper_funcs.chat_status import (bot_admin,
                                                            can_restrict,
@@ -40,7 +40,7 @@ def warn(user: User,
         # message.reply_text("Damn admins, They are too far to be One Punched!")
         return
 
-    if user.id in TIGER_USERS:
+    if user.id in TIGERS:
         if warner:
             message.reply_text("Tigers cant be warned.")
         else:
@@ -49,7 +49,7 @@ def warn(user: User,
             )
         return
 
-    if user.id in WHITELIST_USERS:
+    if user.id in WOLVES:
         if warner:
             message.reply_text("Wolf disasters are warn immune.")
         else:
@@ -69,17 +69,23 @@ def warn(user: User,
         sql.reset_warns(user.id, chat.id)
         if soft_warn:  # punch
             chat.unban_member(user.id)
-            reply = f"{limit} warnings, *Punches {mention_html(user.id, user.first_name)} with a normal punch!* "
+            reply = (
+                f"<code>❕</code><b>Punch Event</b>\n"
+                f"<code> </code><b>•  User:</b> {mention_html(user.id, user.first_name)}\n"
+                f"<code> </code><b>•  Count:</b> {limit}")
 
         else:  # ban
             chat.kick_member(user.id)
-            reply = f"{limit} warnings, *Punches {mention_html(user.id, user.first_name)} with a Serious Punch* "
+            reply = (
+                f"<code>❕</code><b>Ban Event</b>\n"
+                f"<code> </code><b>•  User:</b> {mention_html(user.id, user.first_name)}\n"
+                f"<code> </code><b>•  Count:</b> {limit}")
 
         for warn_reason in reasons:
             reply += f"\n - {html.escape(warn_reason)}"
 
-        message.bot.send_sticker(chat.id, BAN_STICKER)  # Saitama's sticker
-        keyboard = []
+        # message.bot.send_sticker(chat.id, BAN_STICKER)  # Saitama's sticker
+        keyboard = None
         log_reason = (f"<b>{html.escape(chat.title)}:</b>\n"
                       f"#WARN_BAN\n"
                       f"<b>Admin:</b> {warner_tag}\n"
@@ -88,14 +94,17 @@ def warn(user: User,
                       f"<b>Counts:</b> <code>{num_warns}/{limit}</code>")
 
     else:
-        keyboard = InlineKeyboardMarkup([{
+        keyboard = InlineKeyboardMarkup([[
             InlineKeyboardButton(
-                "Remove warn", callback_data="rm_warn({})".format(user.id))
-        }])
+                "🔘 Remove warn", callback_data="rm_warn({})".format(user.id))
+        ]])
 
-        reply = f"{mention_html(user.id, user.first_name)} has {num_warns}/{limit} warnings... watch out!"
+        reply = (
+            f"<code>❕</code><b>Warn Event</b>\n"
+            f"<code> </code><b>•  User:</b> {mention_html(user.id, user.first_name)}\n"
+            f"<code> </code><b>•  Count:</b> {num_warns}/{limit}")
         if reason:
-            reply += f"\nReason for last warn:\n{html.escape(reason)}"
+            reply += f"\n<code> </code><b>•  Reason:</b> {html.escape(reason)}"
 
         log_reason = (f"<b>{html.escape(chat.title)}:</b>\n"
                       f"#WARN\n"
@@ -215,7 +224,7 @@ def warns(update: Update, context: CallbackContext):
         if reasons:
             text = f"This user has {num_warns}/{limit} warns, for the following reasons:"
             for reason in reasons:
-                text += f"\n - {reason}"
+                text += f"\n • {reason}"
 
             msgs = split_message(text)
             for msg in msgs:
@@ -328,6 +337,13 @@ def list_warn_filters(update: Update, context: CallbackContext):
 def reply_filter(update: Update, context: CallbackContext) -> str:
     chat: Optional[Chat] = update.effective_chat
     message: Optional[Message] = update.effective_message
+    user: Optional[User] = update.effective_user
+
+    if not user:  #Ignore channel
+        return
+
+    if user.id == 777000:
+        return
 
     chat_warn_filters = sql.get_chat_warn_triggers(chat.id)
     to_match = extract_text(message)
@@ -419,8 +435,8 @@ def set_warn_strength(update: Update, context: CallbackContext):
 
 def __stats__():
     return (
-        f"{sql.num_warns()} overall warns, across {sql.num_warn_chats()} chats.\n"
-        f"{sql.num_warn_filters()} warn filters, across {sql.num_warn_filter_chats()} chats."
+        f"• {sql.num_warns()} overall warns, across {sql.num_warn_chats()} chats.\n"
+        f"• {sql.num_warn_filters()} warn filters, across {sql.num_warn_filter_chats()} chats."
     )
 
 

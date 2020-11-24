@@ -14,10 +14,13 @@ def totranslate(update: Update, context: CallbackContext):
         if "-" in key:
             problem_lang_code.append(key)
     try:
-        if msg.reply_to_message and msg.reply_to_message.text:
-
+        if msg.reply_to_message:
             args = update.effective_message.text.split(None, 1)
-            text = msg.reply_to_message.text
+            if msg.reply_to_message.text:
+                text = msg.reply_to_message.text
+            elif msg.reply_to_message.caption:
+                text = msg.reply_to_message.caption
+
             message = update.effective_message
             dest_lang = None
 
@@ -124,9 +127,10 @@ def totranslate(update: Update, context: CallbackContext):
 
 
 __help__ = """
-• `/tr` or `/tl` (language code) as reply to a long message.
-*Example:* `/tr en`*:* translates something to english. 
-         `/tr hi-en`*:* translates hindi to english.
+• `/tr` or `/tl` (language code) as reply to a long message
+*Example:* 
+  `/tr en`*:* translates something to english
+  `/tr hi-en`*:* translates hindi to english
 """
 
 TRANSLATE_HANDLER = DisableAbleCommandHandler(["tr", "tl"], totranslate)
