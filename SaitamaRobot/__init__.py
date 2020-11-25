@@ -28,7 +28,7 @@ if sys.version_info[0] < 3 or sys.version_info[1] < 6:
 ENV = bool(os.environ.get('ENV', False))
 
 if ENV:
-    API_KEY = os.environ.get('API_KEY', None)
+    TOKEN = os.environ.get('TOKEN', None)
 
     try:
         OWNER_ID = int(os.environ.get('OWNER_ID', None))
@@ -97,7 +97,7 @@ if ENV:
 
 else:
     from SaitamaRobot.config import Development as Config
-    API_KEY = Config.API_KEY
+    TOKEN = Config.TOKEN
 
     try:
         OWNER_ID = int(Config.OWNER_ID)
