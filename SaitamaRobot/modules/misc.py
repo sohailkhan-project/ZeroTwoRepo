@@ -169,11 +169,11 @@ def info(update: Update, context: CallbackContext):
         if mod_info:
             text += "\n\n" + mod_info
 
-    if user_id in [777000, 1087968824]:
+    if user.id in [777000, 1087968824]:
         text += "╘══「 Groups count: <code>???</code> 」"
-    if user_id == dispatcher.bot.id:
+    if user.id == dispatcher.bot.id:
         text += "╘══「 Groups count: <code>???</code> 」"
-    num_chats = sql.get_user_num_chats(user_id)
+    num_chats = sql.get_user_num_chats(user.id)
     text += f"""╘══「 Groups count: <code>{num_chats}</code> 」"""
 
 
