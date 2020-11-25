@@ -8,8 +8,8 @@ import json
 import urllib.request
 import urllib.parse
 
-from SaitamaRobot import (DEV_USERS, OWNER_ID, SUDO_USERS, SUPPORT_USERS,
-                          TIGER_USERS, WHITELIST_USERS, dispatcher)
+from SaitamaRobot import (DEV_USERS, OWNER_ID, DRAGONS, DEMON,
+                          TIGERS, WOLVES, dispatcher)
 from SaitamaRobot.__main__ import STATS, TOKEN, USER_INFO
 from SaitamaRobot.modules.disable import DisableAbleCommandHandler
 from SaitamaRobot.modules.helper_funcs.chat_status import sudo_plus, user_admin
@@ -142,16 +142,16 @@ def info(update: Update, context: CallbackContext):
     elif user.id in DEV_USERS:
         text += "\nThis member is one of 'Hero Association'."
         disaster_level_present = True
-    elif user.id in SUDO_USERS:
+    elif user.id in DRAGONS:
         text += "\nThe Disaster level of this person is 'Dragon'."
         disaster_level_present = True
-    elif user.id in SUPPORT_USERS:
+    elif user.id in DEMON:
         text += "\nThe Disaster level of this person is 'Demon'."
         disaster_level_present = True
-    elif user.id in TIGER_USERS:
+    elif user.id in TIGERS:
         text += "\nThe Disaster level of this person is 'Tiger'."
         disaster_level_present = True
-    elif user.id in WHITELIST_USERS:
+    elif user.id in WOLVES:
         text += "\nThe Disaster level of this person is 'Wolf'."
         disaster_level_present = True
 
