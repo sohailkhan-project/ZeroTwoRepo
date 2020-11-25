@@ -131,8 +131,9 @@ def echo(update: Update, context: CallbackContext):
     message.delete()
 
 @run_async
-def lyrics(bot: Bot, update: Update, args):
+def lyrics(update: Update, context: CallbackContext):
     msg = update.effective_message
+    args = context.args
     query = " ".join(args)
     song = ""
     if not query:
@@ -157,7 +158,7 @@ def lyrics(bot: Bot, update: Update, args):
             msg.reply_text(reply)
 
 @run_async
-def github(bot: Bot, update: Update):
+def github(update: Update, context: CallbackContext):
     message = update.effective_message
     text = message.text[len('/git '):]
     usr = get(f'https://api.github.com/users/{text}').json()
