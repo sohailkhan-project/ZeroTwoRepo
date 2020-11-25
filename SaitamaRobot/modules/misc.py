@@ -144,7 +144,7 @@ def info(update: Update, context: CallbackContext):
         text += "\nThis person is one of my sudo users! " \
                     "Nearly as powerful as my owner - so watch it.."
         
-    elif user.id in DEMON:
+    elif user.id in DEMONS:
         text += "\nThis person is one of my support users! " \
                         "Not quite a sudo user, but can still gban you off the map."
 
