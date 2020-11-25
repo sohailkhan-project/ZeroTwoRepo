@@ -10,7 +10,7 @@ from telegram.ext import run_async, CallbackContext, CommandHandler, MessageHand
 from telegram.utils.helpers import mention_html
 
 import SaitamaRobot.modules.sql.global_bans_sql as sql
-from SaitamaRobot import dispatcher, OWNER_ID, GBAN_LOGS, SUPPORT_CHAT, DEV_USERS, DRAGONS, TIGERS, WOLVES, DEMONS, STRICT_GBAN
+from SaitamaRobot import dispatcher, OWNER_ID, EVENT_LOGS, SUPPORT_CHAT, DEV_USERS, DRAGONS, TIGERS, WOLVES, DEMONS, STRICT_GBAN
 from SaitamaRobot.modules.helper_funcs.chat_status import user_admin, is_user_admin
 from SaitamaRobot.modules.helper_funcs.extraction import extract_user, extract_user_and_text
 from SaitamaRobot.modules.helper_funcs.filters import CustomFilters
@@ -143,13 +143,13 @@ def gban(update: Update, context:CallbackContext):
         else:
             log_message += f"\n<b>Reason:</b> <code>{reason}</code>"
 
-    if GBAN_LOGS:
+    if EVENT_LOGS:
         try:
             log = bot.send_message(
-                GBAN_LOGS, log_message, parse_mode=ParseMode.HTML)
+                EVENT_LOGS, log_message, parse_mode=ParseMode.HTML)
         except BadRequest as excp:
             log = bot.send_message(
-                GBAN_LOGS, log_message +
+                EVENT_LOGS, log_message +
                 "\n\nFormatting has been disabled due to an unexpected error.")
 
     else:
@@ -172,9 +172,9 @@ def gban(update: Update, context:CallbackContext):
             gbanned_chats += 1
 
         except BadRequest as excp:
-            if GBAN_LOGS:
+            if EVENT_LOGS:
                     bot.send_message(
-                        GBAN_LOGS,
+                        EVENT_LOGS,
                         f"Could not gban due to {excp.message}",
                         parse_mode=ParseMode.HTML)
             else:
@@ -185,7 +185,7 @@ def gban(update: Update, context:CallbackContext):
         except TelegramError:
             pass
 
-    if GBAN_LOGS:
+    if EVENT_LOGS:
         log.edit_text(
             log_message +
             f"\n<b>Chats affected:</b> <code>{gbanned_chats}</code>",
@@ -259,13 +259,13 @@ def ungban(update: Update, context:CallbackContext):
         f"<b>Unbanned User ID:</b> <code>{user_chat.id}</code>\n"
         f"<b>Event Stamp:</b> <code>{current_time}</code>")
 
-    if GBAN_LOGS:
+    if EVENT_LOGS:
         try:
             log = bot.send_message(
-                GBAN_LOGS, log_message, parse_mode=ParseMode.HTML)
+                EVENT_LOGS, log_message, parse_mode=ParseMode.HTML)
         except BadRequest as excp:
             log = bot.send_message(
-                GBAN_LOGS, log_message +
+                EVENT_LOGS, log_message +
                 "\n\nFormatting has been disabled due to an unexpected error.")
     else:
         send_to_list(bot, DRAGONS + DEMONS, log_message, html=True)
@@ -291,9 +291,9 @@ def ungban(update: Update, context:CallbackContext):
                 pass
             else:
                 message.reply_text(f"Could not un-gban due to: {excp.message}")
-                if GBAN_LOGS:
+                if EVENT_LOGS:
                     bot.send_message(
-                        GBAN_LOGS,
+                        EVENT_LOGS,
                         f"Could not un-gban due to: {excp.message}",
                         parse_mode=ParseMode.HTML)
                 else:
@@ -305,7 +305,7 @@ def ungban(update: Update, context:CallbackContext):
 
     sql.ungban_user(user_id)
 
-    if GBAN_LOGS:
+    if EVENT_LOGS:
         log.edit_text(
             log_message + f"\n<b>Chats affected:</b> {ungbanned_chats}",
             parse_mode=ParseMode.HTML)
