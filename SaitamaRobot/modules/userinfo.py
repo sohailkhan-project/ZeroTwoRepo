@@ -109,48 +109,6 @@ def make_bar(per):
     done = min(round(per / 10), 10)
     return "■" * done + "□" * (10 - done)
 
-
-@run_async
-def get_id(update: Update, context: CallbackContext):
-    bot, args = context.bot, context.args
-    message = update.effective_message
-    chat = update.effective_chat
-    msg = update.effective_message
-    user_id = extract_user(msg, args)
-
-    if user_id:
-
-        if msg.reply_to_message and msg.reply_to_message.forward_from:
-
-            user1 = message.reply_to_message.from_user
-            user2 = message.reply_to_message.forward_from
-
-            msg.reply_text(
-                f"<b>Telegram ID:</b>,"
-                f"• {html.escape(user2.first_name)} - <code>{user2.id}</code>.\n"
-                f"• {html.escape(user1.first_name)} - <code>{user1.id}</code>.",
-                parse_mode=ParseMode.HTML)
-
-        else:
-
-            user = bot.get_chat(user_id)
-            msg.reply_text(
-                f"{html.escape(user.first_name)}'s id is <code>{user.id}</code>.",
-                parse_mode=ParseMode.HTML)
-
-    else:
-
-        if chat.type == "private":
-            msg.reply_text(
-                f"Your id is <code>{chat.id}</code>.",
-                parse_mode=ParseMode.HTML)
-
-        else:
-            msg.reply_text(
-                f"This group's id is <code>{chat.id}</code>.",
-                parse_mode=ParseMode.HTML)
-
-
 @SaitamaTelethonClient.on(
     events.NewMessage(
         pattern='/ginfo ',
@@ -185,19 +143,6 @@ async def group_info(event) -> None:
         msg += f"\n• [{x.id}](tg://user?id={x.id})"
     msg += f"\n\n**Description**:\n`{ch_full.full_chat.about}`"
     await event.reply(msg)
-
-
-@run_async
-def gifid(update: Update, context: CallbackContext):
-    msg = update.effective_message
-    if msg.reply_to_message and msg.reply_to_message.animation:
-        update.effective_message.reply_text(
-            f"Gif ID:\n<code>{msg.reply_to_message.animation.file_id}</code>",
-            parse_mode=ParseMode.HTML)
-    else:
-        update.effective_message.reply_text(
-            "Please reply to a gif to get its ID.")
-
 
 @run_async
 def info(update: Update, context: CallbackContext):
@@ -521,8 +466,6 @@ SET_ABOUT_HANDLER = DisableAbleCommandHandler("setme", set_about_me)
 GET_ABOUT_HANDLER = DisableAbleCommandHandler("me", about_me)
 
 dispatcher.add_handler(STATS_HANDLER)
-dispatcher.add_handler(ID_HANDLER)
-dispatcher.add_handler(GIFID_HANDLER)
 dispatcher.add_handler(INFO_HANDLER)
 dispatcher.add_handler(SET_BIO_HANDLER)
 dispatcher.add_handler(GET_BIO_HANDLER)
