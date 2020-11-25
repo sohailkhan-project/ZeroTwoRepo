@@ -2,7 +2,6 @@ import html
 import re
 import os
 import requests
-import subprocess
 
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.types import ChannelParticipantsAdmins
@@ -16,6 +15,7 @@ from telegram.utils.helpers import escape_markdown, mention_html
 
 from SaitamaRobot import (DEV_USERS, OWNER_ID, DRAGONS, DEMONS,
                           INFOPIC, dispatcher, sw)
+import SaitamaRobot.modules.sql.users_sql as usql
 from SaitamaRobot.__main__ import STATS, TOKEN, USER_INFO
 import SaitamaRobot.modules.sql.userinfo_sql as sql
 from SaitamaRobot.modules.disable import DisableAbleCommandHandler
@@ -303,11 +303,13 @@ def info(update: Update, context: CallbackContext):
         if mod_info:
             text += "\n\n" + mod_info
 
+    text +="\n\n"
+
     if user.id in [777000, 1087968824]:
         text += "╘══「 Groups count: <code>???</code> 」"
     if user.id == dispatcher.bot.id:
         text += "╘══「 Groups count: <code>???</code> 」"
-    num_chats = sql.get_user_num_chats(user.id)
+    num_chats = usql.get_user_num_chats(user.id)
     text += f"""╘══「 Groups count: <code>{num_chats}</code> 」"""
 
     if INFOPIC:

@@ -4,10 +4,10 @@ import re
 import requests
 import random
 
+from tswift import Song
 import json
 import urllib.request
 import urllib.parse
-import SaitamaRobot.modules.sql.users_sql as sql
 from SaitamaRobot import (DEV_USERS, OWNER_ID, DRAGONS, DEMONS,
                           TIGERS, WOLVES, dispatcher)
 from SaitamaRobot.__main__ import STATS, TOKEN, USER_INFO
@@ -42,7 +42,6 @@ This will create two buttons on a single line, instead of one button per line.
 
 Keep in mind that your message <b>MUST</b> contain some text other than just a button!
 """
-
 
 @run_async
 def get_id(update: Update, context: CallbackContext):
@@ -131,6 +130,58 @@ def echo(update: Update, context: CallbackContext):
 
     message.delete()
 
+@run_async
+def lyrics(bot: Bot, update: Update, args):
+    msg = update.effective_message
+    query = " ".join(args)
+    song = ""
+    if not query:
+        msg.reply_text("You haven't specified which song to look for!")
+        return
+    else:
+        song = Song.find_song(query)
+        if song:
+            if song.lyrics:
+                reply = song.format()
+            else:
+                reply = "Couldn't find any lyrics for that song!"
+        else:
+            reply = "Song not found!"
+        if len(reply) > 4090:
+            with open("lyrics.txt", 'w') as f:
+                f.write(f"{reply}\n\n\nOwO UwU OmO")
+            with open("lyrics.txt", 'rb') as f:
+                msg.reply_document(document=f,
+                caption="Message length exceeded max limit! Sending as a text file.")
+        else:
+            msg.reply_text(reply)
+
+@run_async
+def github(bot: Bot, update: Update):
+    message = update.effective_message
+    text = message.text[len('/git '):]
+    usr = get(f'https://api.github.com/users/{text}').json()
+    if usr.get('login'):
+        reply_text = f"""*Name:* `{usr['name']}`
+*Username:* `{usr['login']}`
+*Account ID:* `{usr['id']}`
+*Account type:* `{usr['type']}`
+*Location:* `{usr['location']}`
+*Bio:* `{usr['bio']}`
+*Followers:* `{usr['followers']}`
+*Following:* `{usr['following']}`
+*Hireable:* `{usr['hireable']}`
+*Public Repos:* `{usr['public_repos']}`
+*Public Gists:* `{usr['public_gists']}`
+*Email:* `{usr['email']}`
+*Company:* `{usr['company']}`
+*Website:* `{usr['blog']}`
+*Last updated:* `{usr['updated_at']}`
+*Account created at:* `{usr['created_at']}`
+"""
+    else:
+        reply_text = "User not found. Make sure you entered valid username!"
+    message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN)
 
 @run_async
 def markdown_help(update: Update, context: CallbackContext):
@@ -155,6 +206,8 @@ def stats(update: Update, context: CallbackContext):
 __help__ = """
  • `/id`*:* get the current group id. If used by replying to a message, gets that user's id.
  • `/gifid`*:* reply to a gif to me to tell you its file ID.
+ • `/git:{GitHub username}`*:* Returns info about a GitHub user or organization.
+ • `/lyrics <song>`*:* returns the lyrics of that song.
  • `/markdownhelp`*:* quick summary of how markdown works in telegram - can only be called in private chats.
 """
 
@@ -166,7 +219,11 @@ ECHO_HANDLER = DisableAbleCommandHandler("echo", echo, filters=Filters.group)
 MD_HELP_HANDLER = CommandHandler(
     "markdownhelp", markdown_help, filters=Filters.private)
 STATS_HANDLER = CommandHandler("stats", stats)
+LYRICS_HANDLER = DisableAbleCommandHandler("lyrics", lyrics, pass_args=True)
+GITHUB_HANDLER = DisableAbleCommandHandler("git", github)
 
+dispatcher.add_handler(GITHUB_HANDLER)
+dispatcher.add_handler(LYRICS_HANDLER)
 dispatcher.add_handler(ID_HANDLER)
 dispatcher.add_handler(GIFID_HANDLER)
 dispatcher.add_handler(PAT_HANDLER)
