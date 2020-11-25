@@ -134,30 +134,19 @@ def info(update: Update, context: CallbackContext):
 
     text += f"\nPermanent user link: {mention_html(user.id, 'link')}"
 
-    disaster_level_present = False
-
     if user.id == OWNER_ID:
-        text += "\nThe Disaster level of this person is 'God'."
-        disaster_level_present = True
+        text += "\nThis person is my owner - I would never do anything against them!."
+        
     elif user.id in DEV_USERS:
-        text += "\nThis member is one of 'Hero Association'."
-        disaster_level_present = True
+        text += "\nThis person is my dev - I would never do anything against them!."
+        
     elif user.id in DRAGONS:
-        text += "\nThe Disaster level of this person is 'Dragon'."
-        disaster_level_present = True
+        text += "\nThis person is one of my sudo users! " \
+                    "Nearly as powerful as my owner - so watch it.."
+        
     elif user.id in DEMON:
-        text += "\nThe Disaster level of this person is 'Demon'."
-        disaster_level_present = True
-    elif user.id in TIGERS:
-        text += "\nThe Disaster level of this person is 'Tiger'."
-        disaster_level_present = True
-    elif user.id in WOLVES:
-        text += "\nThe Disaster level of this person is 'Wolf'."
-        disaster_level_present = True
-
-    if disaster_level_present:
-        text += ' [<a href="https://t.me/{}?start=disasters">?</a>]'.format(
-            bot.username)
+        text += "\nThis person is one of my support users! " \
+                        "Not quite a sudo user, but can still gban you off the map."
 
     try:
         user_member = chat.get_member(user.id)
@@ -179,6 +168,14 @@ def info(update: Update, context: CallbackContext):
             mod_info = mod.__user_info__(user.id, chat.id).strip()
         if mod_info:
             text += "\n\n" + mod_info
+
+    if user_id in [777000, 1087968824]:
+        text += "╘══「 Groups count: <code>???</code> 」"
+    if user_id == dispatcher.bot.id:
+        text += "╘══「 Groups count: <code>???</code> 」"
+    num_chats = sql.get_user_num_chats(user_id)
+    text += f"""╘══「 Groups count: <code>{num_chats}</code> 」"""
+
 
     update.effective_message.reply_text(
         text, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
