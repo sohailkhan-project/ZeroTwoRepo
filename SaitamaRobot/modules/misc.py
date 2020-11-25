@@ -7,7 +7,7 @@ import random
 import json
 import urllib.request
 import urllib.parse
-
+import SaitamaRobot.modules.sql.users_sql as sql
 from SaitamaRobot import (DEV_USERS, OWNER_ID, DRAGONS, DEMONS,
                           TIGERS, WOLVES, dispatcher)
 from SaitamaRobot.__main__ import STATS, TOKEN, USER_INFO
