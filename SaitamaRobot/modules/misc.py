@@ -8,7 +8,7 @@ import json
 import urllib.request
 import urllib.parse
 
-from SaitamaRobot import (DEV_USERS, OWNER_ID, DRAGONS, DEMON,
+from SaitamaRobot import (DEV_USERS, OWNER_ID, DRAGONS, DEMONS,
                           TIGERS, WOLVES, dispatcher)
 from SaitamaRobot.__main__ import STATS, TOKEN, USER_INFO
 from SaitamaRobot.modules.disable import DisableAbleCommandHandler
