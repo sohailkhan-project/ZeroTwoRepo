@@ -14,7 +14,7 @@ from telegram.ext.dispatcher import run_async
 from telegram.error import BadRequest
 from telegram.utils.helpers import escape_markdown, mention_html
 
-from SaitamaRobot import (DEV_USERS, OWNER_ID, DRAGONS, DEMONS, TIGERS, WOLVES,
+from SaitamaRobot import (DEV_USERS, OWNER_ID, DRAGONS, DEMONS,
                           INFOPIC, dispatcher, sw)
 from SaitamaRobot.__main__ import STATS, TOKEN, USER_INFO
 import SaitamaRobot.modules.sql.userinfo_sql as sql
@@ -268,30 +268,19 @@ def info(update: Update, context: CallbackContext):
     except:
         pass  # don't crash if api is down somehow...
 
-    disaster_level_present = False
-
     if user.id == OWNER_ID:
-        text += "\n\nThe Disaster level of this person is 'God'."
-        disaster_level_present = True
-    elif user.id in DEV_USERS:
-        text += "\n\nThis user is member of 'Hero Association'."
-        disaster_level_present = True
-    elif user.id in DRAGONS:
-        text += "\n\nThe Disaster level of this person is 'Dragon'."
-        disaster_level_present = True
-    elif user.id in DEMONS:
-        text += "\n\nThe Disaster level of this person is 'Demon'."
-        disaster_level_present = True
-    elif user.id in TIGERS:
-        text += "\n\nThe Disaster level of this person is 'Tiger'."
-        disaster_level_present = True
-    elif user.id in WOLVES:
-        text += "\n\nThe Disaster level of this person is 'Wolf'."
-        disaster_level_present = True
+        text += "\nThis person is my owner - I would never do anything against them!."
 
-    if disaster_level_present:
-        text += ' [<a href="https://t.me/OnePunchUpdates/155">?</a>]'.format(
-            bot.username)
+    elif user.id in DEV_USERS:
+        text += "\nThis person is my dev - I would never do anything against them!."
+
+    elif user.id in DRAGONS:
+        text += "\nThis person is one of my sudo users! " \
+                    "Nearly as powerful as my owner - so watch it.."
+
+    elif user.id in DEMONS:
+        text += "\nThis person is one of my support users! " \
+                        "Not quite a sudo user, but can still gban you off the map."
 
     try:
         user_member = chat.get_member(user.id)
@@ -313,6 +302,13 @@ def info(update: Update, context: CallbackContext):
             mod_info = mod.__user_info__(user.id, chat.id).strip()
         if mod_info:
             text += "\n\n" + mod_info
+
+    if user.id in [777000, 1087968824]:
+        text += "╘══「 Groups count: <code>???</code> 」"
+    if user.id == dispatcher.bot.id:
+        text += "╘══「 Groups count: <code>???</code> 」"
+    num_chats = sql.get_user_num_chats(user.id)
+    text += f"""╘══「 Groups count: <code>{num_chats}</code> 」"""
 
     if INFOPIC:
         try:
@@ -401,10 +397,7 @@ def set_about_me(update: Update, context: CallbackContext):
 @run_async
 @sudo_plus
 def stats(update: Update, context: CallbackContext):
-    process = subprocess.Popen(
-        "neofetch --stdout", shell=True, text=True, stdout=subprocess.PIPE)
-    output = process.communicate()[0]
-    stats = "<b>Current stats:</b>\n" + "\n" + output + "\n".join(
+    stats = "<b>Current stats:</b>\n" + "\n".join(
         [mod.__stats__() for mod in STATS])
     result = re.sub(r'(\d+)', r'<code>\1</code>', stats)
     update.effective_message.reply_text(result, parse_mode=ParseMode.HTML)
@@ -460,7 +453,7 @@ def set_about_bio(update: Update, context: CallbackContext):
 
         if user_id == bot.id and sender_id not in DEV_USERS:
             message.reply_text(
-                "Erm... yeah, I only trust Heroes Association to set my bio.")
+                "Erm... yeah, I only trust Owner and Developers to set my bio.")
             return
 
         text = message.text
@@ -513,18 +506,13 @@ Examples:
  `/setbio This user is a wolf` (reply to the user)
 
 *Overall Information about you:*
- • `/info`*:* get information about a user. 
- 
-*What is that health thingy?*
- Come and see [HP System explained](https://t.me/OnePunchUpdates/192)
+ • `/info`*:* get information about a user.
 """
 
 SET_BIO_HANDLER = DisableAbleCommandHandler("setbio", set_about_bio)
 GET_BIO_HANDLER = DisableAbleCommandHandler("bio", about_bio)
 
 STATS_HANDLER = CommandHandler("stats", stats)
-ID_HANDLER = DisableAbleCommandHandler("id", get_id)
-GIFID_HANDLER = DisableAbleCommandHandler("gifid", gifid)
 INFO_HANDLER = DisableAbleCommandHandler(("info", "book"), info)
 
 SET_ABOUT_HANDLER = DisableAbleCommandHandler("setme", set_about_me)
@@ -541,7 +529,6 @@ dispatcher.add_handler(GET_ABOUT_HANDLER)
 
 __mod_name__ = "Info"
 __command_list__ = ["setbio", "bio", "setme", "me", "info"]
-__handlers__ = [
-    ID_HANDLER, GIFID_HANDLER, INFO_HANDLER, SET_BIO_HANDLER, GET_BIO_HANDLER,
+__handlers__ = [INFO_HANDLER, SET_BIO_HANDLER, GET_BIO_HANDLER,
     SET_ABOUT_HANDLER, GET_ABOUT_HANDLER, STATS_HANDLER
 ]
