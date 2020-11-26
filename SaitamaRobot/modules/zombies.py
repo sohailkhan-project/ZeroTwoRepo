@@ -1,4 +1,4 @@
-from SaitamaRobot import telethn
+"""from SaitamaRobot import telethn
 import time
 from telethon import events
 
@@ -55,3 +55,4 @@ async def zombie_clean(message):
                 f"{del_stats} you can clean them using `/zombies clean`", del_in=5)
         else:
             await message.edit(f"{del_stats}", del_in=5)
+"""
