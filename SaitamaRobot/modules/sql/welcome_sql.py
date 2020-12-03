@@ -219,7 +219,7 @@ DEFAULT_GOODBYE_MESSAGES = [
 
 
 class Welcome(BASE):
-    __tablename__ = "welcome_pref"
+    __tablename__ = "welcome_pref1"
     chat_id = Column(String(14), primary_key=True)
     should_welcome = Column(Boolean, default=True)
     should_goodbye = Column(Boolean, default=True)
@@ -246,7 +246,7 @@ class Welcome(BASE):
 
 
 class WelcomeButtons(BASE):
-    __tablename__ = "welcome_urls"
+    __tablename__ = "welcome_urls1"
     id = Column(Integer, primary_key=True, autoincrement=True)
     chat_id = Column(String(14), primary_key=True)
     name = Column(UnicodeText, nullable=False)
@@ -261,7 +261,7 @@ class WelcomeButtons(BASE):
 
 
 class GoodbyeButtons(BASE):
-    __tablename__ = "leave_urls"
+    __tablename__ = "leave_urls1"
     id = Column(Integer, primary_key=True, autoincrement=True)
     chat_id = Column(String(14), primary_key=True)
     name = Column(UnicodeText, nullable=False)
@@ -276,7 +276,7 @@ class GoodbyeButtons(BASE):
 
 
 class WelcomeMute(BASE):
-    __tablename__ = "welcome_mutes"
+    __tablename__ = "welcome_mutes1"
     chat_id = Column(String(14), primary_key=True)
     welcomemutes = Column(UnicodeText, default=False)
 
@@ -286,7 +286,7 @@ class WelcomeMute(BASE):
 
 
 class WelcomeMuteUsers(BASE):
-    __tablename__ = "human_checks"
+    __tablename__ = "human_checks1"
     user_id = Column(Integer, primary_key=True)
     chat_id = Column(String(14), primary_key=True)
     human_check = Column(Boolean)
@@ -298,7 +298,7 @@ class WelcomeMuteUsers(BASE):
 
 
 class CleanServiceSetting(BASE):
-    __tablename__ = "clean_service"
+    __tablename__ = "clean_service1"
     chat_id = Column(String(14), primary_key=True)
     clean_service = Column(Boolean, default=True)
 
