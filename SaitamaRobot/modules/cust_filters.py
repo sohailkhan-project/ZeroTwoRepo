@@ -306,6 +306,25 @@ def reply_filter(update, context):
                             text = filt.reply_text
                     else:
                         text = filt.reply_text
+                    if text.startswith('~!') and text.endswith('!~'):
+                        sticker_id = text.replace('~!', '').replace('!~', '')
+                        try:
+                            context.bot.send_sticker(
+                                chat.id,
+                                sticker_id,
+                                reply_to_message_id=message.message_id)
+                            return
+                        except BadRequest as excp:
+                            if excp.message == 'Wrong remote file identifier specified: wrong padding in the string':
+                                context.bot.send_message(
+                                    chat.id,
+                                    "Message couldn't be sent, Is the sticker id valid?"
+                                )
+                                return
+                            else:
+                                LOGGER.exception("Error in filters: " +
+                                                 excp.message)
+                                return
                     valid_format = escape_invalid_curly_brackets(
                         text, VALID_WELCOME_FORMATTERS)
                     if valid_format:
@@ -374,15 +393,21 @@ def reply_filter(update, context):
                                                  excp.message)
                                 pass
                 else:
-                    ENUM_FUNC_MAP[filt.file_type](
-                        chat.id,
-                        filt.file_id,
-                        caption=markdown_to_html(filtext),
-                        reply_to_message_id=message.message_id,
-                        parse_mode=ParseMode.HTML,
-                        disable_web_page_preview=True,
-                        reply_markup=keyboard,
-                    )
+                    try:
+                        ENUM_FUNC_MAP[filt.file_type](
+                            chat.id,
+                            filt.file_id,
+                            caption=markdown_to_html(filtext),
+                            reply_to_message_id=message.message_id,
+                            parse_mode=ParseMode.HTML,
+                            disable_web_page_preview=True,
+                            reply_markup=keyboard,
+                        )
+                    except BadRequest:
+                        send_message(
+                            message,
+                            "I don't have the permission to send the content of the filter."
+                        )
                 break
             else:
                 if filt.is_sticker:
@@ -572,7 +597,6 @@ def __chat_settings__(chat_id, user_id):
 
 __help__ = """
  • `/filters`*:* List all active filters saved in the chat.
-
 *Admin only:*
  • `/filter <keyword> <reply message>`*:* Add a filter to this chat. The bot will now reply that message whenever 'keyword'\
 is mentioned. If you reply to a sticker with a keyword, the bot will reply with that sticker. NOTE: all filter \
@@ -587,13 +611,10 @@ doin?
  %%%
  Reply 3`
  • `/stop <filter keyword>`*:* Stop that filter.
-
 *Chat creator only:*
  • `/removeallfilters`*:* Remove all chat filters at once.
-
 *Note*: Filters also support markdown formatters like: {first}, {last} etc.. and buttons.
 Check `/markdownhelp` to know more!
-
 """
 
 __mod_name__ = "Filters"
