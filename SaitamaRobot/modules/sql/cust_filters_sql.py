@@ -7,7 +7,7 @@ from SaitamaRobot.modules.sql import BASE, SESSION
 
 
 class CustomFilters(BASE):
-    __tablename__ = "cust_filters1"
+    __tablename__ = "cust_filters2"
     chat_id = Column(String(14), primary_key=True)
     keyword = Column(UnicodeText, primary_key=True, nullable=False)
     reply = Column(UnicodeText, nullable=False)
