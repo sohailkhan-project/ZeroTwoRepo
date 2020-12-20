@@ -7,7 +7,7 @@ from SaitamaRobot.modules.sql import BASE, SESSION
 
 
 class CustomFilters(BASE):
-    __tablename__ = "cust_filters2"
+    __tablename__ = "cust_filters5"
     chat_id = Column(String(14), primary_key=True)
     keyword = Column(UnicodeText, primary_key=True, nullable=False)
     reply = Column(UnicodeText, nullable=False)
@@ -72,7 +72,7 @@ class CustomFilters(BASE):
 
 
 class NewCustomFilters(BASE):
-    __tablename__ = "cust_filters_new"
+    __tablename__ = "cust_filters_new5"
     chat_id = Column(String(14), primary_key=True)
     keyword = Column(UnicodeText, primary_key=True, nullable=False)
     text = Column(UnicodeText)
@@ -96,7 +96,7 @@ class NewCustomFilters(BASE):
 
 
 class Buttons(BASE):
-    __tablename__ = "cust_filter_urls"
+    __tablename__ = "cust_filter_urls5"
     id = Column(Integer, primary_key=True, autoincrement=True)
     chat_id = Column(String(14), primary_key=True)
     keyword = Column(UnicodeText, primary_key=True)
