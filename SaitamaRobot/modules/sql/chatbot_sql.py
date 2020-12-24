@@ -5,7 +5,7 @@ from sqlalchemy import Column, String
 
 
 class ChatbotChats(BASE):
-    __tablename__ = "chatbot_chats"
+    __tablename__ = "chatbot_chats1"
     chat_id = Column(String(14), primary_key=True)
     ses_id = Column(String(70))
     expires = Column(String(15))
