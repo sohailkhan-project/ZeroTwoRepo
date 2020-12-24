@@ -5,7 +5,7 @@ from threading import RLock
 from SaitamaRobot import (DEL_CMDS, DEV_USERS, DRAGONS, SUPPORT_CHAT, DEMONS,
                           TIGERS, WOLVES, dispatcher)
 
-from telegram import Chat, ChatMember, ParseMode, Update
+from telegram import User, Chat, ChatMember, ParseMode, Update
 from telegram.ext import CallbackContext
 
 # stores admemes in memory for 10 min.
