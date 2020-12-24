@@ -8,7 +8,7 @@ from SaitamaRobot.modules.sql import SESSION, BASE
 
 
 class ChatAccessConnectionSettings(BASE):
-    __tablename__ = "access_connection"
+    __tablename__ = "access_connection2"
     chat_id = Column(String(14), primary_key=True)
     allow_connect_to_chat = Column(Boolean, default=True)
 
@@ -22,7 +22,7 @@ class ChatAccessConnectionSettings(BASE):
 
 
 class Connection(BASE):
-    __tablename__ = "connection"
+    __tablename__ = "connection2"
     user_id = Column(Integer, primary_key=True)
     chat_id = Column(String(14))
 
@@ -32,7 +32,7 @@ class Connection(BASE):
 
 
 class ConnectionHistory(BASE):
-    __tablename__ = "connection_history"
+    __tablename__ = "connection_history2"
     user_id = Column(Integer, primary_key=True)
     chat_id = Column(String(14), primary_key=True)
     chat_name = Column(UnicodeText)
