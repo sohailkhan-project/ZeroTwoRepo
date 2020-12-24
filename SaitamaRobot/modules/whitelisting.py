@@ -1,4 +1,3 @@
-
 from SaitamaRobot.modules.disable import DisableAbleCommandHandler
 from SaitamaRobot import dispatcher, DRAGONS, telethn
 from SaitamaRobot.modules.helper_funcs.extraction import extract_user
@@ -170,4 +169,4 @@ dispatcher.add_handler(APPROVAL)
 
 __mod_name__ = "Approvals"
 __command_list__ = ["approve", "unapprove", "approved", "approval"]
-__handlers__ = [APPROVE, DISAPPROVE, ALL, APPROVAL]
+__handlers__ = [APPROVE, DISAPPROVE, APPROVAL]
