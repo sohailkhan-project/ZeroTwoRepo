@@ -311,6 +311,19 @@ def can_pin(func):
 
     return pin_rights
 
+def can_changeinfo(func):
+
+    @wraps(func)
+    def changeinfo_rights(update: Update, context: CallbackContext, *args, **kwargs):
+        bot = context.bot
+        chat = update.effective_chat
+
+        if chat.get_member(user.id).can_change_info:
+            return func(update, context, *args, **kwargs)
+        else:
+            pass
+
+    return changeinfo_rights
 
 def can_promote(func):
 

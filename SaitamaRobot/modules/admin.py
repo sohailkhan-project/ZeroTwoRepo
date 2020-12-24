@@ -3,14 +3,17 @@ import html
 from telegram import ParseMode, Update
 from telegram.error import BadRequest
 from telegram.ext import CallbackContext, CommandHandler, Filters, run_async
-from telegram.utils.helpers import mention_html, mention_markdown, escape_markdown
+from telegram.utils.helpers import mention_html
 
 from SaitamaRobot import DRAGONS, dispatcher
 from SaitamaRobot.modules.disable import DisableAbleCommandHandler
 from SaitamaRobot.modules.helper_funcs.chat_status import (bot_admin, can_pin,
                                                            can_promote,
                                                            connection_status,
-                                                           user_admin)
+                                                           user_admin,
+                                                           can_changeinfo,
+                                                           ADMIN_CACHE)
+
 from SaitamaRobot.modules.helper_funcs.extraction import (extract_user,
                                                           extract_user_and_text)
 from SaitamaRobot.modules.log_channel import loggable
@@ -170,6 +173,17 @@ def demote(update: Update, context: CallbackContext) -> str:
             "Could not demote. I might not be admin, or the admin status was appointed by another"
             " user, so I can't act upon them!")
         return
+
+
+@run_async
+@user_admin
+def refresh_admin(update, _):
+    try:
+        ADMIN_CACHE.pop(update.effective_chat.id)
+    except KeyError:
+        pass
+
+    update.effective_message.reply_text("Admins cache refreshed!")
 
 
 @run_async
@@ -346,15 +360,14 @@ def adminlist(update, context):
 
     try:
         msg = update.effective_message.reply_text(
-            'Fetching group admins...', parse_mode=ParseMode.MARKDOWN)
+            'Fetching group admins...', parse_mode=ParseMode.HTML)
     except BadRequest:
         msg = update.effective_message.reply_text(
-            'Fetching group admins...',
-            quote=False,
-            parse_mode=ParseMode.MARKDOWN)
+            'Fetching group admins...', quote=False, parse_mode=ParseMode.HTML)
 
     administrators = bot.getChatAdministrators(chat_id)
-    text = "Admins in *{}*:".format(update.effective_chat.title)
+    text = "Admins in <b>{}</b>:".format(
+        html.escape(update.effective_chat.title))
 
     bot_admin_list = []
 
@@ -367,8 +380,10 @@ def adminlist(update, context):
             name = "☠ Deleted Account"
         else:
             name = "{}".format(
-                mention_markdown(user.id, user.first_name + " " +
-                                 (user.last_name or "")))
+                mention_html(
+                    user.id,
+                    html.escape(user.first_name + " " +
+                                (user.last_name or ""))))
 
         if user.is_bot:
             bot_admin_list.append(name)
@@ -379,10 +394,10 @@ def adminlist(update, context):
         #    name = escape_markdown("@" + user.username)
         if status == "creator":
             text += "\n 👑 Creator:"
-            text += "\n` • `{}\n".format(name)
+            text += "\n<code> • </code>{}\n".format(name)
 
             if custom_title:
-                text += f"┗━ `{escape_markdown(custom_title)}`\n"
+                text += f"<code> ┗━ {html.escape(custom_title)}</code>\n"
 
     text += "\n🔱 Admins:"
 
@@ -398,8 +413,10 @@ def adminlist(update, context):
             name = "☠ Deleted Account"
         else:
             name = "{}".format(
-                mention_markdown(user.id, user.first_name + " " +
-                                 (user.last_name or "")))
+                mention_html(
+                    user.id,
+                    html.escape(user.first_name + " " +
+                                (user.last_name or ""))))
         #if user.username:
         #    name = escape_markdown("@" + user.username)
         if status == "administrator":
@@ -412,40 +429,192 @@ def adminlist(update, context):
                 normal_admin_list.append(name)
 
     for admin in normal_admin_list:
-        text += "\n` • `{}".format(admin)
+        text += "\n<code> • </code>{}".format(admin)
 
     for admin_group in custom_admin_list.copy():
         if len(custom_admin_list[admin_group]) == 1:
-            text += "\n` • `{} | `{}`".format(custom_admin_list[admin_group][0],
-                                              escape_markdown(admin_group))
+            text += "\n<code> • </code>{} | <code>{}</code>".format(
+                custom_admin_list[admin_group][0], html.escape(admin_group))
             custom_admin_list.pop(admin_group)
 
     text += "\n"
     for admin_group in custom_admin_list:
-        text += "\n🔘 `{}`".format(admin_group)
+        text += "\n🚨 <code>{}</code>".format(admin_group)
         for admin in custom_admin_list[admin_group]:
-            text += "\n` • `{}".format(admin)
+            text += "\n<code> • </code>{}".format(admin)
         text += "\n"
 
     text += "\n🤖 Bots:"
     for each_bot in bot_admin_list:
-        text += "\n` • `{}".format(each_bot)
+        text += "\n<code> • </code>{}".format(each_bot)
 
     try:
-        msg.edit_text(text, parse_mode=ParseMode.MARKDOWN)
+        msg.edit_text(text, parse_mode=ParseMode.HTML)
     except BadRequest:  # if original message is deleted
         return
+
+@run_async
+@bot_admin
+@user_admin
+@typing_action
+def setchatpic(update, context):
+    chat = update.effective_chat
+    msg = update.effective_message
+    user = update.effective_user
+
+    if can_changeinfo(chat, user, context.bot.id) is False:
+        msg.reply_text("You are missing right to change group info!")
+        return
+
+    if msg.reply_to_message:
+        if msg.reply_to_message.photo:
+            pic_id = msg.reply_to_message.photo[-1].file_id
+        elif msg.reply_to_message.document:
+            pic_id = msg.reply_to_message.document.file_id
+        else:
+            msg.reply_text("You can only set some photo as chat pic!")
+            return
+        dlmsg = msg.reply_text("Just a sec...")
+        tpic = context.bot.get_file(pic_id)
+        tpic.download("gpic.png")
+        try:
+            with open("gpic.png", "rb") as chatp:
+                context.bot.set_chat_photo(int(chat.id), photo=chatp)
+                msg.reply_text("Successfully set new chatpic!")
+        except BadRequest as excp:
+            msg.reply_text(f"Error! {excp.message}")
+        finally:
+            dlmsg.delete()
+            if os.path.isfile("gpic.png"):
+                os.remove("gpic.png")
+    else:
+        msg.reply_text("Reply to some photo or file to set new chat pic!")
+
+
+@run_async
+@bot_admin
+@user_admin
+@typing_action
+def rmchatpic(update, context):
+    chat = update.effective_chat
+    msg = update.effective_message
+    user = update.effective_user
+
+    if can_changeinfo(chat, user, context.bot.id) is False:
+        msg.reply_text("You don't have enough rights to delete group photo")
+        return
+    try:
+        context.bot.delete_chat_photo(int(chat.id))
+        msg.reply_text("Successfully deleted chat's profile photo!")
+    except BadRequest as excp:
+        msg.reply_text(f"Error! {excp.message}.")
+        return
+
+
+@run_async
+@bot_admin
+@user_admin
+@typing_action
+def setchat_title(update, context):
+    chat = update.effective_chat
+    msg = update.effective_message
+    user = update.effective_user
+    args = context.args
+
+    if can_changeinfo(chat, user, context.bot.id) is False:
+        msg.reply_text("You don't have enough rights to change chat info!")
+        return
+
+    title = " ".join(args)
+    if not title:
+        msg.reply_text("Enter some text to set new title in your chat!")
+        return
+
+    try:
+        context.bot.set_chat_title(int(chat.id), str(title))
+        msg.reply_text(
+            f"Successfully set <b>{title}</b> as new chat title!",
+            parse_mode=ParseMode.HTML,
+        )
+    except BadRequest as excp:
+        msg.reply_text(f"Error! {excp.message}.")
+        return
+
+
+@run_async
+@bot_admin
+@user_admin
+@typing_action
+def set_sticker(update, context):
+    msg = update.effective_message
+    chat = update.effective_chat
+    user = update.effective_user
+
+    if can_changeinfo(chat, user, context.bot.id) is False:
+        return msg.reply_text("You're missing rights to change chat info!")
+
+    if msg.reply_to_message:
+        if not msg.reply_to_message.sticker:
+            return msg.reply_text(
+                "You need to reply to some sticker to set chat sticker set!"
+            )
+        stkr = msg.reply_to_message.sticker.set_name
+        try:
+            context.bot.set_chat_sticker_set(chat.id, stkr)
+            msg.reply_text(f"Successfully set new group stickers in {chat.title}!")
+        except BadRequest as excp:
+            if excp.message == "Participants_too_few":
+                return msg.reply_text(
+                    "Sorry, due to telegram restrictions chat needs to have minimum 100 members before they can have group stickers!"
+                )
+            msg.reply_text(f"Error! {excp.message}.")
+    else:
+        msg.reply_text("You need to reply to some sticker to set chat sticker set!")
+
+
+@run_async
+@bot_admin
+@user_admin
+@typing_action
+def set_desc(update, context):
+    msg = update.effective_message
+    chat = update.effective_chat
+    user = update.effective_user
+
+    if can_changeinfo(chat, user, context.bot.id) is False:
+        return msg.reply_text("You're missing rights to change chat info!")
+
+    tesc = msg.text.split(None, 1)
+    if len(tesc) >= 2:
+        desc = tesc[1]
+    else:
+        return msg.reply_text("Setting empty description won't do anything!")
+    try:
+        if len(desc) > 255:
+            return msg.reply_text("Description must needs to be under 255 characters!")
+        context.bot.set_chat_description(chat.id, desc)
+        msg.reply_text(f"Successfully updated chat description in {chat.title}!")
+    except BadRequest as excp:
+        msg.reply_text(f"Error! {excp.message}.")
 
 
 __help__ = """
  • `/admins`*:* list of admins in the chat
 *Admins only:*
- • `/pin`*:* silently pins the message replied to - add `'loud'` or `'notify'` to give notifs to users.
+ • `/pin`*:* silently pins the message replied to - add `'loud'` or `'notify'` to give notifs to users
  • `/unpin`*:* unpins the currently pinned message
  • `/invitelink`*:* gets invitelink
  • `/promote`*:* promotes the user replied to
  • `/demote`*:* demotes the user replied to
  • `/title <title here>`*:* sets a custom title for an admin that the bot promoted
+ • `/admincache`*:* force refresh the admins list
+ • `/setgpic`*:* As a reply to file or photo to set group profile pic!
+ • `/delgpic`*:* Same as above but to remove group profile pic.
+ • `/setgtitle <newtitle>`*:* Sets new chat title in your group.
+ • `/setsticker`*:* As a reply to some sticker to set it as group sticker set!
+ • `/setdescription`*:* <description> Sets new chat description in group.
+
+*Note*: To set group sticker set chat must needs to have min 100 members.
 """
 
 ADMINLIST_HANDLER = DisableAbleCommandHandler("admins", adminlist)
@@ -458,7 +627,17 @@ INVITE_HANDLER = DisableAbleCommandHandler("invitelink", invite)
 PROMOTE_HANDLER = DisableAbleCommandHandler("promote", promote)
 DEMOTE_HANDLER = DisableAbleCommandHandler("demote", demote)
 
+CHAT_PIC_HANDLER = CommandHandler("setgpic", setchatpic, filters=Filters.group)
+DEL_CHAT_PIC_HANDLER = CommandHandler("delgpic", rmchatpic, filters=Filters.group)
+SETCHAT_TITLE_HANDLER = CommandHandler(
+    "setgtitle", setchat_title, filters=Filters.group
+)
+SETSTICKET_HANDLER = CommandHandler("setsticker", set_sticker, filters=Filters.group)
+SETDESC_HANDLER = CommandHandler("setdescription", set_desc, filters=Filters.group)
+
 SET_TITLE_HANDLER = CommandHandler("title", set_title)
+ADMIN_REFRESH_HANDLER = CommandHandler(
+    "admincache", refresh_admin, filters=Filters.group)
 
 dispatcher.add_handler(ADMINLIST_HANDLER)
 dispatcher.add_handler(PIN_HANDLER)
@@ -467,10 +646,18 @@ dispatcher.add_handler(INVITE_HANDLER)
 dispatcher.add_handler(PROMOTE_HANDLER)
 dispatcher.add_handler(DEMOTE_HANDLER)
 dispatcher.add_handler(SET_TITLE_HANDLER)
+dispatcher.add_handler(ADMIN_REFRESH_HANDLER)
+dispatcher.add_handler(CHAT_PIC_HANDLER)
+dispatcher.add_handler(DEL_CHAT_PIC_HANDLER)
+dispatcher.add_handler(SETCHAT_TITLE_HANDLER)
+dispatcher.add_handler(SETSTICKET_HANDLER)
+dispatcher.add_handler(SETDESC_HANDLER)
 
 __mod_name__ = "Admin"
-__command_list__ = ["adminlist", "admins", "invitelink", "promote", "demote"]
+__command_list__ = [
+    "adminlist", "admins", "invitelink", "promote", "demote", "admincache"
+]
 __handlers__ = [
     ADMINLIST_HANDLER, PIN_HANDLER, UNPIN_HANDLER, INVITE_HANDLER,
-    PROMOTE_HANDLER, DEMOTE_HANDLER, SET_TITLE_HANDLER
+    PROMOTE_HANDLER, DEMOTE_HANDLER, SET_TITLE_HANDLER, ADMIN_REFRESH_HANDLER
 ]
