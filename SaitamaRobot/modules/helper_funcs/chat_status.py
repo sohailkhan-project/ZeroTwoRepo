@@ -70,6 +70,9 @@ def is_bot_admin(chat: Chat,
 def can_delete(chat: Chat, bot_id: int) -> bool:
     return chat.get_member(bot_id).can_delete_messages
 
+def can_changeinfo(chat: Chat, user: User, bot_id: int) -> bool:
+    return chat.get_member(user.id).can_change_info
+
 
 def is_user_ban_protected(chat: Chat,
                           user_id: int,
@@ -310,20 +313,6 @@ def can_pin(func):
                 cant_pin, parse_mode=ParseMode.HTML)
 
     return pin_rights
-
-def can_changeinfo(func):
-
-    @wraps(func)
-    def changeinfo_rights(update: Update, context: CallbackContext, *args, **kwargs):
-        bot = context.bot
-        chat = update.effective_chat
-
-        if chat.get_member(user.id).can_change_info:
-            return func(update, context, *args, **kwargs)
-        else:
-            pass
-
-    return changeinfo_rights
 
 def can_promote(func):
 
