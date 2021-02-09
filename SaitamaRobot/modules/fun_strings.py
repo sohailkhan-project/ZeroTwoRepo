@@ -437,37 +437,21 @@ TRUTH_STRINGS = (
    "What’s the longest you’ve gone without showering?",
    "Have you ever used a fake ID?",
    "Who’s your hall pass?",
-
+   "Be honest: Do you have a favorite child?",
+   "Which of your family members annoys you the most and why?",
+   "What is your greatest fear in a relationship?",
+   "What’s your biggest pet peeve about the person to your left?",
+   "What’s the most embarrassing text in your phone right now?",
+   "Have you ever seen a dead body?",
+   "What celebrity do you think is overrated?",
+   "Have you ever lied to your boss?",
+   "Have you ever stolen something from work?",
+   "What’s the longest you’ve gone without brushing your teeth?",
+   "What’s your biggest regret in life?",
+   "Who would you hate to see naked?",
+   "Describe the weirdest thing you’ve ever done while inebriated.",
+   "Have you ever regifted a present?",
 """
-
-51. Be honest: Do you have a favorite child?
-
-52. Which of your family members annoys you the most and why?
-
-53. What is your greatest fear in a relationship?
-
-54. What’s your biggest pet peeve about the person to your left?
-
-55. What’s the most embarrassing text in your phone right now?
-
-56. Have you ever seen a dead body?
-
-57. What celebrity do you think is overrated?
-
-58. Have you ever lied to your boss?
-
-59. Have you ever stolen something from work?
-
-60. What’s the longest you’ve gone without brushing your teeth?
-
-61. What’s your biggest regret in life?
-
-62. Who would you hate to see naked?
-
-63. Describe the weirdest thing you’ve ever done while inebriated.
-
-64. Have you ever regifted a present?
-
 65. Would you break up with your partner for $1 million?
 
 66. Have you ever had a crush on a coworker?
@@ -862,7 +846,10 @@ DARE_STRINGS = (
    "Send 'I want your nudes' to 10 people in your PM [Private Messaging list and share screenshots of the task.",
    "Make your phone number public for 3 minutes.",
    "Set your bio as, 'I am gay and I want to sleep with the person reading this right now' for 2 days.",
-   "Suggest more dares to @MaiSakurajima7",
+   "Suggest more dares to @DarkSamuraiBot",
+   "Send the pictures of your ex's panties.",
+   "Ask for nudes from strangers and share screenshots of the task.",
+   "Share screenshot from most recent chat on WhatsApp.",
 )
 
 
