@@ -224,6 +224,11 @@ def start(update: Update, context: CallbackContext):
                          InlineKeyboardButton(
                              text="🗄 Source code",
                              url="https://github.com/ninja7-bot/ZeroTwoRepo")
+                     ],                      
+                     [
+                         InlineKeyboardButton(
+                             text="Help",
+                             url="http://t.me/MissZeroTwoBot?start=help")
 
                      ]]))
     else:
