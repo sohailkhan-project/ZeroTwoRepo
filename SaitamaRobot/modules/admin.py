@@ -378,7 +378,7 @@ def adminlist(update, context):
         #if user.username:
         #    name = escape_markdown("@" + user.username)
         if status == "creator":
-            text += "\n⚘ Creator:"
+            text += "\n ⚘ Creator:"
             text += "\n` ⎔ `{}\n".format(name)
 
             if custom_title:
@@ -427,9 +427,9 @@ def adminlist(update, context):
             text += "\n` • `{}".format(admin)
         text += "\n"
 
-    text += "\n⊡ Bots:"
+    text += "\n✇ Bots:"
     for each_bot in bot_admin_list:
-        text += "\n` ▢ `{}".format(each_bot)
+        text += "\n` » `{}".format(each_bot)
 
     try:
         msg.edit_text(text, parse_mode=ParseMode.MARKDOWN)
