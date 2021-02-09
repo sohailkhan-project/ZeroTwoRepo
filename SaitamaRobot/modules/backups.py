@@ -103,7 +103,7 @@ def import_data(update, context):
             )
 
             LOGGER.exception(
-                "Imprt for the chat %s with the name %s failed.",
+                "Import for the chat %s with the name %s failed.",
                 str(chat.id),
                 str(chat.title),
             )
