@@ -52,7 +52,7 @@ def get_readable_time(seconds: int) -> str:
 
 
 PM_START_TEXT = """
-*Welcome user:* {}, *002 Online Codename: {}!* 
+*Welcome user:* {}, *002 Online Codename: {}!*[^_^](https://images.alphacoders.com/901/901812.png) 
 
 *〔Status〕*
 *Classification*: _Parasite_
@@ -60,8 +60,6 @@ PM_START_TEXT = """
 *Occupation*: _FRANXX Pilot (Pistil)_
 *Partner*: _Hiro_
 *FRANXX*: _Strelizia_ 
-
-Use /help to know my abilities [^_^](https://images.alphacoders.com/901/901812.png).
 """
 
 HELP_STRINGS = """
