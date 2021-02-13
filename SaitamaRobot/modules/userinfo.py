@@ -322,11 +322,11 @@ def info(update: Update, context: CallbackContext):
             _file.download(f"{user.id}.png")
 
             message.reply_photo(
-                photo=_file(f"{user.id}.png", "rb"),
+                photo=INFOPIC,
                 caption=(text),
                 parse_mode=ParseMode.HTML)
 
-            os.remove(f"{user.id}.png")
+            #os.remove(f"{user.id}.png")
         # Incase user don't have profile pic, send normal text
         except IndexError:
             message.reply_text(
