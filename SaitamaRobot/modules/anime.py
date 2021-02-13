@@ -23,9 +23,9 @@ def shorten(description, info='anilist.co'):
     msg = ""
     if len(description) > 700:
         description = description[0:500] + '....'
-        msg += f"\n*Description*: _{description}_[Read More]({info})"
+        msg += f"\n*Synopsis*:\n _{description}_ [Read More]({info})"
     else:
-        msg += f"\n*Description*:_{description}_"
+        msg += f"\n*Synopsis*:\n _{description}_"
     return msg
 
 
@@ -316,12 +316,12 @@ def manga(update: Update, context: CallbackContext):
             if title_native:
                 msg += f"(`{title_native}`)"
         if start_date:
-            msg += f"\n*Start Date* - `{start_date}`"
+            msg += f"\n*Start Date*: `{start_date}`"
         if status:
-            msg += f"\n*Status* - `{status}`"
+            msg += f"\n*Status*: `{status}`"
         if score:
-            msg += f"\n*Score* - `{score}`"
-        msg += '\n*Genres* - '
+            msg += f"\n*Score*: `{score}`"
+        msg += '\n*Genres*: '
         for x in json.get('genres', []):
             msg += f"{x}, "
         msg = msg[:-2]
