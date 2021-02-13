@@ -322,7 +322,7 @@ def info(update: Update, context: CallbackContext):
             _file.download(f"{user.id}.png")
 
             message.reply_photo(
-                photo=INFOPIC(f"{user.id}.png", "rb"),
+                photo=_file(f"{user.id}.png", "rb"),
                 caption=(text),
                 parse_mode=ParseMode.HTML)
 
