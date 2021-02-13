@@ -229,7 +229,7 @@ def info(update: Update, context: CallbackContext):
 
     text = (f"╔═══〔 <b> Status</b> 〕\n"
             f"ID: <code>{user.id}</code>\n"
-            f"First Name: {html.escape(user.fullname)}")
+            f"First Name: {html.escape(user.full_name)}")
 
     if user.username:
         text += f"\nUsername: @{html.escape(user.username)}"
