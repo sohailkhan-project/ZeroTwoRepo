@@ -227,15 +227,15 @@ def info(update: Update, context: CallbackContext):
     rep = message.reply_text(
         "<code>Accessing Franxx Database...</code>", parse_mode=ParseMode.HTML)
 
-    text = (f"╔═══〔 <b> Status</b> 〕\n"
-            f"ID: <code>{user.id}</code>\n"
-            f"Name: {html.escape(user.full_name)}")
+    text = (f"〔 <b> Status </b> 〕\n"
+            f"◇ Name: {html.escape(user.full_name)}\n"
+            f"◇ ID: <code>{user.id}</code>")
 
     if user.username:
-        text += f"\nUsername: @{html.escape(user.username)}"
+        text += f"\n◇ Username: @{html.escape(user.username)}"
 
     if chat.type != "private" and user_id != bot.id:
-        _stext = "\nPresence: <code>{}</code>"
+        _stext = "\n◇ Presence: <code>{}</code>"
 
         afk_st = is_afk(user.id)
         if afk_st:
@@ -251,7 +251,7 @@ def info(update: Update, context: CallbackContext):
                     text += _stext.format("Member of Nines")
     if user_id not in [bot.id, 777000, 1087968824]:
         userhp = hpmanager(user)
-        text += f"\n\n<b>Health Points:</b> <code>{userhp['earnedhp']}/{userhp['totalhp']} | {userhp['percentage']}% </code>\n[ {make_bar(int(userhp['percentage' ]))}]"
+        text += f"\n\n<b>◇ Health Points:</b> <code>{userhp['earnedhp']}/{userhp['totalhp']} | {userhp['percentage']}% </code>\n[ {make_bar(int(userhp['percentage' ]))}]"
 
     try:
         spamwtc = sw.get_ban(int(user.id))
@@ -267,22 +267,22 @@ def info(update: Update, context: CallbackContext):
     disaster_level_present = False
 
     if user.id == OWNER_ID:
-        text += "\n\nThreat Level: 'MAXIMUM'."
+        text += "\n\n◇ Threat Level: 'MAXIMUM'."
         disaster_level_present = True
     elif user.id in DEV_USERS:
-        text += "\n\nThis user is member of 'Franxx Health System'."
+        text += "\n\n◇ This user is member of 'Franxx Health System'."
         disaster_level_present = True
     elif user.id in DRAGONS:
-        text += "\n\nThreat Level: 'SSS RANK'."
+        text += "\n\n◇ Threat Level: 'SSS RANK'."
         disaster_level_present = True
     elif user.id in DEMONS:
-        text += "\n\nThreat Level: 'S RANK'."
+        text += "\n\n◇ Threat Level: 'S RANK'."
         disaster_level_present = True
     elif user.id in TIGERS:
-        text += "\n\nThreat Level: 'A RANK'."
+        text += "\n\n◇ Threat Level: 'A RANK'."
         disaster_level_present = True
     elif user.id in WOLVES:
-        text += "\n\nThreat Level: 'B RANK'."
+        text += "\n\n◇ Threat Level: 'B RANK'."
         disaster_level_present = True
 
     if disaster_level_present:
@@ -298,7 +298,7 @@ def info(update: Update, context: CallbackContext):
             result = result.json()["result"]
             if "custom_title" in result.keys():
                 custom_title = result['custom_title']
-                text += f"\n\nTitle:\n<b>{custom_title}</b>"
+                text += f"\n\n◇ Title:\n<b>{custom_title}</b>"
     except BadRequest:
         pass
 
