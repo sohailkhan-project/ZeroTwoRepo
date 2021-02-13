@@ -227,7 +227,7 @@ def info(update: Update, context: CallbackContext):
     rep = message.reply_text(
         "<code>Accessing Franxx Database...</code>", parse_mode=ParseMode.HTML)
 
-    text = (f"╔═══〔<b> Status:</b> 〕\n"
+    text = (f"╔═══〔 <b> Status</b> 〕\n"
             f"ID: <code>{user.id}</code>\n"
             f"First Name: {html.escape(user.first_name)}")
 
@@ -325,7 +325,7 @@ def info(update: Update, context: CallbackContext):
                 document=open(f"{user.id}.png", "rb"),
                 caption=(text),
                 parse_mode=ParseMode.HTML,
-                disable_web_page_preview=True)
+                disable_web_page_preview=False)
 
             os.remove(f"{user.id}.png")
         # Incase user don't have profile pic, send normal text
