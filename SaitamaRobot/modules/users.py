@@ -144,11 +144,11 @@ def chat_checker(update: Update, context: CallbackContext):
 
 def __user_info__(user_id):
     if user_id in [777000, 1087968824]:
-        return """「◇ *Mana Point*: <code>???</code> 」"""
+        return """「◇ <b>Mana Point</b>: <code>???</code> 」"""
     if user_id == dispatcher.bot.id:
-        return """「◇ *Mana Point*: <code>???</code> 」"""
+        return """「◇ <b>Mana Point</b>: <code>???</code> 」"""
     num_chats = sql.get_user_num_chats(user_id)
-    return f"""「◇ *Mana Point*: <code>{num_chats}</code> 」"""
+    return f"""「◇ <b>Mana Point</b>: <code>{num_chats}</code> 」"""
 
 
 def __stats__():
