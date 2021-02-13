@@ -182,7 +182,7 @@ def scam(imgspage, lim):
 
 
 REVERSE_HANDLER = DisableAbleCommandHandler(
-    "rev", rev, pass_args=True, admin_ok=True
+    ("rev", "grs"), rev, pass_args=True, admin_ok=True
 )
 
 dispatcher.add_handler(REVERSE_HANDLER)
