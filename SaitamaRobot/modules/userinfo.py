@@ -229,7 +229,7 @@ def info(update: Update, context: CallbackContext):
 
     text = (f"╔═══〔 <b> Status</b> 〕\n"
             f"ID: <code>{user.id}</code>\n"
-            f"First Name: {html.escape(user.full_name)}")
+            f"Name: {html.escape(user.full_name)}")
 
     if user.username:
         text += f"\nUsername: @{html.escape(user.username)}"
@@ -251,7 +251,7 @@ def info(update: Update, context: CallbackContext):
                     text += _stext.format("Member of Nines")
     if user_id not in [bot.id, 777000, 1087968824]:
         userhp = hpmanager(user)
-        text += f"\n\n<b>Health Points:</b> <code>{userhp['earnedhp']}/{userhp['totalhp']} | {userhp['percentage']}%] </code>\n[<i>{make_bar(int(userhp['percentage']))} </i>"
+        text += f"\n\n<b>Health Points:</b> <code>{userhp['earnedhp']}/{userhp['totalhp']} | {userhp['percentage']}% </code>\n[ {make_bar(int(userhp['percentage' ]))}]"
 
     try:
         spamwtc = sw.get_ban(int(user.id))
@@ -313,8 +313,8 @@ def info(update: Update, context: CallbackContext):
     if INFOPIC:
         try:
             profile = context.bot.get_user_profile_photos(user.id).photos[0][-1]
-            _file = bot.get_file(profile["file_id"])
-            _file.download(f"{user.id}.png")
+            #_file = bot.get_file(profile["file_id"])
+            #_file.download(f"{user.id}.png")
 
             message.reply_photo(
                 photo=INFOPIC,
