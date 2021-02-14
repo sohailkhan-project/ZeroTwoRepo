@@ -31,4 +31,5 @@ alphabet_detector
 pyrate-limiter
 cachetools
 ujson
+tswift
 pretty_errors
