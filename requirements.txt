@@ -16,6 +16,7 @@ psutil
 aiohttp>=2.2.5
 Pillow>=4.2.0
 CurrencyConverter
+#googletrans
 google_trans_new
 jikanpy
 speedtest-cli
@@ -24,10 +25,10 @@ regex
 bleach
 git+https://github.com/starry69/python-markdown2.git
 wikipedia
-telethon==1.16.4
+telethon
 spamwatch
 alphabet_detector
 pyrate-limiter
 cachetools
 ujson
-tswift
+pretty_errors
