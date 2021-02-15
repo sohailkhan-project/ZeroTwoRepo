@@ -33,3 +33,4 @@ cachetools
 ujson
 tswift
 pretty_errors
+redis
