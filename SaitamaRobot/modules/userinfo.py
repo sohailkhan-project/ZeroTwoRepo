@@ -505,7 +505,7 @@ def status(update: Update, context: CallbackContext):
     if info:
         update.effective_message.reply_photo(
             photo = status
-            caption = f"Status Window for [{html.escape(user.full_name)}](t.me/{html.escape(user.username)}"
+          caption = f"Status Window for [{html.escape(user.full_name)}](t.me/{html.escape(user.username)}"
         )
     elif message.reply_to_message:
         username = message.reply_to_message.from_user.first_name
