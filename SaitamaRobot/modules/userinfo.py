@@ -486,6 +486,65 @@ def __user_info__(user_id):
         result += f"◇ <b>What others say:</b>\n{bio}\n"
     result = result.strip("\n")
     return result
+  
+STATUS_IMG = "https://telegra.ph/file/b9cc33424c4c938e57d9c.jpg"
+
+@run_async
+def status(update: Update, context: CallbackContext):
+    bot, args = context.bot, context.args
+    message = update.effective_message
+    user_id = extract_user(message, args)
+
+    if user_id:
+        user = bot.get_chat(user_id)
+    else:
+        user = message.from_user
+
+    status = sql.get_user_status(user.id)
+
+    if info:
+        update.effective_message.reply_photo(
+            photo = status
+            caption = f"Status Window for [{html.escape(user.full_name)}](t.me/{html.escape(user.username)}"
+        )
+    elif message.reply_to_message:
+        username = message.reply_to_message.from_user.first_name
+        update.effective_message.reply_document(
+            document=open(f"STAUS_IMG.png", "rb"),
+            caption= (Use it to save your Status Window),
+            parse_mode=ParseMode.HTML,
+            disable_web_page_preview=True)
+    else:
+        update.effective_message.reply_text(
+            "There isnt one, use /svstatus to set one.")
+
+
+@run_async
+def set_status(update: Update, context: CallbackContext):
+    message = update.effective_message
+    user_id = message.from_user.id
+    if user_id in [777000, 1087968824]:
+        message.reply_text("Error! Unauthorized")
+        return
+    bot = context.bot
+    if message.reply_to_message:
+        repl_message = message.reply_to_message
+        repl_user_id = repl_message.from_user.id
+        if repl_user_id in [bot.id, 777000, 1087968824] and (user_id
+                                                             in DEV_USERS):
+            user_id = repl_user_id
+    photo = message.photo
+    status = photo
+    if status:
+        if status:
+            sql.set_user_status(user_id, status)
+            if user_id in [777000, 1087968824]:
+                message.reply_text("Authorized...Information updated!")
+            elif user_id == bot.id:
+                message.reply_text(
+                    "I can't add a Status Window for myself, I can only give you one!😞")
+            else:
+                message.reply_text("Added Status Window!")
 
 
 
