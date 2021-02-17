@@ -580,6 +580,9 @@ INFO_HANDLER = DisableAbleCommandHandler(("info", "book"), info)
 SET_ABOUT_HANDLER = DisableAbleCommandHandler("setme", set_about_me)
 GET_ABOUT_HANDLER = DisableAbleCommandHandler("me", about_me)
 
+SET_STATUS_HANDLER = DisableAbleCommandHandler("svstatus", set_status)
+GET_STATUS_HANDLER = DisableAbleCommandHandler("me", status)
+
 dispatcher.add_handler(STATS_HANDLER)
 dispatcher.add_handler(ID_HANDLER)
 dispatcher.add_handler(GIFID_HANDLER)
@@ -588,10 +591,12 @@ dispatcher.add_handler(SET_BIO_HANDLER)
 dispatcher.add_handler(GET_BIO_HANDLER)
 dispatcher.add_handler(SET_ABOUT_HANDLER)
 dispatcher.add_handler(GET_ABOUT_HANDLER)
+dispatcher.add_handler(SET_STATUS_HANDLER)
+dispatcher.add_handler(GET_STATUS_HANDLER)
 
 __mod_name__ = "Info"
-__command_list__ = ["setbio", "bio", "setme", "me", "info"]
+__command_list__ = ["setbio", "bio", "setme", "me", "info", "status", "svstatus",]
 __handlers__ = [
     ID_HANDLER, GIFID_HANDLER, INFO_HANDLER, SET_BIO_HANDLER, GET_BIO_HANDLER,
-    SET_ABOUT_HANDLER, GET_ABOUT_HANDLER, STATS_HANDLER
+    SET_ABOUT_HANDLER, GET_ABOUT_HANDLER, STATS_HANDLER, SET_STATUS_HANDLER, GET_STATUS_HANDLER,
 ]
