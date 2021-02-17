@@ -510,7 +510,6 @@ def status(update: Update, context: CallbackContext):
         username = message.reply_to_message.from_user.first_name
         update.effective_message.reply_document(
             document=open(f"STAUS_IMG.png", "rb"),
-            caption= (Use it to save your Status Window),
             parse_mode=ParseMode.HTML,
             disable_web_page_preview=True)
     else:
