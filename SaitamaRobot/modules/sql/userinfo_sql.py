@@ -74,7 +74,7 @@ def set_user_bio(user_id, bio):
         SESSION.add(userbio)
         SESSION.commit()
         
-"""
+
 def get_user_status(user_id):
     userbio = SESSION.query(UserStatus).get(user_id)
     SESSION.close()
@@ -93,4 +93,4 @@ def set_user_status(user_id, status):
 
         SESSION.add(userstatus)
         SESSION.commit()
-"""
+
