@@ -228,7 +228,7 @@ def info(update: Update, context: CallbackContext):
         "<code>Accessing Franxx Database...</code>", parse_mode=ParseMode.HTML)
 
     text = (f"〔 <b> Status </b> 〕\n"
-            f"◇ <b>Name:</b> [{html.escape(user.full_name)}](t.me/{html.escape(user.username)})\n"
+            f"◇ <b>Name:</b> [{(user.full_name)}](t.me/{(user.username)})\n"
             f"◇ <b>ID:</b> <code>{user.id}</code>")
 
     if user.username:
@@ -502,9 +502,9 @@ def status(update: Update, context: CallbackContext):
 
     status = sql.get_user_status(user.id)
 
-    if info:
+    if status:
         update.effective_message.reply_photo(
-            photo=status
+            photo=STATUS_IMG
         )
     elif message.reply_to_message:
         username = message.reply_to_message.from_user.first_name
