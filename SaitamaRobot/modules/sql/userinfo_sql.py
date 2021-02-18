@@ -28,10 +28,23 @@ class UserBio(BASE):
 
     def __repr__(self):
         return "<User info %d>" % self.user_id
+    
+class UserStatus(BASE):
+    __tablename__ = "userbio"
+    user_id = Column(Integer, primary_key=True)
+    status = Column(UnicodeText)
+
+    def __init__(self, user_id, status):
+        self.user_id = user_id
+        self.status = status
+
+    def __repr__(self):
+        return "<User info %d>" % self.user_id
 
 
 UserInfo.__table__.create(checkfirst=True)
 UserBio.__table__.create(checkfirst=True)
+UserStatus.__table__.create(checkfirst=True)
 
 INSERTION_LOCK = threading.RLock()
 
