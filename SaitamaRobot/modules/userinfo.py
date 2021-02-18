@@ -228,7 +228,7 @@ def info(update: Update, context: CallbackContext):
         "<code>Accessing Franxx Database...</code>", parse_mode=ParseMode.HTML)
 
     text = (f"〔 <b> Status </b> 〕\n"
-            f"◇ <b>Name:</b> <a href="https://t.me/{html.escape(user.username)}">[{html.escape(user.full_name)}]</a>" #[{html.escape(user.full_name)}](t.me/{html.escape(user.username)})\n
+            f"◇ <b>Name:</b> [{html.escape(user.full_name)}](t.me/{html.escape(user.username)})\n"
             f"◇ <b>ID:</b> <code>{user.id}</code>")
 
     if user.username:
