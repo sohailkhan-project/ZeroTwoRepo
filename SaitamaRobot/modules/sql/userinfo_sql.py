@@ -30,7 +30,7 @@ class UserBio(BASE):
         return "<User info %d>" % self.user_id
     
 class UserStatus(BASE):
-    __tablename__ = "userbio"
+    __tablename__ = "userstatus"
     user_id = Column(Integer, primary_key=True)
     status = Column(UnicodeText)
 
