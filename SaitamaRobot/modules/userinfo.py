@@ -581,7 +581,7 @@ SET_ABOUT_HANDLER = DisableAbleCommandHandler("setme", set_about_me)
 GET_ABOUT_HANDLER = DisableAbleCommandHandler("me", about_me)
 
 SET_STATUS_HANDLER = DisableAbleCommandHandler("svstatus", set_status)
-GET_STATUS_HANDLER = DisableAbleCommandHandler("me", status)
+GET_STATUS_HANDLER = DisableAbleCommandHandler("status", status)
 
 dispatcher.add_handler(STATS_HANDLER)
 dispatcher.add_handler(ID_HANDLER)
