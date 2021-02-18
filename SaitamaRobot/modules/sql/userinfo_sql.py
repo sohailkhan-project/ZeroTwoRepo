@@ -76,7 +76,7 @@ def set_user_bio(user_id, bio):
         
 
 def get_user_status(user_id):
-    userbio = SESSION.query(UserStatus).get(user_id)
+    userstatus = SESSION.query(UserStatus).get(user_id) #Status Pull Request
     SESSION.close()
     if status:
         return userstatus.status
@@ -85,7 +85,7 @@ def get_user_status(user_id):
 
 def set_user_status(user_id, status):
     with INSERTION_LOCK:
-        userstatus = SESSION.query(UserStatus).get(user_id)
+        userstatus = SESSION.query(UserStatus).get(user_id) #Status Save Request
         if userstatus:
             userstatus.status = status
         else:
