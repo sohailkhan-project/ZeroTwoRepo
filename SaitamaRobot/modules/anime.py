@@ -547,6 +547,23 @@ def site_search(update: Update, context: CallbackContext, site: str):
             post_link = entry.a['href']
             post_name = html.escape(entry.text.strip())
             result += f"• <a href='{post_link}'>{post_name}</a>\n"
+    elif site == "erai":
+        search_url = f"https://https://www.erai-raws.info/anime-list/{search_query}/"
+        html_text = requests.get(search_url).text
+        soup = bs4.BeautifulSoup(html_text, "html.parser")
+        search_result = soup.find_all("h2", {'class': "title"})
+
+        result = f"<b>Click the button below to access the results for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>Erai Raws</code>: \n"
+        for entry in search_result:
+
+            if entry.text.strip() == "Nothing Found":
+                result = f"<b>No result found for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>Erai Raws</code>"
+                more_results = False
+                break
+
+            post_link = entry.a['href']
+            post_name = html.escape(entry.text.strip())
+            result += f"• <a href='{post_link}'>{post_name}</a>\n"
 
     buttons = [[InlineKeyboardButton("See all results", url=search_url)]]
 
@@ -574,6 +591,10 @@ def kayo(update: Update, context: CallbackContext):
 def vibe(update: Update, context: CallbackContext):
     site_search(update, context, "vibe")
 
+@run_async
+def erai(update: Update, context: CallbackContext):
+    site_search(update, context, "erai")
+
 __help__ = """
 Get information about anime, manga or characters from [AniList](anilist.co).
 
@@ -599,6 +620,7 @@ UPCOMING_HANDLER = DisableAbleCommandHandler("upcoming", upcoming)
 KAIZOKU_SEARCH_HANDLER = DisableAbleCommandHandler("kaizoku", kaizoku)
 KAYO_SEARCH_HANDLER = DisableAbleCommandHandler("kayo", kayo)
 VIBE_SEARCH_HANDLER = DisableAbleCommandHandler("vibe", vibe)
+ERAI_SEARCH_HANDLER = DisableAbleCommandHandler("erai", erai)
 BUTTON_HANDLER = CallbackQueryHandler(button, pattern='anime_.*')
 
 dispatcher.add_handler(BUTTON_HANDLER)
@@ -615,10 +637,10 @@ dispatcher.add_handler(UPCOMING_HANDLER)
 __mod_name__ = "Anime"
 __command_list__ = [
     "anime", "manga", "character", "user", "upcoming", "kaizoku", "airing",
-    "kayo", "vibe"
+    "kayo", "vibe", "erai"
 ]
 __handlers__ = [
     ANIME_HANDLER, CHARACTER_HANDLER, MANGA_HANDLER, USER_HANDLER,
     UPCOMING_HANDLER, KAIZOKU_SEARCH_HANDLER, KAYO_SEARCH_HANDLER,
-    BUTTON_HANDLER, AIRING_HANDLER, VIBE_SEARCH_HANDLER
+    BUTTON_HANDLER, AIRING_HANDLER, VIBE_SEARCH_HANDLER, ERAI_SEARCH_HANDLER
 ]
