@@ -150,8 +150,8 @@ query ($id: Int,$search: String) {
           siteUrl
           averageScore
           genres
-          volumes
-          chapters
+          volumeCount
+          chapterCount
           bannerImage
       }
     }
