@@ -489,7 +489,7 @@ DEMOTE_HANDLER = DisableAbleCommandHandler("demote", demote)
 
 SET_TITLE_HANDLER = CommandHandler("title", set_title)
 ADMIN_REFRESH_HANDLER = CommandHandler(
-    "admincache", refresh_admin, filters=Filters.group
+    "reload", refresh_admin, filters=Filters.group
 )
 
 dispatcher.add_handler(ADMINLIST_HANDLER)
