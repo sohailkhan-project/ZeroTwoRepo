@@ -622,7 +622,7 @@ Get information about anime, manga or characters from [AniList](anilist.co).
  • `/kayo <anime>`*:* search an anime on animekayo.com
  • `/airing <anime>`*:* returns anime airing info.
  • `/vibe <anime>`*:* search an anime on animevibe.wtf.
- • `/erai <anime>`*:* search an anime on erai-raws.info. [ Beta Phase is on going and it is suggested to NOT use it right now. ]
+ • `/erai <anime>`*:* search an anime on erai-raws.info.
  """
 
 ANIME_HANDLER = DisableAbleCommandHandler("anime", anime)
