@@ -562,6 +562,7 @@ def site_search(update: Update, context: CallbackContext, site: str):
             post_name = html.escape(entry.text.strip())
             result += f"• <a href='{post_link}'>{post_name}</a>\n"
     elif site == "erai":
+        search_query = args[1].replace(" ", "-")
         search_url = f"https://www.erai-raws.info/anime-list/{search_query}/"
         html_text = requests.get(search_url).text
         soup = bs4.BeautifulSoup(html_text, "html.parser")
@@ -571,7 +572,7 @@ def site_search(update: Update, context: CallbackContext, site: str):
         for entry in search_result:
 
             if entry.text.strip() == "Nothing Found":
-                result = f"<b>No result found for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>Erai Raws</code>"
+                result = f"<b>No result found for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>Erai Raws</code>.\n <b>NOTE:</b> Erai Raws only accept arguments with correct naming, such as: <code>/erai hibike euphonium </code>."
                 more_results = False
                 break
 
