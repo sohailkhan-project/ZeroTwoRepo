@@ -23,9 +23,9 @@ def shorten(description, info='anilist.co'):
     msg = ""
     if len(description) > 700:
         description = description[0:500] + '....'
-        msg += f"\n*Description*: _{description}_[Read More]({info})"
+        msg += f"\n*Synopsis*:\n _{description}_ [Read More]({info})"
     else:
-        msg += f"\n*Description*:_{description}_"
+        msg += f"\n*Synopsis*:\n _{description}_"
     return msg
 
 
@@ -150,6 +150,8 @@ query ($id: Int,$search: String) {
           siteUrl
           averageScore
           genres
+          volumeCount
+          chapterCount
           bannerImage
       }
     }
@@ -316,12 +318,12 @@ def manga(update: Update, context: CallbackContext):
             if title_native:
                 msg += f"(`{title_native}`)"
         if start_date:
-            msg += f"\n*Start Date* - `{start_date}`"
+            msg += f"\n*Start Date*: `{start_date}`"
         if status:
-            msg += f"\n*Status* - `{status}`"
+            msg += f"\n*Status*: `{status}`"
         if score:
-            msg += f"\n*Score* - `{score}`"
-        msg += '\n*Genres* - '
+            msg += f"\n*Score*: `{score}`"
+        msg += '\n*Genres*: '
         for x in json.get('genres', []):
             msg += f"{x}, "
         msg = msg[:-2]
@@ -407,13 +409,11 @@ def user(update: Update, context: CallbackContext):
 
     caption += textwrap.dedent(f"""
     *Username*: [{user['username']}]({user['url']})
-
     *Gender*: `{user['gender']}`
     *Birthday*: `{user_birthday_formatted}`
     *Joined*: `{user_joined_date_formatted}`
     *Days wasted watching anime*: `{user['anime_stats']['days_watched']}`
     *Days wasted reading manga*: `{user['manga_stats']['days_read']}`
-
     """)
 
     caption += f"*About*: {about_string}"
@@ -530,8 +530,6 @@ def site_search(update: Update, context: CallbackContext, site: str):
             post_link = entry.a['href']
             post_name = html.escape(entry.text.strip())
             result += f"• <a href='{post_link}'>{post_name}</a>\n"
-
-
     elif site == "vibe":
         search_url = f"https://animevibe.wtf/?s={search_query}"
         html_text = requests.get(search_url).text
@@ -549,7 +547,7 @@ def site_search(update: Update, context: CallbackContext, site: str):
             post_link = entry.a['href']
             post_name = html.escape(entry.text.strip())
             result += f"• <a href='{post_link}'>{post_name}</a>\n"
-     elif site == "erai":
+    elif site == "erai":
         search_query = args[1].replace(" ", "-")
         search_url = f"https://www.erai-raws.info/anime-list/{search_query}/"
         html_text = requests.get(search_url).text
@@ -560,7 +558,7 @@ def site_search(update: Update, context: CallbackContext, site: str):
         for entry in search_result:
 
             if entry.text.strip() == "Nothing Found":
-                result = f"<b>No result found for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>Erai Raws</code>.\n <b>NOTE:</b> Erai Raws only accept arguments with correct naming, such as: <code>/erai hibike euphonium </code>."
+                result = f"<b>No result found for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>Erai Raws</code> \n <b>NOTE:</b> Erai Raws only accept perfect arguments, such as: <code>/erai hibike euphonium</code>."
                 more_results = False
                 break
 
