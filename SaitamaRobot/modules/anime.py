@@ -550,6 +550,7 @@ def site_search(update: Update, context: CallbackContext, site: str):
             post_name = html.escape(entry.text.strip())
             result += f"• <a href='{post_link}'>{post_name}</a>\n"
     elif site == "erai":
+        search_query = msg.text.replace(" ", "-")
         search_url = f"https://www.erai-raws.info/anime-list/{search_query}/"
         html_text = requests.get(search_url).text
         soup = bs4.BeautifulSoup(html_text, "html.parser")
@@ -610,7 +611,8 @@ Get information about anime, manga or characters from [AniList](anilist.co).
  • `/kaizoku <anime>`*:* search an anime on animekaizoku.com
  • `/kayo <anime>`*:* search an anime on animekayo.com
  • `/airing <anime>`*:* returns anime airing info.
-
+ • `/vibe <anime>`*:* search an anime on animevibe.wtf.
+ • `/erai <anime>`*:* search an anime on erai-raws.info. [ Beta Phase is on going and it is suggested to NOT use it right now. ]
  """
 
 ANIME_HANDLER = DisableAbleCommandHandler("anime", anime)
