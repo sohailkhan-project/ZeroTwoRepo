@@ -369,15 +369,15 @@ def adminlist(update, context):
 
     try:
         msg = update.effective_message.reply_text(
-            "Fetching group admins...", parse_mode=ParseMode.HTML
+            "Extracting data for Nines", parse_mode=ParseMode.HTML
         )
     except BadRequest:
         msg = update.effective_message.reply_text(
-            "Fetching group admins...", quote=False, parse_mode=ParseMode.HTML
+            "Extracting data for Nines", quote=False, parse_mode=ParseMode.HTML
         )
 
     administrators = bot.getChatAdministrators(chat_id)
-    text = "Admins in <b>{}</b>:".format(html.escape(update.effective_chat.title))
+    text = "Members of Nines in <b>{}</b>:".format(html.escape(update.effective_chat.title))
 
     bot_admin_list = []
 
@@ -403,13 +403,13 @@ def adminlist(update, context):
         # if user.username:
         #    name = escape_markdown("@" + user.username)
         if status == "creator":
-            text += "\n 👑 Creator:"
-            text += "\n<code> • </code>{}\n".format(name)
+            text += "\n 💠 Creator:"
+            text += "\n<code> ⎔ </code>{}\n".format(name)
 
             if custom_title:
                 text += f"<code> ┗━ {html.escape(custom_title)}</code>\n"
 
-    text += "\n🔱 Admins:"
+    text += "\n 🌀 Admins:"
 
     custom_admin_list = {}
     normal_admin_list = []
@@ -439,25 +439,25 @@ def adminlist(update, context):
                 normal_admin_list.append(name)
 
     for admin in normal_admin_list:
-        text += "\n<code> • </code>{}".format(admin)
+        text += "\n<code> ⦿ </code>{}".format(admin)
 
     for admin_group in custom_admin_list.copy():
         if len(custom_admin_list[admin_group]) == 1:
-            text += "\n<code> • </code>{} | <code>{}</code>".format(
+            text += "\n<code> ◉ </code>{} | <code>{}</code>".format(
                 custom_admin_list[admin_group][0], html.escape(admin_group)
             )
             custom_admin_list.pop(admin_group)
 
     text += "\n"
     for admin_group, value in custom_admin_list.items():
-        text += "\n🚨 <code>{}</code>".format(admin_group)
+        text += "\n仝 <code>{}</code>".format(admin_group)
         for admin in value:
             text += "\n<code> • </code>{}".format(admin)
         text += "\n"
 
     text += "\n🤖 Bots:"
     for each_bot in bot_admin_list:
-        text += "\n<code> • </code>{}".format(each_bot)
+        text += "\n<code> » </code>{}".format(each_bot)
 
     try:
         msg.edit_text(text, parse_mode=ParseMode.HTML)
@@ -474,7 +474,7 @@ __help__ = """
  • `/promote`*:* promotes the user replied to
  • `/demote`*:* demotes the user replied to
  • `/title <title here>`*:* sets a custom title for an admin that the bot promoted
- • `/admincache`*:* force refresh the admins list
+ • `/reload`*:* force refresh the admins list
 """
 
 ADMINLIST_HANDLER = DisableAbleCommandHandler("admins", adminlist)
@@ -508,7 +508,7 @@ __command_list__ = [
     "invitelink",
     "promote",
     "demote",
-    "admincache",
+    "reload",
 ]
 __handlers__ = [
     ADMINLIST_HANDLER,
