@@ -188,23 +188,6 @@ def table(update: Update, context: CallbackContext):
 def dyk(update: Update, context: CallbackContext):
     update.effective_message.reply_text(random.choice(fun_strings.DYK_STRINGS))
 
-"""
-@run_async
-def truth(update: Update, context: CallbackContext):
-    update.effective_message.reply_text(random.choice(fun_strings.TRUTH_STRINGS))
-
-
-@run_async
-def dare(update: Update, context: CallbackContext):
-    update.effective_message.reply_text(random.choice(fun_strings.DARE_STRINGS))
-
-
-@run_async
-def tord(update: Update, context: CallbackContext):
-    update.effective_message.reply_text(random.choice(fun_strings.TORD_STRINGS))
-
-"""
-
 __help__ = """
  • `/runs`*:* reply a random string from an array of replies
  • `/slap`*:* slap a user, or get slapped if not a reply
@@ -220,9 +203,6 @@ __help__ = """
  • `/sanitize`*:* always use this before /pat or any contact
  • `/pat`*:* pats a user, or get patted
  • `/dyk`*:* gives you a anime related fact. NOTE: These facts may contain spoilers
- • `/truth`*:* asks you a question
- • `/dare`*:* gives you a dare
- • `/tord`*:* can be a truth or a dare
 """
 
 SANITIZE_HANDLER = DisableAbleCommandHandler("sanitize", sanitize)
@@ -237,9 +217,7 @@ RLG_HANDLER = DisableAbleCommandHandler("rlg", rlg)
 DECIDE_HANDLER = DisableAbleCommandHandler("decide", decide)
 TABLE_HANDLER = DisableAbleCommandHandler("table", table)
 DYK_HANDLER = DisableAbleCommandHandler("dyk", dyk)
-#TRUTH_HANDLER = DisableAbleCommandHandler("truth", truth)
-#DARE_HANDLER = DisableAbleCommandHandler("dare", dare)
-#TORD_HANDLER = DisableAbleCommandHandler("tord", tord)
+
 
 dispatcher.add_handler(SANITIZE_HANDLER)
 dispatcher.add_handler(RUNS_HANDLER)
@@ -253,9 +231,7 @@ dispatcher.add_handler(RLG_HANDLER)
 dispatcher.add_handler(DECIDE_HANDLER)
 dispatcher.add_handler(TABLE_HANDLER)
 dispatcher.add_handler(DYK_HANDLER)
-#dispatcher.add_handler(TRUTH_HANDLER)
-#dispatcher.add_handler(DARE_HANDLER)
-#dispatcher.add_handler(TORD_HANDLER)
+
 
 
 __mod_name__ = "Fun"
@@ -268,5 +244,3 @@ __handlers__ = [
     SHRUG_HANDLER, BLUETEXT_HANDLER, RLG_HANDLER, DECIDE_HANDLER, TABLE_HANDLER,
     SANITIZE_HANDLER, DYK_HANDLER,
 ]
-# TRUTH_HANDLER, DARE_HANDLER, TORD_HANDLER,
-# "truth", "dare", "tord",
