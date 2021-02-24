@@ -531,18 +531,6 @@ def site_search(update: Update, context: CallbackContext, site: str):
             post_name = html.escape(entry.text.strip())
             result += f"• <a href='{post_link}'>{post_name}</a>\n"
 
-    buttons = [[InlineKeyboardButton("See all results", url=search_url)]]
-
-    if more_results:
-        message.reply_text(
-            result,
-            parse_mode=ParseMode.HTML,
-            reply_markup=InlineKeyboardMarkup(buttons),
-            disable_web_page_preview=True)
-    else:
-        message.reply_text(
-            result, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
-
 
     elif site == "vibe":
         search_url = f"https://animevibe.wtf/?s={search_query}"
@@ -561,7 +549,7 @@ def site_search(update: Update, context: CallbackContext, site: str):
             post_link = entry.a['href']
             post_name = html.escape(entry.text.strip())
             result += f"• <a href='{post_link}'>{post_name}</a>\n"
-    elif site == "erai":
+     elif site == "erai":
         search_query = args[1].replace(" ", "-")
         search_url = f"https://www.erai-raws.info/anime-list/{search_query}/"
         html_text = requests.get(search_url).text
