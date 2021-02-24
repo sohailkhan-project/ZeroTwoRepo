@@ -550,7 +550,7 @@ def site_search(update: Update, context: CallbackContext, site: str):
             post_name = html.escape(entry.text.strip())
             result += f"• <a href='{post_link}'>{post_name}</a>\n"
     elif site == "erai":
-        search_query = message.text.replace(" ", "-")
+        search_query = args.text.replace(" ", "-")
         search_url = f"https://www.erai-raws.info/anime-list/{search_query}/"
         html_text = requests.get(search_url).text
         soup = bs4.BeautifulSoup(html_text, "html.parser")
