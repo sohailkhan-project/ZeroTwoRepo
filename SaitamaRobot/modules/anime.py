@@ -544,6 +544,54 @@ def site_search(update: Update, context: CallbackContext, site: str):
             result, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
 
 
+    elif site == "vibe":
+        search_url = f"https://animevibe.wtf/?s={search_query}"
+        html_text = requests.get(search_url).text
+        soup = bs4.BeautifulSoup(html_text, "html.parser")
+        search_result = soup.find_all("h2", {'class': "title"})
+
+        result = f"<b>Click the button below to access the results for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>AnimeVibe</code>: \n"
+        for entry in search_result:
+
+            if entry.text.strip() == "Nothing Found":
+                result = f"<b>No result found for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>AnimeVibe</code>"
+                more_results = False
+                break
+
+            post_link = entry.a['href']
+            post_name = html.escape(entry.text.strip())
+            result += f"• <a href='{post_link}'>{post_name}</a>\n"
+    elif site == "erai":
+        search_url = f"https://www.erai-raws.info/anime-list/{search_query}/"
+        html_text = requests.get(search_url).text
+        soup = bs4.BeautifulSoup(html_text, "html.parser")
+        search_result = soup.find_all("h2", {'class': "title"})
+
+        result = f"<b>Click the button below to access the results for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>Erai Raws</code>: \n"
+        for entry in search_result:
+
+            if entry.text.strip() == "Nothing Found":
+                result = f"<b>No result found for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>Erai Raws</code>"
+                more_results = False
+                break
+
+            post_link = entry.a['href']
+            post_name = html.escape(entry.text.strip())
+            result += f"• <a href='{post_link}'>{post_name}</a>\n"
+
+    buttons = [[InlineKeyboardButton("See all results", url=search_url)]]
+
+    if more_results:
+        message.reply_text(
+            result,
+            parse_mode=ParseMode.HTML,
+            reply_markup=InlineKeyboardMarkup(buttons),
+            disable_web_page_preview=True)
+    else:
+        message.reply_text(
+            result, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
+
+
 @run_async
 def kaizoku(update: Update, context: CallbackContext):
     site_search(update, context, "kaizoku")
@@ -553,12 +601,17 @@ def kaizoku(update: Update, context: CallbackContext):
 def kayo(update: Update, context: CallbackContext):
     site_search(update, context, "kayo")
 
+@run_async
+def vibe(update: Update, context: CallbackContext):
+    site_search(update, context, "vibe")
+
+@run_async
+def erai(update: Update, context: CallbackContext):
+    site_search(update, context, "erai")
 
 __help__ = """
 Get information about anime, manga or characters from [AniList](anilist.co).
-
 *Available commands:*
-
  • `/anime <anime>`*:* returns information about the anime.
  • `/character <character>`*:* returns information about the character.
  • `/manga <manga>`*:* returns information about the manga.
@@ -567,7 +620,8 @@ Get information about anime, manga or characters from [AniList](anilist.co).
  • `/kaizoku <anime>`*:* search an anime on animekaizoku.com
  • `/kayo <anime>`*:* search an anime on animekayo.com
  • `/airing <anime>`*:* returns anime airing info.
-
+ • `/vibe <anime>`*:* search an anime on animevibe.wtf.
+ • `/erai <anime>`*:* search an anime on erai-raws.info. [ Beta Phase is on going and it is suggested to NOT use it right now. ]
  """
 
 ANIME_HANDLER = DisableAbleCommandHandler("anime", anime)
@@ -578,6 +632,8 @@ USER_HANDLER = DisableAbleCommandHandler("user", user)
 UPCOMING_HANDLER = DisableAbleCommandHandler("upcoming", upcoming)
 KAIZOKU_SEARCH_HANDLER = DisableAbleCommandHandler("kaizoku", kaizoku)
 KAYO_SEARCH_HANDLER = DisableAbleCommandHandler("kayo", kayo)
+VIBE_SEARCH_HANDLER = DisableAbleCommandHandler("vibe", vibe)
+ERAI_SEARCH_HANDLER = DisableAbleCommandHandler("erai", erai)
 BUTTON_HANDLER = CallbackQueryHandler(button, pattern='anime_.*')
 
 dispatcher.add_handler(BUTTON_HANDLER)
@@ -588,15 +644,17 @@ dispatcher.add_handler(AIRING_HANDLER)
 dispatcher.add_handler(USER_HANDLER)
 dispatcher.add_handler(KAIZOKU_SEARCH_HANDLER)
 dispatcher.add_handler(KAYO_SEARCH_HANDLER)
+dispatcher.add_handler(VIBE_SEARCH_HANDLER)
+dispatcher.add_handler(ERAI_SEARCH_HANDLER)
 dispatcher.add_handler(UPCOMING_HANDLER)
 
 __mod_name__ = "Anime"
 __command_list__ = [
     "anime", "manga", "character", "user", "upcoming", "kaizoku", "airing",
-    "kayo"
+    "kayo", "vibe", "erai"
 ]
 __handlers__ = [
     ANIME_HANDLER, CHARACTER_HANDLER, MANGA_HANDLER, USER_HANDLER,
     UPCOMING_HANDLER, KAIZOKU_SEARCH_HANDLER, KAYO_SEARCH_HANDLER,
-    BUTTON_HANDLER, AIRING_HANDLER
+    BUTTON_HANDLER, AIRING_HANDLER, VIBE_SEARCH_HANDLER, ERAI_SEARCH_HANDLER
 ]
