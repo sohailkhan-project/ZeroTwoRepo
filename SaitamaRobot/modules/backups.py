@@ -221,8 +221,7 @@ def export_data(update, context):
     bl = list(blacklistsql.get_chat_blacklist(chat_id))
     # Disabled command
     disabledcmd = list(disabledsql.get_all_disabled(chat_id))
-    # Filters (TODO)
-    """
+
 	all_filters = list(filtersql.get_chat_triggers(chat_id))
 	export_filters = {}
 	for filters in all_filters:
@@ -253,9 +252,9 @@ def export_data(update, context):
 		print(content)
 		export_filters[filters] = content
 	print(export_filters)
-	"""
+#Comment all_filters if bot crashes.
     # Welcome (TODO)
-    # welc = welcsql.get_welc_pref(chat_id)
+    welc = welcsql.get_welc_pref(chat_id)
     # Locked
     curr_locks = locksql.get_locks(chat_id)
     curr_restr = locksql.get_restr(chat_id)
@@ -303,7 +302,7 @@ def export_data(update, context):
 
     locks = {"locks": locked_lock, "restrict": locked_restr}
     # Warns (TODO)
-    # warns = warnssql.get_warns(chat_id)
+    warns = warnssql.get_warns(chat_id)
     # Backing up
     backup[chat_id] = {
         "bot": context.bot.id,
@@ -312,9 +311,12 @@ def export_data(update, context):
                 "rules": rules
             },
             "extra": notes,
+	    "filters": filt,		
             "blacklist": bl,
+	    "warns": warns,	
             "disabled": disabledcmd,
             "locks": locks,
+	    "welcome": welc,	 
         },
     }
     baccinfo = json.dumps(backup, indent=4)
