@@ -45,119 +45,118 @@ def t(milliseconds: int) -> str:
     return tmp[:-2]
 
 
-airing_query = '''
-    query ($id: Int,$search: String) { 
-      Media (id: $id, type: ANIME,search: $search) { 
+airing_query = """
+query ($id: Int,$search: String) { 
+    Media (id: $id, type: ANIME,search: $search) {
         id
         episodes
         title {
-          romaji
-          english
-          native
+            romaji
+            english
+            native
         }
         nextAiringEpisode {
-           airingAt
-           timeUntilAiring
-           episode
+            airingAt
+            timeUntilAiring
+            episode
         } 
-      }
     }
-    '''
-
-fav_query = """
-query ($id: Int) { 
-      Media (id: $id, type: ANIME) { 
-        id
-        title {
-          romaji
-          english
-          native
-        }
-     }
 }
 """
 
-anime_query = '''
-   query ($id: Int,$search: String) { 
-      Media (id: $id, type: ANIME,search: $search) { 
+fav_query = """
+query ($id: Int) {
+    Media (id: $id, type: ANIME) {
         id
         title {
-          romaji
-          english
-          native
+            romaji
+            english
+            native
+        }
+    }
+}
+"""
+
+anime_query = """
+query ($id: Int,$search: String) {
+    Media (id: $id, type: ANIME,search: $search) {
+        id
+        title {
+            romaji
+            english
+            native
         }
         description (asHtml: false)
         startDate{
             year
-          }
-          episodes
-          season
-          type
-          format
-          status
-          duration
-          siteUrl
-          studios{
-              nodes{
-                   name
-              }
-          }
-          trailer{
-               id
-               site 
-               thumbnail
-          }
-          averageScore
-          genres
-          bannerImage
-      }
-    }
-'''
-character_query = """
-    query ($query: String) {
-        Character (search: $query) {
-               id
-               name {
-                     first
-                     last
-                     full
-               }
-               siteUrl
-               image {
-                        large
-               }
-               description
         }
+        episodes
+        season
+        type
+        format
+        status
+        duration
+        siteUrl
+        studios{
+            nodes{
+                name
+            }
+        }
+        trailer{
+            id
+            site
+            thumbnail
+        }
+        averageScore
+        genres
+        bannerImage
     }
+}
+"""
+
+character_query = """
+query ($query: String) {
+    Character (search: $query) {
+        id
+        name {
+            first
+            last
+            full
+        }
+        siteUrl
+        image {
+            large
+        }
+        description
+    }
+}
 """
 
 manga_query = """
 query ($id: Int,$search: String) { 
-      Media (id: $id, type: MANGA,search: $search) { 
+    Media (id: $id, type: MANGA,search: $search) { 
         id
         title {
-          romaji
-          english
-          native
+            romaji
+            english
+            native
         }
         description (asHtml: false)
         startDate{
             year
-          }
-          type
-          format
-          status
-          siteUrl
-          averageScore
-          genres
-          volumeCount
-          chapterCount
-          bannerImage
-      }
+        }
+        type
+        format
+        status
+        siteUrl
+        averageScore
+        genres
+        bannerImage
     }
+}
 """
 
-url = 'https://graphql.anilist.co'
+url = "https://graphql.anilist.co"
 
 
 @run_async
