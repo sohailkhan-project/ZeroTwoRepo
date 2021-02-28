@@ -202,33 +202,45 @@ def start(update: Update, context: CallbackContext):
                 parse_mode=ParseMode.MARKDOWN,
                 disable_web_page_preview=True,
                 reply_markup=InlineKeyboardMarkup(
-                    [[
-                        InlineKeyboardButton(
-                            text="☑️ Add Zero Two to your group",
-                            url="t.me/{}?startgroup=true".format(
-                                context.bot.username))
-                    ],
-                     [
-                         InlineKeyboardButton(
-                             text="Franxx Health System",
-                             url=f"https://t.me/{SUPPORT_CHAT}"),
-                     ],
-                     [
-                         InlineKeyboardButton(
-                             text="🧾 Setup Protocol",
-                             url="https://t.me/ZeroTwoUpdates/13")
-                     ],
-                     [
-                         InlineKeyboardButton(
-                             text="🗄 Source code",
-                             url="https://github.com/ninja7-bot/ZeroTwoRepo")
-                     ],                      
-                     [
+                    [
+                        [
+                            InlineKeyboardButton(
+                                text="☑️ Add Zero Two to your group",
+                                url="t.me/{}?startgroup=true".format(
+                                    context.bot.username
+                                ),
+                            )
+                        ],
+                        [
+                            InlineKeyboardButton(
+                                text="Franxx Health System,
+                                url=f"https://t.me/{SUPPORT_CHAT}",
+                            ),
+                            InlineKeyboardButton(
+                                text="🔔 Updates Channel",
+                                url="https://t.me/ZeroTwoUpdates",
+                            ),
+                        ],
+                        [
+                            InlineKeyboardButton(
+                                text="🧾 Getting started guide",
+                                url="https://t.me/ZeroTwoUpdates/13",
+                            )
+                        ],
+                        [
+                            InlineKeyboardButton(
+                                text="🗄 Source code",
+                                url="https://github.com/ninja7-bot/ZeroTwoRepo",
+                            )
+                        ],
+                        [
                          InlineKeyboardButton(
                              text="Help",
                              url="http://t.me/MissZeroTwoBot?start=help")
-
-                     ]]))
+    
+                    ]
+                ),
+            )
     else:
         update.effective_message.reply_text(
             "Summoned me!?".format(uptime),
