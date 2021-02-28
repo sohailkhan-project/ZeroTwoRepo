@@ -237,7 +237,7 @@ def start(update: Update, context: CallbackContext):
                          InlineKeyboardButton(
                              text="Help",
                              url="http://t.me/MissZeroTwoBot?start=help")
-    
+                        ],
                     ]
                 ),
             )
