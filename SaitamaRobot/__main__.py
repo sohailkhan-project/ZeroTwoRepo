@@ -213,17 +213,17 @@ def start(update: Update, context: CallbackContext):
                         ],
                         [
                             InlineKeyboardButton(
-                                text="Franxx Health System,
+                                text="Franxx Health System",
                                 url=f"https://t.me/{SUPPORT_CHAT}",
                             ),
                             InlineKeyboardButton(
-                                text="🔔 Updates Channel",
+                                text="FranXX Updates",
                                 url="https://t.me/ZeroTwoUpdates",
                             ),
                         ],
                         [
                             InlineKeyboardButton(
-                                text="🧾 Getting started guide",
+                                text="Setup Protocol",
                                 url="https://t.me/ZeroTwoUpdates/13",
                             )
                         ],
