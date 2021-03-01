@@ -221,7 +221,8 @@ def export_data(update, context):
     bl = list(blacklistsql.get_chat_blacklist(chat_id))
     # Disabled command
     disabledcmd = list(disabledsql.get_all_disabled(chat_id))
-	"""
+    # Filters (TODO)
+    """
 	all_filters = list(filtersql.get_chat_triggers(chat_id))
 	export_filters = {}
 	for filters in all_filters:
@@ -310,10 +311,10 @@ def export_data(update, context):
             "info": {
                 "rules": rules
             },
-            "extra": notes,		
-            "blacklist": bl,	
+            "extra": notes,
+            "blacklist": bl,
             "disabled": disabledcmd,
-            "locks": locks,	 
+            "locks": locks,
         },
     }
     baccinfo = json.dumps(backup, indent=4)
@@ -366,12 +367,9 @@ __mod_name__ = "Backups"
 
 __help__ = """
 *Only for group owner:*
-
  • /import: Reply to the backup file for the butler / emilia group to import as much as possible, making transfers very easy! \
  Note that files / photos cannot be imported due to telegram restrictions.
-
  • /export: Export group data, which will be exported are: rules, notes (documents, images, music, video, audio, voice, text, text buttons) \
-
 """
 
 IMPORT_HANDLER = CommandHandler("import", import_data)
