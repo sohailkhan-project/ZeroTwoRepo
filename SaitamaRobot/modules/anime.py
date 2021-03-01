@@ -287,72 +287,119 @@ def character(update: Update, context: CallbackContext):
                 msg.replace('<b>', '</b>'), parse_mode=ParseMode.MARKDOWN)
 
 
+base_url = "https://kitsu.io/api/edge"
+tempdict = {}
+
+
 @run_async
-def manga(update: Update, context: CallbackContext):
-    message = update.effective_message
-    search = message.text.split(' ', 1)
-    if len(search) == 1:
-        update.effective_message.reply_text('Format : /manga < manga name >')
-        return
-    search = search[1]
-    variables = {'search': search}
-    json = requests.post(
-        url, json={
-            'query': manga_query,
-            'variables': variables
-        }).json()
-    msg = ''
-    if 'errors' in json.keys():
-        update.effective_message.reply_text('Manga not found')
-        return
-    if json:
-        json = json['data']['Media']
-        title, title_native = json['title'].get('romaji',
-                                                False), json['title'].get(
-                                                    'native', False)
-        start_date, status, score = json['startDate'].get(
-            'year', False), json.get('status',
-                                     False), json.get('averageScore', False)
-        if title:
-            msg += f"*{title}*"
-            if title_native:
-                msg += f"(`{title_native}`)"
-        if start_date:
-            msg += f"\n*Start Date*: `{start_date}`"
-        if status:
-            msg += f"\n*Status*: `{status}`"
-        if score:
-            msg += f"\n*Score*: `{score}`"
-        if volumeCount:
-            msg += f"\n*Volumes*: `{volumeCount}`"
-        if chapterCount:
-            msg += f"\nChapters*: `{chapterCount}`"
-        msg += '\n*Genres*: '
-        for x in json.get('genres', []):
-            msg += f"{x}, "
-        msg = msg[:-2]
-        info = json['siteUrl']
-        buttons = [[InlineKeyboardButton("More Info", url=info)]]
-        image = json.get("bannerImage", False)
-        msg += f"_{json.get('description', None)}_"
-        if image:
-            try:
-                update.effective_message.reply_photo(
-                    photo=image,
-                    caption=msg,
-                    parse_mode=ParseMode.MARKDOWN,
-                    reply_markup=InlineKeyboardMarkup(buttons))
-            except:
-                msg += f" [〽️]({image})"
-                update.effective_message.reply_text(
-                    msg,
-                    parse_mode=ParseMode.MARKDOWN,
-                    reply_markup=InlineKeyboardMarkup(buttons))
-        else:
-            update.effective_message.reply_text(
-                msg,
-                parse_mode=ParseMode.MARKDOWN,
-                reply_markup=InlineKeyboardMarkup(buttons))
+@typing
+def manga_entry(update, context):
+    update.effective_message.reply_text(
+        st.TOSEARCH_MANGA, reply_markup=ForceReply(selective=True),
+    )
+
+    return 1
+
+
+@run_async
+@typing
+def manga(update, context):
+    msg = update.message
+    user = update.effective_user
+    query = msg.text.replace(" ", "%20")
+
+    res = r.get(f"{base_url}/manga?filter%5Btext%5D={query}")
+    if res.status_code != 200:
+        msg.reply_text(st.API_ERR)
+        return -1
+
+    res = res.json()["data"]
+    if len(res) <= 0:
+        msg.reply_text(st.NOT_FOUND)
+        return -1
+
+    # Add results array with user's id as key
+    tempdict[user.id] = res
+
+    keyb = []
+    for x in enumerate(res):
+        titles = x[1]["attributes"]["titles"]
+        keyb.append(
+            [
+                InlineKeyboardButton(
+                    text=f"{titles.get('en') if titles.get('en') else titles.get('ja_jp')}",
+                    callback_data=f"manga_{x[0]}_{user.id}",
+                )
+            ]
+        )
+
+    msg.reply_text(
+        f"🔍 Search results for <b>{msg.text}</b>:",
+        reply_markup=InlineKeyboardMarkup(keyb[:6]),
+    )
+
+    return ConversationHandler.END
+
+
+@run_async
+def manga_button(update, context):
+    query = update.callback_query
+    chat = update.effective_chat
+    user = update.effective_user
+
+    spl = query.data.split("_")
+    x, user_id = int(spl[1]), int(spl[2])
+    if user.id != user_id:
+        return query.answer(st.NOT_ALLOWED, show_alert=True)
+
+    try:
+        res = tempdict[user_id]
+    except KeyError:
+        return query.answer(st.KEYERROR, show_alert=True)
+
+    query.answer("Hold on...")
+    query.message.delete()
+
+    data = res[x]["attributes"]
+    caption = st.MANGA_STR.format(
+        data["titles"].get("en", ""),
+        data["titles"].get("ja_jp", ""),
+        data.get("subtype", "N/A"),
+        data.get("averageRating", "N/A"),
+        data.get("status", "N/A"),
+        data.get("startDate", "N/A"),
+        data.get("endDate", "N/A"),
+        data.get("volumeCount", "N/A"),
+        data.get("chapterCount", "N/A"),
+        data.get("serialization", "N/A"),
+        data.get("synopsis", "N/A"),
+    )
+
+    if data.get("posterImage"):
+        context.bot.sendPhoto(
+            chat_id=chat.id,
+            photo=data["posterImage"]["original"],
+            caption=sort_caps(caption, c_id=data["slug"], manga=True),
+            reply_markup=InlineKeyboardMarkup(keyboard(manga_id=data["slug"],)),
+            timeout=60,
+            disable_web_page_preview=True,
+        )
+
+    else:
+        context.bot.sendMessage(
+            chat.id,
+            text=caption,
+            reply_markup=InlineKeyboardMarkup(keyboard(manga_id=data["slug"],)),
+            disable_web_page_preview=True,
+        )
+    del tempdict[user_id]
+
+
+@run_async
+@typing
+def cancel(update, context):
+    context.bot.sendMessage(update.effective_chat.id, (st.CANCEL))
+    return ConversationHandler.END
 
 
 @run_async
