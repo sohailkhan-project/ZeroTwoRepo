@@ -55,8 +55,8 @@ PM_START_TEXT = """
 Hey there, {}! I am {}, AKA Partner Killer.
 *Codename*: [002](https://images8.alphacoders.com/923/923161.jpg) 
 
-[*Status*: `Reincarnated`]
-[*Health Points*: `Critical`]
+*Status*: ```Reincarnated```
+*Health Points*: ```Critical```
 """
 
 HELP_STRINGS = """
