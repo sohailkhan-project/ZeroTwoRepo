@@ -52,14 +52,11 @@ def get_readable_time(seconds: int) -> str:
 
 
 PM_START_TEXT = """
-*Welcome user:* {}, *002 Online Codename: {}!*[^_^](https://images.alphacoders.com/901/901812.png) 
+Hey there, {}! I am {}, AKA Partner Killer.
+*Codename*: [002](https://images8.alphacoders.com/923/923161.jpg) 
 
-*〔Status〕*
-*Classification*: _Parasite_
-*Affiliation*: _APE's Special Forces Unit_
-*Occupation*: _FRANXX Pilot (Pistil)_
-*Partner*: _Hiro_
-*FRANXX*: _Strelizia_ 
+[*Status*: `Reincarnated`]
+[*Health Points*: `Critical`]
 """
 
 HELP_STRINGS = """
@@ -81,7 +78,7 @@ And the following:
     dispatcher.bot.first_name, ""
     if not ALLOW_EXCL else "\nAll commands can either be used with / or !.\n")
 
-SAITAMA_IMG = "https://images.alphacoders.com/901/901812.png" #"https://telegra.ph/file/ff21a6f2a29ac89932368.master
+SAITAMA_IMG = "https://images8.alphacoders.com/923/923161.jpg" #"https://telegra.ph/file/ff21a6f2a29ac89932368.master
 
 DONATE_STRING = """Heya, glad to hear you want to donate!
 Zero Two is basically a forked version of Saitama, so there is no needs of funding for me right now. But\
@@ -234,9 +231,10 @@ def start(update: Update, context: CallbackContext):
                             ),
                         ],
                         [
-                         InlineKeyboardButton(
-                             text="Help",
-                             url="http://t.me/MissZeroTwoBot?start=help")
+                            InlineKeyboardButton(
+                                text="Help",
+                                url="http://t.me/MissZeroTwoBot?start=help" 
+                            )
                         ],
                     ]
                 ),
