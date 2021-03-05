@@ -139,7 +139,7 @@ def sudo_plus(func):
                 pass
         else:
             update.effective_message.reply_text(
-                "You are not an authorized user.\n *User Requirements*: Admin"
+                "You are not an authorized user.\nUser Requirements: Admin"
             )
 
     return is_sudo_plus_func
@@ -200,7 +200,7 @@ def user_admin(func):
                 pass
         else:
             update.effective_message.reply_text(
-                "You are not an authorized user.\n *User Requirements*: Admin"
+                "You are not an authorized user.\nUser Requirements: Admin"
             )
 
     return is_admin
@@ -252,7 +252,7 @@ def bot_admin(func):
         message_chat_title = update.effective_message.chat.title
 
         if update_chat_title == message_chat_title:
-            not_admin = "I am not authorized user.\n *Requirements*: Admin"
+            not_admin = "I am not authorized user.\nRequirements: Admin"
         else:
             not_admin = f"I'm not admin in <b>{update_chat_title}</b>! - REEEEEE"
 
@@ -273,7 +273,7 @@ def bot_can_delete(func):
         message_chat_title = update.effective_message.chat.title
 
         if update_chat_title == message_chat_title:
-            cant_delete = "I lack authorization or permissions are lacking.\n *Requirements*: Admin\n*Permissions*: Delete Messages"
+            cant_delete = "I lack authorization or permissions are lacking.\n *Requirements*: Admin\nPermissions: Delete Messages"
         else:
             cant_delete = f"I can't delete messages in <b>{update_chat_title}</b>!\nMake sure I'm admin and can delete other user's messages there."
 
@@ -295,7 +295,7 @@ def can_pin(func):
 
         if update_chat_title == message_chat_title:
             cant_pin = (
-                "I lack authorization or permissions are lacking.\n *Requirements*: Admin\n*Permissions*: Pin Messages"
+                "I lack authorization or permissions are lacking.\nRequirements: Admin\nPermissions: Pin Messages"
             )
         else:
             cant_pin = f"I can't pin messages in <b>{update_chat_title}</b>!\nMake sure I'm admin and can pin messages there."
@@ -317,7 +317,7 @@ def can_promote(func):
         message_chat_title = update.effective_message.chat.title
 
         if update_chat_title == message_chat_title:
-            cant_promote = "I lack authorization or permissions are lacking.\n *Requirements*: Admin\n*Permissions*: Add New Admins"
+            cant_promote = "I lack authorization or permissions are lacking.\nRequirements: Admin\nPermissions: Add New Admins"
         else:
             cant_promote = (
                 f"I can't promote/demote people in <b>{update_chat_title}</b>!\n"
@@ -341,7 +341,7 @@ def can_restrict(func):
         message_chat_title = update.effective_message.chat.title
 
         if update_chat_title == message_chat_title:
-            cant_restrict = "I lack authorization or permissions are lacking.\n *Requirements*: Admin\n*Permissions*: Ban Users"
+            cant_restrict = "I lack authorization or permissions are lacking.\nRequirements: Admin\nPermissions: Ban Users"
         else:
             cant_restrict = f"I can't restrict people in <b>{update_chat_title}</b>!\nMake sure I'm admin there and can restrict users."
 
