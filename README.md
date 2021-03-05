@@ -13,11 +13,9 @@ News channel as at [Franxx Updates](https://https://t.me/zerotwoupdates)
 
 
 ## Credits
-The bot is based on the original work done by [PaulSonOfLars](https://github.com/PaulSonOfLars)
-This repo was just revamped to suit an Anime-centric community. All original credits go to Paul and his dedication, Without his efforts, this fork would not have been possible!
+The bot is based on the original work done by [PaulSonOfLars](https://github.com/PaulSonOfLars).
+Original Owners: [Anime Kaizoku](https://github.com/AnimeKaizoku)
 
-Also, missing proper credit for blacklistusers taken from TheRealPhoenixBot (will add it later, this note says unless it is done)
+Zero Two has been modified in order to fulfil needs in [AniRena](t.me/AniRena7). This is not an original work and all the credit goes to [Anime Kaizoku](https://github.com/AnimeKaizoku).
 
-Any other authorship/credits can be seen through the commits.
-
-Should any be missing kindly let us know at [FranXX Health System](https://t.me/FranXXSupport) or simply submit a pull request on the readme.
+Visit us at [FranXX Health System](https://t.me/FranXXSupport) to add anything if left out or simply submit a pull request on the readme.
