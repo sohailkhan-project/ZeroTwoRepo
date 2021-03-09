@@ -86,6 +86,8 @@ And the following:
 ZEROTWO_IMG = "https://images8.alphacoders.com/923/923161.jpg" #"https://telegra.ph/file/ff21a6f2a29ac89932368.master
 ZEROTWO_YAWN = "https://telegra.ph/file/df5c1103ab9d539ab760d.gif"
 
+YAWN_CPT = "I want to sleep 😴!"
+
 DONATE_STRING = """Heya, glad to hear you want to donate!
 Zero Two is basically a forked version of Saitama, so there is no needs of funding for me right now. But\
 You can donate to the original writer of the Base code, Paul
@@ -211,8 +213,8 @@ def start(update: Update, context: CallbackContext):
                             context.bot.username))
                 ]]))
     else:
-        update.effective_message.reply_text(
-            ZEROTWO_YAWN)
+        update.effective_message.reply_video(
+            ZEROTWO_YAWN, YAWN_CPT)
 
 
 # for test purposes
