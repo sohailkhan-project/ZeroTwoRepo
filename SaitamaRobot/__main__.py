@@ -52,15 +52,20 @@ def get_readable_time(seconds: int) -> str:
 
 
 PM_START_TEXT = """
-Hey there, {}! I am {}, AKA Partner Killer.
-*Codename*: [002](https://images8.alphacoders.com/923/923161.jpg) 
+Hey there, {}!
+I am called {}, Pistil for Strelizia.
 
+*Codename*: [002](https://images8.alphacoders.com/923/923161.jpg) 
 *Status*: `Reincarnated`
 *Health Points*: `Critical`
+
+I help admins in groups while providing some fun games and anime commands for members. Click /help for help window.
+
+[Setup Protocol](https://t.me/ZeroTwoUpdates/13) | [Source Code](https://github.com/ninja7-bot/ZeroTwoRepo) | [Updates](https://t.me/ZeroTwoUpdates) | [FHS: FranXX Health System](t.me/FranXXSupport)
 """
 
 HELP_STRINGS = """
-Codename *{}* at your service.
+*{}* at your service.
 I can help you with following functions in managing group.
 
 *Main* commands available:
@@ -206,34 +211,6 @@ def start(update: Update, context: CallbackContext):
                                 url="t.me/{}?startgroup=true".format(
                                     context.bot.username
                                 ),
-                            )
-                        ],
-                        [
-                            InlineKeyboardButton(
-                                text="Support",
-                                url=f"https://t.me/{SUPPORT_CHAT}",
-                            ),
-                            InlineKeyboardButton(
-                                text="Updates",
-                                url="https://t.me/ZeroTwoUpdates",
-                            ),
-                        ],
-                        [
-                            InlineKeyboardButton(
-                                text="Setup Protocol",
-                                url="https://t.me/ZeroTwoUpdates/13",
-                            )
-                        ],
-                        [
-                            InlineKeyboardButton(
-                                text="🗄 Source code",
-                                url="https://github.com/ninja7-bot/ZeroTwoRepo",
-                            ),
-                        ],
-                        [
-                            InlineKeyboardButton(
-                                text="Help",
-                                url="http://t.me/MissZeroTwoBot?start=help" 
                             )
                         ],
                     ]
