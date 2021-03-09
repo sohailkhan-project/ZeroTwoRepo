@@ -83,7 +83,8 @@ And the following:
     dispatcher.bot.first_name, ""
     if not ALLOW_EXCL else "\nAll commands can either be used with / or !.\n")
 
-SAITAMA_IMG = "https://images8.alphacoders.com/923/923161.jpg" #"https://telegra.ph/file/ff21a6f2a29ac89932368.master
+ZEROTWO_IMG = "https://images8.alphacoders.com/923/923161.jpg" #"https://telegra.ph/file/ff21a6f2a29ac89932368.master
+ZEROTWO_YAWN = "https://telegra.ph/file/df5c1103ab9d539ab760d.gif"
 
 DONATE_STRING = """Heya, glad to hear you want to donate!
 Zero Two is basically a forked version of Saitama, so there is no needs of funding for me right now. But\
@@ -197,29 +198,21 @@ def start(update: Update, context: CallbackContext):
         else:
             first_name = update.effective_user.first_name
             update.effective_message.reply_photo(
-                SAITAMA_IMG,
+                ZEROTWO_IMG,
                 PM_START_TEXT.format(
                     escape_markdown(first_name),
                     escape_markdown(context.bot.first_name)),
                 parse_mode=ParseMode.MARKDOWN,
                 disable_web_page_preview=True,
-                reply_markup=InlineKeyboardMarkup(
-                    [
-                        [
-                            InlineKeyboardButton(
-                                text="☑️ Add Zero Two to your group",
-                                url="t.me/{}?startgroup=true".format(
-                                    context.bot.username
-                                ),
-                            )
-                        ],
-                    ]
-                ),
-            )
+                reply_markup=InlineKeyboardMarkup([[
+                    InlineKeyboardButton(
+                        text="Add Zero Two to your group",
+                        url="t.me/{}?startgroup=true".format(
+                            context.bot.username))
+                ]]))
     else:
         update.effective_message.reply_text(
-            "Summoned me!?".format(uptime),
-            parse_mode=ParseMode.HTML)
+            ZEROTWO_YAWN)
 
 
 # for test purposes
