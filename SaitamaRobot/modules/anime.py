@@ -615,7 +615,7 @@ def erai(update: Update, context: CallbackContext):
    
 @run_async
 def katana(update: Update, contect: CallbackContext):
-site_search(update, context, "katana")
+    site_search(update, context, "katana")
 
 __help__ = """
 Get information about anime, manga or characters from [AniList](anilist.co).
