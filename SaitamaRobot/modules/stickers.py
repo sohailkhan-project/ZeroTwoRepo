@@ -80,7 +80,7 @@ def kang(update: Update, context: CallbackContext):
     user = update.effective_user
     args = context.args
     packnum = 0
-    packname = "a" + str(user.id) + "_by_" + "ZeroTwo"
+    packname = str(user.username) + "_by_" + context.bot.username
     packname_found = 0
     max_stickers = 120
     while packname_found == 0:
@@ -88,8 +88,8 @@ def kang(update: Update, context: CallbackContext):
             stickerset = context.bot.get_sticker_set(packname)
             if len(stickerset.stickers) >= max_stickers:
                 packnum += 1
-                packname = ("a" + str(packnum) + "_" + str(user.id) + "_by_" +
-                            "ZeroTwo")
+                packname = ("a" + str(packnum) + "_" + str(user.username) + "_by_" +
+                            context.bot.username)
             else:
                 packname_found = 1
         except TelegramError as e:
@@ -205,7 +205,7 @@ def kang(update: Update, context: CallbackContext):
                 print(e)
 
         else:
-            packname = "animated" + str(user.id) + "_by_" + "ZeroTwo"
+            packname = "animated" + str(user.id) + "_by_" + context.bot.username
             packname_found = 0
             max_stickers = 50
             while packname_found == 0:
@@ -215,7 +215,7 @@ def kang(update: Update, context: CallbackContext):
                         packnum += 1
                         packname = ("animated" + str(packnum) + "_" +
                                     str(user.id) + "_by_" +
-                                    "ZeroTwo")
+                                    context.bot.username)
                     else:
                         packname_found = 1
                 except TelegramError as e:
@@ -377,7 +377,7 @@ def makepack_internal(
             success = context.bot.create_new_sticker_set(
                 user.id,
                 packname,
-                f"{name}'s Kang Pack" + extra_version,
+                f"{name}s kang pack" + extra_version,
                 png_sticker=png_sticker,
                 emojis=emoji,
             )
@@ -385,7 +385,7 @@ def makepack_internal(
             success = context.bot.create_new_sticker_set(
                 user.id,
                 packname,
-                f"{name}'s Animated Pack" + extra_version,
+                f"{name}s animated kang pack" + extra_version,
                 tgs_sticker=tgs_sticker,
                 emojis=emoji,
             )
