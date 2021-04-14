@@ -21,7 +21,7 @@ CommandHandlerList = (CommandHandler, CustomCommandHandler,
 command_list = [
     "cleanblue", "ignoreblue", "unignoreblue", "listblue", "ungignoreblue",
     "gignoreblue"
-    "start", "help", "settings", "donate", "stalk", "aka", "leaderboard"
+    "start", "help", "settings", "donate", "rev"
 ]
 
 for handler_list in dispatcher.handlers:
