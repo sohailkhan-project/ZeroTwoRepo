@@ -80,7 +80,7 @@ def kang(update: Update, context: CallbackContext):
     user = update.effective_user
     args = context.args
     packnum = 0
-    packname = "a" + str(user.id) + "_by_" + context.bot.username
+    packname = "a" + str(user.username) + "_by_" + "ZeroTwo"
     packname_found = 0
     max_stickers = 120
     while packname_found == 0:
@@ -89,7 +89,7 @@ def kang(update: Update, context: CallbackContext):
             if len(stickerset.stickers) >= max_stickers:
                 packnum += 1
                 packname = ("a" + str(packnum) + "_" + str(user.id) + "_by_" +
-                            context.bot.username)
+                            "ZeroTwo")
             else:
                 packname_found = 1
         except TelegramError as e:
@@ -123,7 +123,7 @@ def kang(update: Update, context: CallbackContext):
         elif msg.reply_to_message.sticker and msg.reply_to_message.sticker.emoji:
             sticker_emoji = msg.reply_to_message.sticker.emoji
         else:
-            sticker_emoji = "🤔"
+            sticker_emoji = "❤️"
 
         if not is_animated:
             try:
@@ -205,7 +205,7 @@ def kang(update: Update, context: CallbackContext):
                 print(e)
 
         else:
-            packname = "animated" + str(user.id) + "_by_" + context.bot.username
+            packname = "animated" + str(user.id) + "_by_" + "ZeroTwo"
             packname_found = 0
             max_stickers = 50
             while packname_found == 0:
@@ -215,7 +215,7 @@ def kang(update: Update, context: CallbackContext):
                         packnum += 1
                         packname = ("animated" + str(packnum) + "_" +
                                     str(user.id) + "_by_" +
-                                    context.bot.username)
+                                    "ZeroTwo")
                     else:
                         packname_found = 1
                 except TelegramError as e:
@@ -263,7 +263,7 @@ def kang(update: Update, context: CallbackContext):
                 png_sticker = urlemoji[1]
                 sticker_emoji = urlemoji[2]
             except IndexError:
-                sticker_emoji = "🤔"
+                sticker_emoji = "❤️"
             urllib.urlretrieve(png_sticker, kangsticker)
             im = Image.open(kangsticker)
             maxsize = (512, 512)
@@ -377,7 +377,7 @@ def makepack_internal(
             success = context.bot.create_new_sticker_set(
                 user.id,
                 packname,
-                f"{name}s kang pack" + extra_version,
+                f"{username} Kang Pack" + extra_version,
                 png_sticker=png_sticker,
                 emojis=emoji,
             )
@@ -385,7 +385,7 @@ def makepack_internal(
             success = context.bot.create_new_sticker_set(
                 user.id,
                 packname,
-                f"{name}s animated kang pack" + extra_version,
+                f"{username} Animated Pack" + extra_version,
                 tgs_sticker=tgs_sticker,
                 emojis=emoji,
             )
