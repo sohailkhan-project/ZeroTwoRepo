@@ -61,7 +61,7 @@ I am called {}, Pistil for Strelizia.
 
 I help admins in groups while providing some fun games and anime commands for members. Click /help for help window.
 
-[Setup Protocol](https://t.me/ZeroTwoUpdates/13) | [Source Code](https://github.com/ninja7-bot/ZeroTwoRepo) | [Updates](https://t.me/ZeroTwoUpdates) | [FHS: FranXX Health System](t.me/FranXXSupport)
+[Setup Protocol](https://t.me/ZeroTwoUpdates/13) | [Source Code](https://github.com/ninja7-bot/ZeroTwoRepo) | [Updates](https://t.me/ZeroTwoUpdates) | [Support](t.me/FranXXSupport)
 """
 
 HELP_STRINGS = """
