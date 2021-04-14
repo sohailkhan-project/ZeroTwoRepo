@@ -529,6 +529,7 @@ def site_search(update: Update, context: CallbackContext, site: str):
             post_link = entry.a['href']
             post_name = html.escape(entry.text.strip())
             result += f"• <a href='{post_link}'>{post_name}</a>\n"
+            
     elif site == "vibe":
         search_url = f"https://animevibe.wtf/?s={search_query}"
         html_text = requests.get(search_url).text
@@ -546,6 +547,7 @@ def site_search(update: Update, context: CallbackContext, site: str):
             post_link = entry.a['href']
             post_name = html.escape(entry.text.strip())
             result += f"• <a href='{post_link}'>{post_name}</a>\n"
+            
     elif site == "erai":
         search_query = args[1].replace(" ", "-")
         search_url = f"https://www.erai-raws.info/anime-list/{search_query}/"
@@ -564,6 +566,22 @@ def site_search(update: Update, context: CallbackContext, site: str):
             post_link = entry.a['href']
             post_name = html.escape(entry.text.strip())
             result += f"• <a href='{post_link}'>{post_name}</a>\n"
+            
+    elif site == "katana":
+        search_url = f"https://mangakatana.com/?search={search_query}&search_by=book_name"
+        html_text = requests.get(search_url).text
+        soup = bs4.BeautifulSoup(html_text, "html.parser")
+        search_result = soup.find_all("h2", {'class': "post-title"})
+
+        if search_result:
+            result = f"<b>Search results for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>MangaKatana</code>: \n"
+            for entry in search_result:
+                post_link = "https://mangakatana.com/manga/" + entry.a['href']
+                post_name = html.escape(entry.text)
+                result += f"• <a href='{post_link}'>{post_name}</a>\n"
+        else:
+            more_results = False
+            result = f"<b>No result found for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>MangaKatana</code>"
 
     buttons = [[InlineKeyboardButton("See all results", url=search_url)]]
 
