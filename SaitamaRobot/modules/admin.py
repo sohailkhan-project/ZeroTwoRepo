@@ -369,11 +369,11 @@ def adminlist(update, context):
 
     try:
         msg = update.effective_message.reply_text(
-            "Extracting data for Nines", parse_mode=ParseMode.HTML
+            "<code>Extracting data for Nines</code>", parse_mode=ParseMode.HTML
         )
     except BadRequest:
         msg = update.effective_message.reply_text(
-            "Extracting data for Nines", quote=False, parse_mode=ParseMode.HTML
+            "<code>Extracting data for Nines</code>", quote=False, parse_mode=ParseMode.HTML
         )
 
     administrators = bot.getChatAdministrators(chat_id)
