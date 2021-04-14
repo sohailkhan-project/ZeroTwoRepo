@@ -272,13 +272,13 @@ def info(update: Update, context: CallbackContext):
     disaster_level_present = False
 
     if user.id == OWNER_ID:
-        text += "\n\nThreat Level: 'MAXIMUM'."
+        text += "\n\nWatcher"
         disaster_level_present = True
     elif user.id in DEV_USERS:
-        text += "\n\nThis user is member of 'Franxx Health System'."
+        text += "\n\nMaster"
         disaster_level_present = True
     elif user.id in DRAGONS:
-        text += "\n\nThreat Level: 'SSS RANK'."
+        text += "\n\nExecutor"
         disaster_level_present = True
     elif user.id in DEMONS:
         text += "\n\nThreat Level: 'S RANK'."
