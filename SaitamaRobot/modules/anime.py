@@ -614,7 +614,7 @@ def erai(update: Update, context: CallbackContext):
     site_search(update, context, "erai")
    
 @run_async
-def katana(update: Update, contect: CallbackContext):
+def katana(update: Update, context: CallbackContext):
     site_search(update, context, "katana")
 
 __help__ = """
