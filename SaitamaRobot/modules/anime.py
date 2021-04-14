@@ -612,6 +612,10 @@ def vibe(update: Update, context: CallbackContext):
 @run_async
 def erai(update: Update, context: CallbackContext):
     site_search(update, context, "erai")
+   
+@run_async
+def katana(update: Update, contect: CallbackContext):
+site_search(update, context, "katana")
 
 __help__ = """
 Get information about anime, manga or characters from [AniList](anilist.co).
@@ -626,6 +630,7 @@ Get information about anime, manga or characters from [AniList](anilist.co).
  • `/airing <anime>`*:* returns anime airing info.
  • `/vibe <anime>`*:* search an anime on animevibe.wtf.
  • `/erai <anime>`*:* search an anime on erai-raws.info.
+ • `/katana <manga>`*:* search manga on mangakatana.com.
  """
 
 ANIME_HANDLER = DisableAbleCommandHandler("anime", anime)
@@ -638,6 +643,7 @@ KAIZOKU_SEARCH_HANDLER = DisableAbleCommandHandler("kaizoku", kaizoku)
 KAYO_SEARCH_HANDLER = DisableAbleCommandHandler("kayo", kayo)
 VIBE_SEARCH_HANDLER = DisableAbleCommandHandler("vibe", vibe)
 ERAI_SEARCH_HANDLER = DisableAbleCommandHandler("erai", erai)
+KATANA_HANDLER = DisableAbleCommandHandler("katana", katana)
 BUTTON_HANDLER = CallbackQueryHandler(button, pattern='anime_.*')
 
 dispatcher.add_handler(BUTTON_HANDLER)
@@ -655,10 +661,10 @@ dispatcher.add_handler(UPCOMING_HANDLER)
 __mod_name__ = "Anime"
 __command_list__ = [
     "anime", "manga", "character", "user", "upcoming", "kaizoku", "airing",
-    "kayo", "vibe", "erai"
+    "kayo", "vibe", "erai", "katana",
 ]
 __handlers__ = [
     ANIME_HANDLER, CHARACTER_HANDLER, MANGA_HANDLER, USER_HANDLER,
     UPCOMING_HANDLER, KAIZOKU_SEARCH_HANDLER, KAYO_SEARCH_HANDLER,
-    BUTTON_HANDLER, AIRING_HANDLER, VIBE_SEARCH_HANDLER, ERAI_SEARCH_HANDLER
+    BUTTON_HANDLER, AIRING_HANDLER, VIBE_SEARCH_HANDLER, ERAI_SEARCH_HANDLER, KATANA_HANDLER
 ]
