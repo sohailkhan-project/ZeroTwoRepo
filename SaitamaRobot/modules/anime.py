@@ -571,14 +571,19 @@ def site_search(update: Update, context: CallbackContext, site: str):
         search_url = f"https://mangakatana.com/?search={search_query}&search_by=book_name"
         html_text = requests.get(search_url).text
         soup = bs4.BeautifulSoup(html_text, "html.parser")
-        search_result = soup.find_all("h2", {'class': "post-title"})
+        search_result = soup.find_all("h2", {'class': "title"})
 
-        if search_result:
-            result = f"<b>Search results for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>MangaKatana</code>: \n"
-            for entry in search_result:
-                post_link = "https://mangakatana.com/manga/" + entry.a['href']
-                post_name = html.escape(entry.text)
-                result += f"• <a href='{post_link}'>{post_name}</a>\n"
+        result = f"<b>Results for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>MangaKatana</code>: \n"
+        for entry in search_result:
+
+            if entry.text.strip() == "Nothing Found":
+                result = f"<b>No result found for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>MangaKatana</code>"
+                more_results = False
+                break
+
+            post_link = entry.a['href']
+            post_name = html.escape(entry.text.strip())
+            result += f"• <a href='{post_link}'>{post_name}</a>\n"
         else:
             more_results = False
             result = f"<b>No result found for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>MangaKatana</code>"
