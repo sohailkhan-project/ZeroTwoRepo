@@ -64,7 +64,7 @@ def reverse(update: Update, context:CallbackContext):
             img_link = splatargs[1]
             lim = 2
         else:
-            msg.reply_text("/reverse <link> <amount of images to return.>")
+            msg.reply_text("/rev <link> <amount of images to return.>")
             return
         try:
             urllib.request.urlretrieve(img_link, imagename)
