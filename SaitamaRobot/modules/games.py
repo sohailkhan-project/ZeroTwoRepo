@@ -15,21 +15,21 @@ from SaitamaRobot.modules.helper_funcs.extraction import extract_user
 
 @run_async
 def truth(update: Update, context: CallbackContext):
-    update.effective_message.reply_text(random.choice(games_strings.TRUTH_STRINGS))
+    update.effective_message.reply_text(random.choice(fun_strings.TRUTH_STRINGS))
 
 
 @run_async
 def dare(update: Update, context: CallbackContext):
-    update.effective_message.reply_text(random.choice(games_strings.DARE_STRINGS))
+    update.effective_message.reply_text(random.choice(fun_strings.DARE_STRINGS))
 
 
 @run_async
 def tord(update: Update, context: CallbackContext):
-    update.effective_message.reply_text(random.choice(games_strings.TORD_STRINGS))
+    update.effective_message.reply_text(random.choice(fun_strings.TORD_STRINGS))
 
 @run_async
 def wyr(update: Update, context: CallbackContext):
-    update.effective_message.reply_text(random.choice(games_strings.WYR_STRINGS))
+    update.effective_message.reply_text(random.choice(fun_strings.WYR_STRINGS))
 
 
 __help__ = """
