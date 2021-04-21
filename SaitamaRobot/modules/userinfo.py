@@ -272,22 +272,22 @@ def info(update: Update, context: CallbackContext):
     disaster_level_present = False
 
     if user.id == OWNER_ID:
-        text += "\n\nWatcher"
+        text += "\n\nWatcher!"
         disaster_level_present = True
     elif user.id in DEV_USERS:
-        text += "\n\nMaster"
+        text += "\n\nModerator!"
         disaster_level_present = True
     elif user.id in DRAGONS:
-        text += "\n\nExecutor"
+        text += "\n\nExecutor!"
         disaster_level_present = True
     elif user.id in DEMONS:
-        text += "\n\nThreat Level: 'S RANK'."
+        text += "\n\nReaper!"
         disaster_level_present = True
     elif user.id in TIGERS:
-        text += "\n\nThreat Level: 'A RANK'."
+        text += "\n\nSamurai!"
         disaster_level_present = True
     elif user.id in WOLVES:
-        text += "\n\nThreat Level: 'B RANK'."
+        text += "\n\nNinja!"
         disaster_level_present = True
 
     if disaster_level_present:
@@ -461,7 +461,7 @@ def set_about_bio(update: Update, context: CallbackContext):
 
         if user_id == bot.id and sender_id not in DEV_USERS:
             message.reply_text(
-                "Erm... yeah, I only trust Heroes Association to set my bio.")
+                "Erm... yeah, I only trust Moderators to set my bio.")
             return
 
         text = message.text
