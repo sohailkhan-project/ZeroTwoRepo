@@ -593,12 +593,12 @@ Group admins/group owners do not need these commands.
 Visit @{SUPPORT_CHAT} for more information.
 """
 
-SUDO_HANDLER = CommandHandler(("addsudo", "adddragon"), addsudo)
-SUPPORT_HANDLER = CommandHandler(("addsupport", "adddemon"), addsupport)
-TIGER_HANDLER = CommandHandler(("addtiger"), addtiger)
-WHITELIST_HANDLER = CommandHandler(("addwhitelist", "addwolf"), addwhitelist)
-UNSUDO_HANDLER = CommandHandler(("removesudo", "removedragon"), removesudo)
-UNSUPPORT_HANDLER = CommandHandler(("removesupport", "removedemon"),
+SUDO_HANDLER = CommandHandler(("addsudo", "adddg"), addsudo)
+SUPPORT_HANDLER = CommandHandler(("addsupport", "adddm"), addsupport)
+TIGER_HANDLER = CommandHandler(("addtg"), addtiger)
+WHITELIST_HANDLER = CommandHandler(("addwhitelist", "addwl"), addwhitelist)
+UNSUDO_HANDLER = CommandHandler(("removesudo", "rmvsudo"), removesudo)
+UNSUPPORT_HANDLER = CommandHandler(("removesupport", "rmvreap"),
                                    removesupport)
 UNTIGER_HANDLER = CommandHandler(("removetiger"), removetiger)
 UNWHITELIST_HANDLER = CommandHandler(("removewhitelist", "removewolf"),
