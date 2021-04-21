@@ -57,9 +57,9 @@ I am called {}, Pistil for Strelizia.
 
 *Codename*: [002](https://images8.alphacoders.com/923/923161.jpg) 
 *Status*: `Reincarnated`
-*Health Points*: `Critical`
+*Life Force*: `0%` 
 
-I help admins in groups while providing some fun games and anime commands for members. Click /help for help window.
+I help Nines in groups while providing some fun games and anime commands for members. Click /help for help window.
 
 [Setup Protocol](https://t.me/ZeroTwoUpdates/13) | [Source Code](https://github.com/ninja7-bot/ZeroTwoRepo) | [Updates](https://t.me/ZeroTwoUpdates) | [Support](t.me/FranXXSupport)
 """
@@ -83,10 +83,8 @@ And the following:
     dispatcher.bot.first_name, ""
     if not ALLOW_EXCL else "\nAll commands can either be used with / or !.\n")
 
-ZEROTWO_IMG = "https://images8.alphacoders.com/923/923161.jpg" #"https://telegra.ph/file/ff21a6f2a29ac89932368.master
+ZEROTWO_IMG = "https://telegra.ph/file/31c022ec02781b6169ee2.mp4" #"https://images8.alphacoders.com/923/923161.jpg" #"https://telegra.ph/file/ff21a6f2a29ac89932368.master
 ZEROTWO_YAWN = "https://telegra.ph/file/df5c1103ab9d539ab760d.gif"
-
-YAWN_CPT = "I want to sleep 😴!"
 
 DONATE_STRING = """Heya, glad to hear you want to donate!
 Zero Two is basically a forked version of Saitama, so there is no needs of funding for me right now. But\
