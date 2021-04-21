@@ -63,16 +63,16 @@ def addsudo(update: Update, context: CallbackContext) -> str:
         data = json.load(infile)
 
     if user_id in DRAGONS:
-        message.reply_text("This member is already a Dragon Disaster")
+        message.reply_text("This member is already a Executioner Class.")
         return ""
 
     if user_id in DEMONS:
-        rt += "Requested HA to promote a Demon Disaster to Dragon."
+        rt += "Promoting Reaper to Executioner Class."
         data['supports'].remove(user_id)
         DEMONS.remove(user_id)
 
     if user_id in WOLVES:
-        rt += "Requested HA to promote a Wolf Disaster to Dragon."
+        rt += "Promoting Ninja to Executioner Class."
         data['whitelists'].remove(user_id)
         WOLVES.remove(user_id)
 
@@ -83,7 +83,7 @@ def addsudo(update: Update, context: CallbackContext) -> str:
         json.dump(data, outfile, indent=4)
 
     update.effective_message.reply_text(
-        rt + "\nSuccessfully set Disaster level of {} to Dragon!".format(
+        rt + "\nAppointing Executioner Class to {}!".format(
             user_member.first_name))
 
     log_message = (
@@ -122,16 +122,16 @@ def addsupport(
         data = json.load(infile)
 
     if user_id in DRAGONS:
-        rt += "Requested HA to deomote this Dragon to Demon"
+        rt += "Demoting to Reaper Class."
         data['sudos'].remove(user_id)
         DRAGONS.remove(user_id)
 
     if user_id in DEMONS:
-        message.reply_text("This user is already a Demon Disaster.")
+        message.reply_text("This user is already a Reaper Class.")
         return ""
 
     if user_id in WOLVES:
-        rt += "Requested HA to promote this Wolf Disaster to Demon"
+        rt += "Promoting Ninja to Reaper Class."
         data['whitelists'].remove(user_id)
         WOLVES.remove(user_id)
 
@@ -142,7 +142,7 @@ def addsupport(
         json.dump(data, outfile, indent=4)
 
     update.effective_message.reply_text(
-        rt + f"\n{user_member.first_name} was added as a Demon Disaster!")
+        rt + f"\n{user_member.first_name} was added as a Reaper Class!")
 
     log_message = (
         f"#SUPPORT\n"
@@ -187,7 +187,7 @@ def addwhitelist(update: Update, context: CallbackContext) -> str:
         DEMONS.remove(user_id)
 
     if user_id in WOLVES:
-        message.reply_text("This user is already a Wolf Disaster.")
+        message.reply_text("This user is already a Ninja Class.")
         return ""
 
     data['whitelists'].append(user_id)
@@ -198,7 +198,7 @@ def addwhitelist(update: Update, context: CallbackContext) -> str:
 
     update.effective_message.reply_text(
         rt +
-        f"\nSuccessfully promoted {user_member.first_name} to a Wolf Disaster!")
+        f"\nSuccessfully promoted {user_member.first_name} to a Ninja Class!")
 
     log_message = (
         f"#WHITELIST\n"
@@ -259,11 +259,11 @@ def addtiger(update: Update, context: CallbackContext) -> str:
 
     update.effective_message.reply_text(
         rt +
-        f"\nSuccessfully promoted {user_member.first_name} to a Tiger Disaster!"
+        f"\nSuccessfully promoted {user_member.first_name} to a Samurai Class!"
     )
 
     log_message = (
-        f"#TIGER\n"
+        f"#SAMURAI\n"
         f"<b>Admin:</b> {mention_html(user.id, html.escape(user.first_name))} \n"
         f"<b>User:</b> {mention_html(user_member.id, html.escape(user_member.first_name))}"
     )
@@ -294,7 +294,7 @@ def removesudo(update: Update, context: CallbackContext) -> str:
         data = json.load(infile)
 
     if user_id in DRAGONS:
-        message.reply_text("Requested HA to demote this user to Civilian")
+        message.reply_text("Dismissing Executioner Class.")
         DRAGONS.remove(user_id)
         data['sudos'].remove(user_id)
 
@@ -314,7 +314,7 @@ def removesudo(update: Update, context: CallbackContext) -> str:
         return log_message
 
     else:
-        message.reply_text("This user is not a Dragon Disaster!")
+        message.reply_text("This user is not a Executioner!")
         return ""
 
 
@@ -338,7 +338,7 @@ def removesupport(update: Update, context: CallbackContext) -> str:
         data = json.load(infile)
 
     if user_id in DEMONS:
-        message.reply_text("Requested HA to demote this user to Civilian")
+        message.reply_text("Dismissing Reaper Class.")
         DEMONS.remove(user_id)
         data['supports'].remove(user_id)
 
@@ -357,7 +357,7 @@ def removesupport(update: Update, context: CallbackContext) -> str:
         return log_message
 
     else:
-        message.reply_text("This user is not a Demon level Disaster!")
+        message.reply_text("This user is not a Reaper.")
         return ""
 
 
@@ -431,7 +431,7 @@ def removetiger(update: Update, context: CallbackContext) -> str:
             json.dump(data, outfile, indent=4)
 
         log_message = (
-            f"#UNTIGER\n"
+            f"#RMSAMURAI\n"
             f"<b>Admin:</b> {mention_html(user.id, html.escape(user.first_name))}\n"
             f"<b>User:</b> {mention_html(user_member.id, html.escape(user_member.first_name))}"
         )
@@ -441,14 +441,14 @@ def removetiger(update: Update, context: CallbackContext) -> str:
 
         return log_message
     else:
-        message.reply_text("This user is not a Tiger Disaster!")
+        message.reply_text("This user is not a Samurai!")
         return ""
 
 
 @run_async
 @whitelist_plus
 def whitelistlist(update: Update, context: CallbackContext):
-    reply = "<b>Ninjas</b>\n"
+    reply = "<b>Ninja</b>\n"
     bot = context.bot
     for each_user in WOLVES:
         user_id = int(each_user)
@@ -464,7 +464,7 @@ def whitelistlist(update: Update, context: CallbackContext):
 @run_async
 @whitelist_plus
 def tigerlist(update: Update, context: CallbackContext):
-    reply = "<b>Samurais</b>\n"
+    reply = "<b>Samurai</b>\n"
     bot = context.bot
     for each_user in TIGERS:
         user_id = int(each_user)
