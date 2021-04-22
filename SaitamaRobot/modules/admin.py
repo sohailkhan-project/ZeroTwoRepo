@@ -369,7 +369,7 @@ def adminlist(update, context):
 
     try:
         msg = update.effective_message.reply_text(
-            "<code>Extracting data for Nines</code>", parse_mode=ParseMode.HTML
+            "<code>Extracting data for Nines...</code>", parse_mode=ParseMode.HTML
         )
     except BadRequest:
         msg = update.effective_message.reply_text(
