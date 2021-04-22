@@ -272,22 +272,22 @@ def info(update: Update, context: CallbackContext):
     disaster_level_present = False
 
     if user.id == OWNER_ID:
-        text += "\n\nWatcher!"
+        text += "\n\n<b>Watcher Class!</b>"
         disaster_level_present = True
     elif user.id in DEV_USERS:
-        text += "\n\nModerator!"
+        text += "\n\n<b>Moderator!</b>"
         disaster_level_present = True
     elif user.id in DRAGONS:
-        text += "\n\nExecutor!"
+        text += "\n\n<b>Executioner Class!</b>"
         disaster_level_present = True
     elif user.id in DEMONS:
-        text += "\n\nReaper!"
+        text += "\n\n<b>Reaper Class!</b>"
         disaster_level_present = True
     elif user.id in TIGERS:
-        text += "\n\nSamurai!"
+        text += "\n\n<b>Samurai Class!</b>"
         disaster_level_present = True
     elif user.id in WOLVES:
-        text += "\n\nNinja!"
+        text += "\n\n<b>Ninja Class!</b>"
         disaster_level_present = True
 
     if disaster_level_present:
@@ -514,8 +514,8 @@ Examples:
 *Overall Information about you:*
  • `/info`*:* get information about a user. 
  
- *What is that health thingy?*
-  Come and see [HP System explained](https://t.me/ZeroTwoUpdates/24)
+ *What Health means?*
+  Come and see [HP System explained](https://t.me/ZeroTwoUpdates/24).
 """
 
 SET_BIO_HANDLER = DisableAbleCommandHandler("setbio", set_about_bio)
@@ -524,7 +524,7 @@ GET_BIO_HANDLER = DisableAbleCommandHandler("bio", about_bio)
 STATS_HANDLER = CommandHandler("stats", stats)
 ID_HANDLER = DisableAbleCommandHandler("id", get_id)
 GIFID_HANDLER = DisableAbleCommandHandler("gifid", gifid)
-INFO_HANDLER = DisableAbleCommandHandler(("info", "book"), info)
+INFO_HANDLER = DisableAbleCommandHandler(("info", "book", "data"), info)
 
 SET_ABOUT_HANDLER = DisableAbleCommandHandler("setme", set_about_me)
 GET_ABOUT_HANDLER = DisableAbleCommandHandler("me", about_me)
