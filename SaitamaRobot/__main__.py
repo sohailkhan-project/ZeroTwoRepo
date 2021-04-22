@@ -83,7 +83,7 @@ And the following:
     dispatcher.bot.first_name, ""
     if not ALLOW_EXCL else "\nAll commands can either be used with / or !.\n")
 
-ZEROTWO_IMG = "https://telegra.ph/file/31c022ec02781b6169ee2.mp4" #"https://images8.alphacoders.com/923/923161.jpg" #"https://telegra.ph/file/ff21a6f2a29ac89932368.master
+ZEROTWO_IMG = "https://images8.alphacoders.com/923/923161.jpg" #"https://telegra.ph/file/ff21a6f2a29ac89932368.master
 ZEROTWO_YAWN = "https://telegra.ph/file/4c6f55dbbe553e003ba14.gif" #"https://telegra.ph/file/df5c1103ab9d539ab760d.gif"
 YAWN_CPT = "I wanna sleep, yawn~ 💤"
 
@@ -198,7 +198,7 @@ def start(update: Update, context: CallbackContext):
 
         else:
             first_name = update.effective_user.first_name
-            update.effective_message.reply_video(
+            update.effective_message.reply_photo(
                 ZEROTWO_IMG,
                 PM_START_TEXT.format(
                     escape_markdown(first_name),
