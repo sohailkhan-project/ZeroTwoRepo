@@ -313,15 +313,16 @@ def info(update: Update, context: CallbackContext):
     if INFOPIC:
         try:
             profile = context.bot.get_user_profile_photos(user.id).photos[0][-1]
-            #_file = bot.get_file(profile["file_id"])
-            #_file.download(f"{user.id}.png")
+            _file = bot.get_file(profile["file_id"])
+            _file.download(f"{user.id}.png")
 
-            message.reply_photo(
-                photo=INFOPIC,
+           update.effective_message.reply_photo(
+                photo=(f"{user.id}.png", "rb"),
                 caption=(text),
-                parse_mode=ParseMode.HTML)
+                parse_mode=ParseMode.HTML
+                disable_web_page_preview=True)
 
-            #os.remove(f"{user.id}.png")
+            os.remove(f"{user.id}.png")
         # Incase user don't have profile pic, send normal text
         except IndexError:
             message.reply_text(
@@ -509,7 +510,7 @@ def status(update: Update, context: CallbackContext):
     elif message.reply_to_message:
         username = message.reply_to_message.from_user.first_name
         update.effective_message.reply_document(
-            document=open(f"STAUS_IMG.png", "rb"),
+            document=open(f"STATUS_IMG.png", "rb"),
             parse_mode=ParseMode.HTML,
             disable_web_page_preview=True)
     else:
