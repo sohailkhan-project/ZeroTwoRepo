@@ -256,7 +256,7 @@ def info(update: Update, context: CallbackContext):
                     text += _stext.format("Member of Nines")
     if user_id not in [bot.id, 777000, 1087968824]:
         userhp = hpmanager(user)
-        text += f"\n\n<b>Life Force:</b> <code>{userhp['earnedhp']}/{userhp['totalhp']}</code>\n[ {make_bar(int(userhp['percentage']))} ] | <code>{userhp['percentage']}%</code>]"
+        text += f"\n\n<b>Life Force:</b> <code>{userhp['earnedhp']}/{userhp['totalhp']}</code>\n[ {make_bar(int(userhp['percentage']))} | <code>{userhp['percentage']}%</code> ]"
 
     try:
         spamwtc = sw.get_ban(int(user.id))
