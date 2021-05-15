@@ -227,7 +227,7 @@ def info(update: Update, context: CallbackContext):
     rep = message.reply_text(
         "<code>Accessing Franxx Database...</code>", parse_mode=ParseMode.HTML)
 
-    text = (f"╔═══〔<b> INFO </b>〕\n"
+    text = (f"╔══〔<b> INFO </b>〕\n"
             f"ID: <code>{user.id}</code>\n"
             f"First Name: {html.escape(user.first_name)}")
 
@@ -256,7 +256,7 @@ def info(update: Update, context: CallbackContext):
                     text += _stext.format("Member of Nines")
     if user_id not in [bot.id, 777000, 1087968824]:
         userhp = hpmanager(user)
-        text += f"\n\n<b>Life Force:</b> <code>{userhp['earnedhp']}/{userhp['totalhp']}</code>\n[{make_bar(int(userhp['percentage']))} {userhp['percentage']}%]"
+        text += f"\n\n<b>Life Force:</b> <code>{userhp['earnedhp']}/{userhp['totalhp']}</code>\n［ {make_bar(int(userhp['percentage'))} ］| <code>{userhp['percentage']}%</code>]"
 
     try:
         spamwtc = sw.get_ban(int(user.id))
@@ -272,22 +272,22 @@ def info(update: Update, context: CallbackContext):
     disaster_level_present = False
 
     if user.id == OWNER_ID:
-        text += "\n\n<b>Watcher Class!</b>"
+        text += "\n\n<b>Watcher!</b>"
         disaster_level_present = True
     elif user.id in DEV_USERS:
         text += "\n\n<b>Moderator!</b>"
         disaster_level_present = True
     elif user.id in DRAGONS:
-        text += "\n\n<b>Executioner Class!</b>"
+        text += "\n\n<b>Executioner!</b>"
         disaster_level_present = True
     elif user.id in DEMONS:
-        text += "\n\n<b>Reaper Class!</b>"
+        text += "\n\n<b>Reaper!</b>"
         disaster_level_present = True
     elif user.id in TIGERS:
-        text += "\n\n<b>Samurai Class!</b>"
+        text += "\n\n<b>Samurai!</b>"
         disaster_level_present = True
     elif user.id in WOLVES:
-        text += "\n\n<b>Ninja Class!</b>"
+        text += "\n\n<b>Ninja!</b>"
         disaster_level_present = True
 
     if disaster_level_present:
