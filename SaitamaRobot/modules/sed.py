@@ -115,6 +115,7 @@ def sed(update: Update, context: CallbackContext):
         elif text:
             update.effective_message.reply_to_message.reply_text(text)
 
+__mod_name__ = "Sed/Regex"            
 
 __help__ = """
  • `s/<text1>/<text2>(/<flag>)`*:* Reply to a message with this to perform a sed operation on that message, replacing all \
