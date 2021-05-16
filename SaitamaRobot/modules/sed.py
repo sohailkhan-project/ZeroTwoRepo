@@ -126,8 +126,6 @@ If you want to use these characters, make sure you escape them!
 *Example:* \\?.
 """.format(telegram.MAX_MESSAGE_LENGTH)
 
-__mod_name__ = "Sed/Regex"
-
 SED_HANDLER = DisableAbleMessageHandler(
     Filters.regex(r's([{}]).*?\1.*'.format("".join(DELIMITERS))),
     sed,
