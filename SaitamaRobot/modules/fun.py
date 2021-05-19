@@ -198,10 +198,6 @@ def dare(update: Update, context: CallbackContext):
 def tord(update: Update, context: CallbackContext):
     update.effective_message.reply_text(random.choice(fun_strings.TORD_STRINGS))
 
-@run_async
-def wyr(update: Update, context: CallbackContext):
-    update.effective_message.reply_text(random.choice(fun_strings.WYR_STRINGS))
-    
 TNG = "https://telegra.ph/file/2632bf79c7a184cac562c.png"    
     
 @run_async
@@ -231,7 +227,6 @@ __help__ = """
  • `/truth`*:* asks you a question
  • `/dare`*:* gives you a dare
  • `/tord`*:* can be a truth or a dare
- • `/rather`*:* would you rather
  • `/tng`*:* TNG: The Number Game, answer the question respective to the number.
  
  *NOTE*: Module can be disabled by using `/disablemod fun`.
@@ -251,13 +246,12 @@ TABLE_HANDLER = DisableAbleCommandHandler("table", table)
 TRUTH_HANDLER = DisableAbleCommandHandler("truth", truth)
 DARE_HANDLER = DisableAbleCommandHandler("dare", dare)
 TORD_HANDLER = DisableAbleCommandHandler("tord", tord)
-WYR_HANDLER = DisableAbleCommandHandler("rather", wyr)
 TNG_HANDLER = DisableAbleCommandHandler("tng", tng)
 
 dispatcher.add_handler(TRUTH_HANDLER)
 dispatcher.add_handler(DARE_HANDLER)
 dispatcher.add_handler(TORD_HANDLER)
-dispatcher.add_handler(WYR_HANDLER)
+
 dispatcher.add_handler(TNG_HANDLER)
 dispatcher.add_handler(SANITIZE_HANDLER)
 dispatcher.add_handler(RUNS_HANDLER)
@@ -277,10 +271,10 @@ dispatcher.add_handler(TABLE_HANDLER)
 __mod_name__ = "Fun & Games"
 __command_list__ = [
     "runs", "slap", "roll", "toss", "shrug", "bluetext", "rlg", "decide",
-    "table", "pat", "sanitize", "truth", "dare", "tord", "rather", "tng",
+    "table", "pat", "sanitize", "truth", "dare", "tord", "tng",
 ]
 __handlers__ = [
     RUNS_HANDLER, SLAP_HANDLER, PAT_HANDLER, ROLL_HANDLER, TOSS_HANDLER,
     SHRUG_HANDLER, BLUETEXT_HANDLER, RLG_HANDLER, DECIDE_HANDLER, TABLE_HANDLER,
-    SANITIZE_HANDLER, TRUTH_HANDLER, DARE_HANDLER, TORD_HANDLER, WYR_HANDLER, TNG_HANDLER,
+    SANITIZE_HANDLER, TRUTH_HANDLER, DARE_HANDLER, TORD_HANDLER, TNG_HANDLER,
 ]
