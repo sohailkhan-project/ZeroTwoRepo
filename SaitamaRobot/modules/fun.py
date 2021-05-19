@@ -185,10 +185,34 @@ def table(update: Update, context: CallbackContext):
 
     
 @run_async
-def dyk(update: Update, context: CallbackContext):
-    update.effective_message.reply_text(random.choice(fun_strings.DYK_STRINGS))
+def truth(update: Update, context: CallbackContext):
+    update.effective_message.reply_text(random.choice(fun_strings.TRUTH_STRINGS))
+
+
+@run_async
+def dare(update: Update, context: CallbackContext):
+    update.effective_message.reply_text(random.choice(fun_strings.DARE_STRINGS))
+
+
+@run_async
+def tord(update: Update, context: CallbackContext):
+    update.effective_message.reply_text(random.choice(fun_strings.TORD_STRINGS))
+
+@run_async
+def wyr(update: Update, context: CallbackContext):
+    update.effective_message.reply_text(random.choice(fun_strings.WYR_STRINGS))
+    
+TNG = "https://telegra.ph/file/2632bf79c7a184cac562c.png"    
+    
+@run_async
+def tng(update, context):
+    number = random.choice(range(1, 147))
+    update.effective_message.reply_photo(TNG, caption=number,
+                        parse_mode=ParseMode.MARKDOWN)    
+
 
 __help__ = """
+⎔ *Fun Commands*
  • `/runs`*:* reply a random string from an array of replies
  • `/slap`*:* slap a user, or get slapped if not a reply
  • `/shrug`*:* get shrug XD
@@ -202,7 +226,15 @@ __help__ = """
  • `/weebify <text>`*:* returns a weebified text
  • `/sanitize`*:* always use this before /pat or any contact
  • `/pat`*:* pats a user, or get patted
- • `/dyk`*:* gives you a anime related fact. NOTE: These facts may contain spoilers
+ 
+ ⎔ *Game Commands*
+ • `/truth`*:* asks you a question
+ • `/dare`*:* gives you a dare
+ • `/tord`*:* can be a truth or a dare
+ • `/rather`*:* would you rather
+ • `/tng`*:* TNG: The Number Game, answer the question respective to the number.
+ 
+ *NOTE*: Module can be disabled by using `/disablemod fun`.
 """
 
 SANITIZE_HANDLER = DisableAbleCommandHandler("sanitize", sanitize)
@@ -216,9 +248,17 @@ BLUETEXT_HANDLER = DisableAbleCommandHandler("bluetext", bluetext)
 RLG_HANDLER = DisableAbleCommandHandler("rlg", rlg)
 DECIDE_HANDLER = DisableAbleCommandHandler("decide", decide)
 TABLE_HANDLER = DisableAbleCommandHandler("table", table)
-DYK_HANDLER = DisableAbleCommandHandler("dyk", dyk)
+TRUTH_HANDLER = DisableAbleCommandHandler("truth", truth)
+DARE_HANDLER = DisableAbleCommandHandler("dare", dare)
+TORD_HANDLER = DisableAbleCommandHandler("tord", tord)
+WYR_HANDLER = DisableAbleCommandHandler("rather", wyr)
+TNG_HANDLER = DisableAbleCommandHandler("tng", tng)
 
-
+dispatcher.add_handler(TRUTH_HANDLER)
+dispatcher.add_handler(DARE_HANDLER)
+dispatcher.add_handler(TORD_HANDLER)
+dispatcher.add_handler(WYR_HANDLER)
+dispatcher.add_handler(TNG_HANDLER)
 dispatcher.add_handler(SANITIZE_HANDLER)
 dispatcher.add_handler(RUNS_HANDLER)
 dispatcher.add_handler(SLAP_HANDLER)
@@ -230,17 +270,17 @@ dispatcher.add_handler(BLUETEXT_HANDLER)
 dispatcher.add_handler(RLG_HANDLER)
 dispatcher.add_handler(DECIDE_HANDLER)
 dispatcher.add_handler(TABLE_HANDLER)
-dispatcher.add_handler(DYK_HANDLER)
 
 
 
-__mod_name__ = "Fun"
+
+__mod_name__ = "Fun & Games"
 __command_list__ = [
     "runs", "slap", "roll", "toss", "shrug", "bluetext", "rlg", "decide",
-    "table", "pat", "sanitize", "dyk",
+    "table", "pat", "sanitize", "truth", "dare", "tord", "rather", "tng",
 ]
 __handlers__ = [
     RUNS_HANDLER, SLAP_HANDLER, PAT_HANDLER, ROLL_HANDLER, TOSS_HANDLER,
     SHRUG_HANDLER, BLUETEXT_HANDLER, RLG_HANDLER, DECIDE_HANDLER, TABLE_HANDLER,
-    SANITIZE_HANDLER, DYK_HANDLER,
+    SANITIZE_HANDLER, TRUTH_HANDLER, DARE_HANDLER, TORD_HANDLER, WYR_HANDLER, TNG_HANDLER,
 ]
