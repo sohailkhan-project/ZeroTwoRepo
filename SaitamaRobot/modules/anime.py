@@ -545,6 +545,8 @@ def site_search(update: Update, context: CallbackContext, site: str):
         else:
             more_results = False
             result = f"<b>No result found for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>AnimeDL.</code> \nTry using <code>/kayo </code>!"
+            
+    buttons = [[InlineKeyboardButton("See all results", url=search_url)]]
 
     if more_results:
         message.reply_text(
