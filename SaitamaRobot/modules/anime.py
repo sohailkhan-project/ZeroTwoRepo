@@ -588,8 +588,8 @@ def kayo(update: Update, context: CallbackContext):
     site_search(update, context, "kayo")
 
 @run_async
-def vibe(update: Update, context: CallbackContext):
-    site_search(update, context, "vibe")
+def anidl(update: Update, context: CallbackContext):
+    site_search(update, context, "anidl")
 
 @run_async
 def erai(update: Update, context: CallbackContext):
@@ -606,7 +606,7 @@ Get information about anime, manga or characters from [AniList](anilist.co).
  • `/kaizoku <anime>`*:* search an anime on animekaizoku.com
  • `/kayo <anime>`*:* search an anime on animekayo.com
  • `/airing <anime>`*:* returns anime airing info.
- • `/vibe <anime>`*:* search an anime on animevibe.wtf.
+ • `/anidl <anime>`*:* search an anime on anidl.org.
  • `/erai <anime>`*:* search an anime on erai-raws.info.
  """
 
@@ -618,7 +618,7 @@ USER_HANDLER = DisableAbleCommandHandler("user", user)
 UPCOMING_HANDLER = DisableAbleCommandHandler("upcoming", upcoming)
 KAIZOKU_SEARCH_HANDLER = DisableAbleCommandHandler("kaizoku", kaizoku)
 KAYO_SEARCH_HANDLER = DisableAbleCommandHandler("kayo", kayo)
-VIBE_SEARCH_HANDLER = DisableAbleCommandHandler("vibe", vibe)
+ANIDL_SEARCH_HANDLER = DisableAbleCommandHandler("anidl", anidl)
 ERAI_SEARCH_HANDLER = DisableAbleCommandHandler("erai", erai)
 BUTTON_HANDLER = CallbackQueryHandler(button, pattern='anime_.*')
 
@@ -630,17 +630,17 @@ dispatcher.add_handler(AIRING_HANDLER)
 dispatcher.add_handler(USER_HANDLER)
 dispatcher.add_handler(KAIZOKU_SEARCH_HANDLER)
 dispatcher.add_handler(KAYO_SEARCH_HANDLER)
-dispatcher.add_handler(VIBE_SEARCH_HANDLER)
+dispatcher.add_handler(ANIDL_SEARCH_HANDLER)
 dispatcher.add_handler(ERAI_SEARCH_HANDLER)
 dispatcher.add_handler(UPCOMING_HANDLER)
 
 __mod_name__ = "Anime"
 __command_list__ = [
     "anime", "manga", "character", "user", "upcoming", "kaizoku", "airing",
-    "kayo", "vibe", "erai",
+    "kayo", "anidl", "erai",
 ]
 __handlers__ = [
     ANIME_HANDLER, CHARACTER_HANDLER, MANGA_HANDLER, USER_HANDLER,
     UPCOMING_HANDLER, KAIZOKU_SEARCH_HANDLER, KAYO_SEARCH_HANDLER,
-    BUTTON_HANDLER, AIRING_HANDLER, VIBE_SEARCH_HANDLER, ERAI_SEARCH_HANDLER,
+    BUTTON_HANDLER, AIRING_HANDLER, ANIDL_SEARCH_HANDLER, ERAI_SEARCH_HANDLER,
 ]
