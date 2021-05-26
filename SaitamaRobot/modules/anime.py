@@ -541,31 +541,10 @@ def site_search(update: Update, context: CallbackContext, site: str):
             for entry in search_result:
                 post_link = entry.a['href']
                 post_name = html.escape(entry.text)
-                result += f"• <a href='{post_link}'>{post_name}</a>\n"
+                result += f"- <a href='{post_link}'>{post_name}</a>\n"
         else:
             more_results = False
             result = f"<b>No result found for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>AnimeDL.</code> \nTry using <code>/kayo </code>!"
-            
-    elif site == "erai":
-        search_query = args[1].replace(" ", "-")
-        search_url = f"https://www.erai-raws.info/anime-list/{search_query}/"
-        html_text = requests.get(search_url).text
-        soup = bs4.BeautifulSoup(html_text, "html.parser")
-        search_result = soup.find_all("h2", {'class': "title"})
-
-        result = f"<b>Click the button below to access the results for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>Erai Raws</code>: \n"
-        for entry in search_result:
-
-            if entry.text.strip() == "Nothing Found":
-                result = f"<b>No result found for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>Erai Raws</code> \n <b>NOTE:</b> Erai Raws only accept perfect arguments, such as: <code>/erai hibike euphonium</code>."
-                more_results = False
-                break
-
-            post_link = entry.a['href']
-            post_name = html.escape(entry.text.strip())
-            result += f"• <a href='{post_link}'>{post_name}</a>\n"
-
-    buttons = [[InlineKeyboardButton("See all results", url=search_url)]]
 
     if more_results:
         message.reply_text(
@@ -591,23 +570,20 @@ def kayo(update: Update, context: CallbackContext):
 def anidl(update: Update, context: CallbackContext):
     site_search(update, context, "anidl")
 
-@run_async
-def erai(update: Update, context: CallbackContext):
-    site_search(update, context, "erai")
-
 __help__ = """
 Get information about anime, manga or characters from [AniList](anilist.co).
-*Available commands:*
+*Search commands:*
  • `/anime <anime>`*:* returns information about the anime.
  • `/character <character>`*:* returns information about the character.
  • `/manga <manga>`*:* returns information about the manga.
  • `/user <user>`*:* returns information about a MyAnimeList user.
+ • `/airing <anime>`*:* returns anime airing info.
+ 
+*Site Search commands:*
  • `/upcoming`*:* returns a list of new anime in the upcoming seasons.
  • `/kaizoku <anime>`*:* search an anime on animekaizoku.com
  • `/kayo <anime>`*:* search an anime on animekayo.com
- • `/airing <anime>`*:* returns anime airing info.
  • `/anidl <anime>`*:* search an anime on anidl.org.
- • `/erai <anime>`*:* search an anime on erai-raws.info.
  """
 
 ANIME_HANDLER = DisableAbleCommandHandler("anime", anime)
@@ -619,7 +595,6 @@ UPCOMING_HANDLER = DisableAbleCommandHandler("upcoming", upcoming)
 KAIZOKU_SEARCH_HANDLER = DisableAbleCommandHandler("kaizoku", kaizoku)
 KAYO_SEARCH_HANDLER = DisableAbleCommandHandler("kayo", kayo)
 ANIDL_SEARCH_HANDLER = DisableAbleCommandHandler("anidl", anidl)
-ERAI_SEARCH_HANDLER = DisableAbleCommandHandler("erai", erai)
 BUTTON_HANDLER = CallbackQueryHandler(button, pattern='anime_.*')
 
 dispatcher.add_handler(BUTTON_HANDLER)
@@ -631,16 +606,15 @@ dispatcher.add_handler(USER_HANDLER)
 dispatcher.add_handler(KAIZOKU_SEARCH_HANDLER)
 dispatcher.add_handler(KAYO_SEARCH_HANDLER)
 dispatcher.add_handler(ANIDL_SEARCH_HANDLER)
-dispatcher.add_handler(ERAI_SEARCH_HANDLER)
 dispatcher.add_handler(UPCOMING_HANDLER)
 
 __mod_name__ = "Anime"
 __command_list__ = [
     "anime", "manga", "character", "user", "upcoming", "kaizoku", "airing",
-    "kayo", "anidl", "erai",
+    "kayo", "anidl",
 ]
 __handlers__ = [
     ANIME_HANDLER, CHARACTER_HANDLER, MANGA_HANDLER, USER_HANDLER,
     UPCOMING_HANDLER, KAIZOKU_SEARCH_HANDLER, KAYO_SEARCH_HANDLER,
-    BUTTON_HANDLER, AIRING_HANDLER, ANIDL_SEARCH_HANDLER, ERAI_SEARCH_HANDLER,
+    BUTTON_HANDLER, AIRING_HANDLER, ANIDL_SEARCH_HANDLER,
 ]
