@@ -531,10 +531,10 @@ def site_search(update: Update, context: CallbackContext, site: str):
             result += f"• <a href='{post_link}'>{post_name}</a>\n"
             
     elif site == "vibe":
-        search_url = f"https://animevibe.wtf/?s={search_query}"
+        search_url = f"https://animevibe.wtf/search?q={search_query}"
         html_text = requests.get(search_url).text
         soup = bs4.BeautifulSoup(html_text, "html.parser")
-        search_result = soup.find_all("h2", {'class': "title"})
+        search_result = soup.find_all("h2", {'class': "MuiTypography-root MuiLink-root MuiLink-underlineHover MuiTypography-colorPrimary"})
 
         result = f"<b>Click the button below to access the results for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>AnimeVibe</code>: \n"
         for entry in search_result:
