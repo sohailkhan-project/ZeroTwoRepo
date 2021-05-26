@@ -530,23 +530,21 @@ def site_search(update: Update, context: CallbackContext, site: str):
             post_name = html.escape(entry.text.strip())
             result += f"• <a href='{post_link}'>{post_name}</a>\n"
             
-    elif site == "vibe":
-        search_url = f"https://animevibe.wtf/search?q={search_query}"
+    elif site == "anidl":
+        search_url = f"https://anidl.org/?s={search_query}"
         html_text = requests.get(search_url).text
         soup = bs4.BeautifulSoup(html_text, "html.parser")
-        search_result = soup.find_all("div", {'class': "MuiTypography-root MuiLink-root MuiLink-underlineHover MuiTypography-colorPrimary"})
+        search_result = soup.find_all("h2", {'class': "post-title"})
 
-        result = f"<b>Click the button below to access the results for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>AnimeVibe</code>: \n"
-        for entry in search_result:
-
-            if entry.text.strip() == "Nothing Found":
-                result = f"<b>No result found for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>AnimeVibe</code>"
-                more_results = False
-                break
-
-            post_link = entry.a['href']
-            post_name = html.escape(entry.text.strip())
-            result += f"• <a href='{post_link}'>{post_name}</a>\n"
+        if search_result:
+            result = f"<b>Search results for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>AniDL</code>: \n"
+            for entry in search_result:
+                post_link = entry.a['href']
+                post_name = html.escape(entry.text)
+                result += f"• <a href='{post_link}'>{post_name}</a>\n"
+        else:
+            more_results = False
+            result = f"<b>No result found for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>AnimeDL.</code> \nTry using <code>/kayo </code>!"
             
     elif site == "erai":
         search_query = args[1].replace(" ", "-")
